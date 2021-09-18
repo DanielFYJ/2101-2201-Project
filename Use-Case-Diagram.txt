@@ -3,17 +3,41 @@ title Web Portal System
 
 Student -> (View Error Message)
 (View Error Message) ..> (Web Portal log in): <<include>>
+(View Error Message) ..> (sent Error Message): <<include>>
+
 Student -> (View Virtual Map)
 (View Virtual Map) ..> (Web Portal log in): <<include>>
+
 Student -> (View Dashboard)
 (View Dashboard) ..> (Web Portal log in): <<include>>
+
 Student -> (Manage Queue)
-(Manage Queue) ..> (Add action to queue): <<extend>>
-(Manage Queue) ..> (Delete action to queue): <<extend>>
+(Add action to queue) ..> (Manage Queue): <<extend>>
 (Add action to queue) ..> (Web Portal log in): <<include>>
+
+(Delete action to queue) ..> (Manage Queue): <<extend>>
 (Delete action to queue) ..> (Web Portal log in): <<include>>
 
+(Submit Queue) ..> (Manage Queue): <<extend>>
+(Submit Queue) ..> (Web Portal log in): <<include>>
 
+Robotic_Car -> (sent Error Message)
 
-Car -> (sent Error Message)
+Robotic_Car -> (Receive Queue)
+(Receive Queue) ..> (Submit Queue): <<include>>
+
+Robotic_Car -> (move left)
+(Submit Queue) --> (move left): <<extend>>
+
+Robotic_Car -> (move right)
+(Submit Queue) --> (move right): <<extend>>
+
+Robotic_Car -> (move up)
+(Submit Queue) --> (move up): <<extend>>
+
+Robotic_Car -> (move down)
+(Submit Queue) --> (move down): <<extend>>
+
+Robotic_Car -> ( contains Wifi-module)
+
 @enduml
