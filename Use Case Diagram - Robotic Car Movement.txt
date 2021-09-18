@@ -1,20 +1,20 @@
 @startuml
-title Movement Of Robotic Car
+actor "Robotic Car" as RC
+rectangle "Movement Of Robotic Car" {
 
-Robotic_Car - (Receive Queue)
+RC - (Receive Queue)
 (Submit Queue) ..> (Receive Queue): <<include>>
 
-Robotic_Car - (move left)
+RC - (move left)
 (Submit Queue) ..> (move left): <<extend>>
 
-Robotic_Car - (move right)
+RC - (move right)
 (Submit Queue) ..> (move right): <<extend>>
 
-Robotic_Car - (move up)
+RC - (move up)
 (Submit Queue) ..> (move up): <<extend>>
 
-Robotic_Car - (move down)
+RC - (move down)
 (Submit Queue) ..> (move down): <<extend>>
-
-
+}
 @enduml
