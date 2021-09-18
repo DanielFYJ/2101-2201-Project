@@ -1,0 +1,19 @@
+@startuml
+title Web Portal System
+
+Student -> (View Error Message)
+(View Error Message) ..> (Web Portal log in): <<include>>
+Student -> (View Virtual Map)
+(View Virtual Map) ..> (Web Portal log in): <<include>>
+Student -> (View Dashboard)
+(View Dashboard) ..> (Web Portal log in): <<include>>
+Student -> (Manage Queue)
+(Manage Queue) ..> (Add action to queue): <<extend>>
+(Manage Queue) ..> (Delete action to queue): <<extend>>
+(Add action to queue) ..> (Web Portal log in): <<include>>
+(Delete action to queue) ..> (Web Portal log in): <<include>>
+
+
+
+Car -> (sent Error Message)
+@enduml
