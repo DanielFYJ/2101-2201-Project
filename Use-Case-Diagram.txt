@@ -24,19 +24,19 @@ Student -> (Manage Queue)
 Robotic_Car -> (sent Error Message)
 
 Robotic_Car -> (Receive Queue)
-(Receive Queue) ..> (Submit Queue): <<include>>
+(Submit Queue) ..> (Receive Queue): <<include>>
 
 Robotic_Car -> (move left)
-(Submit Queue) --> (move left): <<extend>>
+(Submit Queue) ..> (move left): <<extend>>
 
 Robotic_Car -> (move right)
-(Submit Queue) --> (move right): <<extend>>
+(Submit Queue) ..> (move right): <<extend>>
 
 Robotic_Car -> (move up)
-(Submit Queue) --> (move up): <<extend>>
+(Submit Queue) ..> (move up): <<extend>>
 
 Robotic_Car -> (move down)
-(Submit Queue) --> (move down): <<extend>>
+(Submit Queue) ..> (move down): <<extend>>
 
 Robotic_Car -> ( contains Wifi-module)
 
