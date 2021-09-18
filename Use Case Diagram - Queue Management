@@ -1,6 +1,6 @@
 @startuml
-title Queue Management
-
+actor Student
+rectangle "Queue Management" {
 Student - (Web Portal log in)
 
 Student - (Manage Queue)
@@ -13,4 +13,5 @@ Student - (Manage Queue)
 (Submit Queue) ..> (Manage Queue): <<extend>>
 (Web Portal log in) ..> (Submit Queue): <<extend>>
 
+}
 @enduml
