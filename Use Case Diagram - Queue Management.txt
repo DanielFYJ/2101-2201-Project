@@ -3,14 +3,10 @@ actor Student
 rectangle "Queue Management" {
 Student - (Web Portal log in)
 
-Student - (Manage Queue)
-(Add action to queue) ..> (Manage Queue): <<extend>>
 (Web Portal log in) ..> (Add action to queue): <<extend>>
 
-(Delete action to queue) ..> (Manage Queue): <<extend>>
-(Web Portal log in) ..> (Delete action to queue): <<extend>>
+(Web Portal log in) ..> (Delete action from queue): <<extend>>
 
-(Submit Queue) ..> (Manage Queue): <<extend>>
 (Web Portal log in) ..> (Submit Queue): <<extend>>
 
 }
