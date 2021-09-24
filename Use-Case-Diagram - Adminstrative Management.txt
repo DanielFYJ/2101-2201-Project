@@ -20,13 +20,13 @@ rectangle "System" {
     usecase "Submit queue" as UC10
 
     /'Robotic Car (Use Cases) '/
-    usecase "Move" as UC11
+    usecase "Movement" as UC11
     usecase "Move Forward" as UC12
     usecase "Move Backward" as UC13
     usecase "Move Left" as UC14
     usecase "Move Right" as UC15
+    usecase "Stop" as UC19
     usecase "Detect Obstacle" as UC16
-    usecase "stop moving" as UC19
     usecase "Detect black tapes" as UC20
 
 }
@@ -34,7 +34,6 @@ rectangle "System" {
     Facil -- UC17
     Car -- UC6
     Car -- UC5
-    Car -- UC11
     Car -- UC16
     Car -- UC20   
     
@@ -51,6 +50,7 @@ rectangle "System" {
 
     /'Robotic Car Movement '/
     UC10 ..> UC11 : include
+    UC11 ..> UC19 : extend
     UC11 ..> UC12 : extend
     UC11 ..> UC13 : extend
     UC11 ..> UC14 : extend
