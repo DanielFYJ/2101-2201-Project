@@ -1,0 +1,71 @@
+@startuml
+actor "Kid" as kid1<< Human>>
+actor "Kid" as kid2<< Human>>
+actor "Robotic Car" as Car << Car>>
+actor "Robotic Car" as Car2 << Car>>
+
+rectangle "Web Portal" {
+    usecase "Display Feedback" as UC2
+    usecase "View Virtual Map" as UC3
+    usecase "View Dashboard" as UC4
+    usecase "Display Status" as UC23
+    usecase "View Queue" as UC5
+    usecase "Add action to queue" as UC8
+    usecase "Delete action from queue" as UC9
+    usecase "Submit queue" as UC10
+    usecase "Car Movement" as CM1   
+}
+
+rectangle "Robotic_Car_Management" {
+    usecase "Connect to WIFI" as CW
+    usecase "Detect Obstacle" as UC16
+    usecase "Detect black tapes" as UC20
+    usecase "Send Feedback" as UC22 
+    usecase "Send Status" as UC24
+    usecase "Car Movement" as CM2
+}
+
+rectangle "Car_Movement" {
+    usecase "Move Forward" as UC12
+    usecase "Move Backward" as UC13
+    usecase "Move Left" as UC14
+    usecase "Move Right" as UC15
+    usecase UC19 as "
+    Stop
+    --
+    non-black tapes or obstacle detection"
+}
+
+    CM1 -- Car_Movement
+    CM2 -- Car_Movement
+
+    kid1 -- UC4
+    kid1 -- UC3
+    
+    kid2 -- UC5
+    kid2 -- UC8
+    kid2 -- UC9
+    kid2 -- UC10
+
+    Car -- CW
+    CW ..> UC16 : extend
+    CW ..> UC20 : extend
+    CW ..> UC22 : extend
+    CW ..> UC24 : extend
+
+    Car2 -- UC12
+    Car2 -- UC13
+    Car2 -- UC14
+    Car2 -- UC15
+    Car2 -- UC19
+
+    UC16 ..> CM2 : include
+    UC20 ..> CM2 : include
+    UC10 ..> CM1 : include
+
+    UC4 ..> UC2 : include
+    UC4 ..> UC23 : include
+
+
+
+@enduml

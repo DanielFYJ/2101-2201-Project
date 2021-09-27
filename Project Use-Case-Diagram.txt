@@ -1,25 +1,19 @@
 @startuml
 actor Kid << Human>>
-actor "Facilitator" as Facil << Human>>
 actor "Robotic Car" as Car << Car>>
 
 rectangle "System" {
-    usecase "Web Portal Login" as UC1
-    usecase "Display Error Message" as UC2
+    /' what the kid can do '/
+    usecase "Display Feedback" as UC2
     usecase "View Virtual Map" as UC3
     usecase "View Dashboard" as UC4
-    usecase "Send Sensors data" as UC5
-    usecase "Send Error Message" as UC6
-    usecase "Display Sensors Data" as UC7
-    usecase "Create Account" as UC17 
-    usecase "Validate Password" as UC18
-
-    /'Queue Movement (Use Cases) '/
+    usecase "View Queue" as UC5
+    usecase "Display Status" as UC23
     usecase "Add action to queue" as UC8
     usecase "Delete action from queue" as UC9
     usecase "Submit queue" as UC10
 
-    /'Robotic Car (Use Cases) '/
+    /'What the Robotic Car can perform  '/
     usecase "Movement" as UC11
     usecase "Move Forward" as UC12
     usecase "Move Backward" as UC13
@@ -28,34 +22,35 @@ rectangle "System" {
     usecase "Stop" as UC19
     usecase "Detect Obstacle" as UC16
     usecase "Detect black tapes" as UC20
-
+    usecase "Send Feedback" as UC22 
+    usecase "Send Status" as UC24    
 }
-    Kid -- UC1
-    Facil -- UC17
-    Car -- UC6
-    Car -- UC5
+
+    Kid -- UC4
+    Kid -- UC5
+    Kid -- UC3
+    Kid -- UC8
+    Kid -- UC9
+    Kid -- UC10
+    
     Car -- UC16
-    Car -- UC20   
+    Car -- UC20
+    Car -- UC22
+    Car -- UC24
     
-    UC1 ..> UC18: include
-    UC1 ..> UC4 : extend
-    UC1 ..> UC3 : extend
-    UC4 ..> UC7 : include
     UC4 ..> UC2 : include
-    
-    /'Queue Management '/
-    UC1 ..> UC8 : extend
-    UC1 ..> UC9 : extend
-    UC1 ..> UC10 : extend
+    UC4 ..> UC23 : include
+
 
     /'Robotic Car Movement '/
     UC10 ..> UC11 : include
-    UC11 ..> UC19 : extend
     UC11 ..> UC12 : extend
     UC11 ..> UC13 : extend
     UC11 ..> UC14 : extend
     UC11 ..> UC15 : extend
     UC16 ..> UC19 : include
     UC20 ..> UC11 : include
+    UC11 ..> UC19 : extend
+    
 
 @enduml
