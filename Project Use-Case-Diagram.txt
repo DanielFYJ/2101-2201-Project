@@ -1,21 +1,33 @@
 @startuml
-actor Kid << Human>>
-actor "Robotic Car" as Car << Car>>
+actor "Kid" as kid1<< Human>>
+actor "Kid" as kid2<< Human>>
+actor "Robotic Car" as Car << Robotic Car>>
+actor "Robotic Car" as Car2 << Robotic Car>>
 
-rectangle "System" {
-    /' what the kid can do '/
+rectangle "Web Portal" {
     usecase "Display Feedback" as UC2
     usecase "View Virtual Map" as UC3
     usecase "View Dashboard" as UC4
-    usecase "View Queue" as UC5
     usecase "Display Status" as UC23
+    usecase "View Queue" as UC5
     usecase "Add action to queue" as UC8
     usecase "Delete action from queue" as UC9
     usecase "Submit queue" as UC10
+    usecase "Car Movement" as CM1   
+}
 
-    /'What the Robotic Car can perform  '/
-    usecase "Movement" as UC11
-    usecase UC12 as "Move Forward
+rectangle "Robotic_Car_Management" {
+    usecase UC16 as "Detect Obstacle" 
+    usecase UC20 as "Detect black marker"
+    usecase UC22 as "Send Feedback"
+    usecase UC24 as "Send Status"
+    usecase "Car Movement" as CM2
+}
+
+rectangle "Car_Movement" {
+    usecase "Move" as MV
+    usecase UC19 as "Stop"
+    /'usecase UC12 as "Move Forward
     --
     **Extension point**\nDepending on the next action of the queue"
     usecase UC13 as "Move Backward
@@ -31,37 +43,32 @@ rectangle "System" {
     Stop
     --
     **Extension point**\nnon-black tapes or obstacle detection" 
-
-    usecase "Detect Obstacle" as UC16
-    usecase "Detect black tapes" as UC20
-    usecase "Send Feedback" as UC22 
-    usecase "Send Status" as UC24    
+    '/
 }
 
-    Kid -- UC4
-    Kid -- UC5
-    Kid -- UC3
-    Kid -- UC8
-    Kid -- UC9
-    Kid -- UC10
+    CM1 -- Car_Movement
+    CM2 -- Car_Movement
+
+    kid1 -- UC4
+    kid1 -- UC3
+    
+    kid2 -- UC5
+    kid2 -- UC8
+    kid2 -- UC9
+    kid2 -- UC10
+
     Car -- UC16
     Car -- UC20
-
-    
+    Car2 -- MV
+    Car2 -- UC19
+    CM2 ..> UC24 : <<include>>
+    UC16 ..> UC22 : <<include>>
+    UC16 ..> CM2 : <<include>>
+    UC20 ..> UC22 : <<include>>
+    UC10 ..> CM1 : <<include>>
     UC4 ..> UC2 : <<include>>
     UC4 ..> UC23 : <<include>>
-    UC16 ..> UC22 : <<include>>
-    UC16 ..> UC11 : <<include>>
-    UC20 ..> UC22 : <<include>>
-    UC11 ..> UC24 : <<include>>
-    UC10 ..> UC11 : <<include>>
-    UC11 ..> UC12 : <<extend>>
-    UC11 ..> UC13 : <<extend>>
-    UC11 ..> UC14 : <<extend>>
-    UC11 ..> UC15 : <<extend>>
-    UC16 ..> UC19 : <<include>>
-    UC20 ..> UC11 : <<include>>
-    UC11 ..> UC19 : <<extend>>
-    
+
+
 
 @enduml
