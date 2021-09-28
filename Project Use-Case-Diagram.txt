@@ -15,11 +15,23 @@ rectangle "System" {
 
     /'What the Robotic Car can perform  '/
     usecase "Movement" as UC11
-    usecase "Move Forward" as UC12
-    usecase "Move Backward" as UC13
-    usecase "Move Left" as UC14
-    usecase "Move Right" as UC15
-    usecase "Stop" as UC19
+    usecase UC12 as "Move Forward
+    --
+    **Extension point**\nDepending on the next action of the queue"
+    usecase UC13 as "Move Backward
+    --
+    **Extension point**\nDepending on the next action of the queue"
+    usecase UC14 as "Move Left
+    --
+    **Extension point**\nDepending on the next action of the queue"
+    usecase UC15 as "Move Right
+    --
+    **Extension point**\nDepending on the next action of the queue" 
+    usecase UC19 as "
+    Stop
+    --
+    **Extension point**\nnon-black tapes or obstacle detection" 
+
     usecase "Detect Obstacle" as UC16
     usecase "Detect black tapes" as UC20
     usecase "Send Feedback" as UC22 
@@ -32,25 +44,24 @@ rectangle "System" {
     Kid -- UC8
     Kid -- UC9
     Kid -- UC10
-    
     Car -- UC16
     Car -- UC20
-    Car -- UC22
-    Car -- UC24
+
     
-    UC4 ..> UC2 : include
-    UC4 ..> UC23 : include
-
-
-    /'Robotic Car Movement '/
-    UC10 ..> UC11 : include
-    UC11 ..> UC12 : extend
-    UC11 ..> UC13 : extend
-    UC11 ..> UC14 : extend
-    UC11 ..> UC15 : extend
-    UC16 ..> UC19 : include
-    UC20 ..> UC11 : include
-    UC11 ..> UC19 : extend
+    UC4 ..> UC2 : <<include>>
+    UC4 ..> UC23 : <<include>>
+    UC16 ..> UC22 : <<include>>
+    UC16 ..> UC11 : <<include>>
+    UC20 ..> UC22 : <<include>>
+    UC11 ..> UC24 : <<include>>
+    UC10 ..> UC11 : <<include>>
+    UC11 ..> UC12 : <<extend>>
+    UC11 ..> UC13 : <<extend>>
+    UC11 ..> UC14 : <<extend>>
+    UC11 ..> UC15 : <<extend>>
+    UC16 ..> UC19 : <<include>>
+    UC20 ..> UC11 : <<include>>
+    UC11 ..> UC19 : <<extend>>
     
 
 @enduml
