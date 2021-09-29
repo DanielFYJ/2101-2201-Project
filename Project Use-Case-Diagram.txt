@@ -1,6 +1,5 @@
 @startuml
-actor "Kid" as kid1<< Human>>
-actor "Kid" as kid2<< Human>>
+actor "Kid" as kid << Human>>
 actor "Robotic Car" as Car << Robotic Car>>
 actor "Robotic Car" as Car2 << Robotic Car>>
 
@@ -18,7 +17,7 @@ rectangle "Web Portal" {
 
 rectangle "Robotic_Car_Management" {
     usecase UC16 as "Detect Obstacle" 
-    usecase UC20 as "Detect black marker"
+    usecase UC20 as "Detect black tile"
     usecase UC22 as "Send Feedback"
     usecase UC24 as "Send Status"
     usecase "Car Movement" as CM2
@@ -42,20 +41,20 @@ rectangle "Car_Movement" {
     usecase UC19 as "
     Stop
     --
-    **Extension point**\nnon-black tapes or obstacle detection" 
+    **Extension point**\nnon-black tile or obstacle detection" 
     '/
 }
 
     CM1 -- Car_Movement
     CM2 -- Car_Movement
 
-    kid1 -- UC4
-    kid1 -- UC3
+    kid -- UC4
+    kid -- UC3
     
-    kid2 -- UC5
-    kid2 -- UC8
-    kid2 -- UC9
-    kid2 -- UC10
+    kid -- UC5
+    kid -- UC8
+    kid -- UC9
+    kid -- UC10
 
     Car -- UC16
     Car -- UC20
