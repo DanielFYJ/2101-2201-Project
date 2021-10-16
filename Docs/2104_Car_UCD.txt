@@ -1,7 +1,6 @@
 @startuml
 
 actor "Robotic Car" as Car << Car>>
-actor "Web Portal" as Portal <<Portal>>
 
 rectangle "Robotic Car Management" {
     usecase UC1 as "Detect Obstacle" 
@@ -15,7 +14,15 @@ rectangle "Robotic Car Management" {
     Extension point\nChange of speed"
 
     usecase UC5 as "Stop"
+
     usecase UC6 as "Receive Queue Commands"
+
+    usecase UC8 as "Receive Force Stop Command
+    --
+    Extension point\nForce stop button is pressed"
+
+    usecase UC9 as "Read sensor data"
+
     usecase CM2 as "Move"
 
     usecase CM3 as "Move Forward
@@ -36,17 +43,18 @@ rectangle "Robotic Car Management" {
 
 }
 
-    Portal -- UC6
-    Car -- UC1
     Car -- UC2
-    Car -- UC5
     Car -- CM2
-    
-    UC6 <.. UC5: <<include>>
+    Car -- UC5
+
+
     UC6 <.. CM2 : <<include>>
+    UC9 <.. UC1 : <<include>>
+    UC9 <.. UC2 : <<include>>
 
     UC1 ..> UC3 : <<extend>>
     UC2 ..> UC3 : <<extend>>
+    UC1 ..> UC5 : <<extend>>
 
     CM2 ..> CM3 : <<extend>>
     CM2 ..> CM4 : <<extend>>
@@ -55,5 +63,5 @@ rectangle "Robotic Car Management" {
 
     CM2 ..> UC4 : <<extend>>
     UC5 ..> UC4 : <<extend>>
-
+    UC5 ..> UC8 : <<extend>>
 @enduml
