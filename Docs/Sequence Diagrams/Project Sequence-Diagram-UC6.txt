@@ -1,0 +1,26 @@
+@startuml
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 200
+participant "//<<entity>>//\n**WebPortal**" as WebPortal
+participant "//<<control>>//\n**RoboticCarManagement**" as RoboticCarManagement
+participant "//<<control>>//\n**MovementManagement**" as B
+participant "//<<entity>>//\n**Movement**" as C
+RoboticCarManagement -> B : Obstacle Detected
+activate RoboticCarManagement
+activate B
+B -> B : stop
+activate B #DarkSalmon
+B-> C : setPWM(PWM)
+activate C
+C --> B : Success()
+deactivate C
+deactivate B
+B --> RoboticCarManagement: Car stopped successfully
+deactivate B
+
+RoboticCarManagement --> WebPortal: sendStatus()
+activate WebPortal
+deactivate WebPortal
+deactivate RoboticCarManagement
+@enduml
