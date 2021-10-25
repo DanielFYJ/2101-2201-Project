@@ -22,7 +22,7 @@ deactivate C
 B --> A: Success()
 deactivate B
 
-A --> Kids: Queue Displayed Successfully
+A --> Kids: "Queue Displayed Successfully"
 deactivate A
 
 @enduml

@@ -6,6 +6,7 @@ participant "//<<entity>>//\n**WebPortal**" as WebPortal
 participant "//<<control>>//\n**RoboticCarManagement**" as RoboticCarManagement
 participant "//<<control>>//\n**MovementManagement**" as B
 participant "//<<entity>>//\n**Movement**" as C
+actor "RobticCar" as RC
 RoboticCarManagement -> B : Obstacle Detected
 activate RoboticCarManagement
 activate B
@@ -13,10 +14,11 @@ B -> B : stop
 activate B #DarkSalmon
 B-> C : setPWM(PWM)
 activate C
+C -> RC : "Car stop successfully"
 C --> B : Success()
 deactivate C
 deactivate B
-B --> RoboticCarManagement: Car stopped successfully
+B --> RoboticCarManagement: Success()
 deactivate B
 
 RoboticCarManagement --> WebPortal: sendStatus()
