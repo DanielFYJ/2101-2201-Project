@@ -1,0 +1,63 @@
+@startuml
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 200
+participant "//<<Queue>>//\n**Queue**" as Queue
+participant "//<<entity>>//\n**WebPortal**" as WebPortal
+participant "//<<Control>>//\n**RoboticCarManagement**" as RoboticCarManagement
+participant "//<<control>>//\n**MovementManagement**" as B
+participant "//<<entity>>//\n**MotorDriver**" as C
+actor "Robotic Car" as RC
+
+Queue -> RoboticCarManagement: Recieve Queue Commands
+activate RoboticCarManagement
+RoboticCarManagement -> B : recieveQueue()
+activate B
+B -> C: getCommands()
+activate C
+C --> B: Success()
+B-> C : setPWM(PWM)
+C -> RC : "Car able to move"
+C --> B : Success()
+B -> C: turn(direction)
+C -> RC : "Car able to turn"
+C --> B : Success()
+
+deactivate C
+B --> RoboticCarManagement: Success()
+deactivate B
+RoboticCarManagement --> WebPortal: sendStatus()
+activate WebPortal
+deactivate WebPortal
+RoboticCarManagement --> Queue : "Queue command executed unsuccessfully"
+deactivate RoboticCarManagement
+
+
+alt car unable to move
+Queue -> RoboticCarManagement: Recieve Queue Commands
+activate RoboticCarManagement
+RoboticCarManagement -> B : recieveQueue()
+activate B
+B -> C: getCommands()
+activate C
+C --> B: Fail()
+B --> RoboticCarManagement : Fail()
+RoboticCarManagement --> WebPortal: sendStatus()
+activate WebPortal
+B-> C : setPWM(PWM)
+C -> RC : "Car unable to move"
+C --> B : Fail()
+B --> RoboticCarManagement : Fail()
+RoboticCarManagement --> WebPortal: sendStatus()
+B -> C: turn(direction)
+C -> RC : "Car unable to turn"
+C --> B : Fail()
+deactivate C
+B --> RoboticCarManagement : Fail()
+deactivate B
+RoboticCarManagement --> WebPortal: sendStatus()
+deactivate WebPortal
+RoboticCarManagement --> Queue : "Queue Command Executed Unsuccessfully"
+deactivate RoboticCarManagement
+end
+@enduml
