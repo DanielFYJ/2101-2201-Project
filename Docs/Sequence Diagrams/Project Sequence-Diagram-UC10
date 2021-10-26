@@ -8,7 +8,7 @@ participant "//<<control>>//\n**CommunicationManagement**" as E
 participant "//<<entity>>// \n **WIFIModule**" as F
 actor RoboticCar
 
-Kid-> A:View Status of Robotic Car
+Kid-> A:View Status of Robotic Car(speed & movement)
 activate A #FFBBBB
 
 A -> B: getSpeed()
@@ -39,14 +39,14 @@ F --> E: sendFeedback(sensorData, errorMessage)
 
 E -> D: sendStatus()
 
-D -> C: recieveStatus()
+D -> C: Success()
 
 C -> B: Success()
 
 B -> A: setSpeed(int)
 B -> A: setMovement(string)
 
-A -> Kid: Displays Status
+A -> Kid: Displays Status(speed & movement)
 
 else Failed connection between web portal and robotic car
 RoboticCar --> F: connectionError()
