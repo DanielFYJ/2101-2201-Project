@@ -1,0 +1,75 @@
+@startuml
+actor Kid
+participant "//<<Boundary>>//\n**IWebPortal**" as A
+participant "//<<control>>//\n**StatusManagement**" as B
+participant "//<<control>>//\n**WebPortalManagement**" as C
+participant "//<<control>>//\n**RoboticCarManagement**" as D
+participant "//<<control>>//\n**CommunicationManagement**" as E
+participant "//<<entity>>// \n **WIFIModule**" as F
+actor RoboticCar
+
+Kid-> A:View Status of Robotic Car
+activate A #FFBBBB
+
+A -> B: getSpeed()
+activate B #FFBBBB
+A -> B: getMovement()
+
+B -> C: getStatus(status)
+activate C #FFBBBB
+
+C -> D: recieveStatus()
+activate D #FFBBBB
+
+D -> E: gatherStatus()
+activate E #FFBBBB
+
+E -> F: receiveFeedback(sensorData, errorMessage)
+activate F #FFBBBB
+
+F -> RoboticCar: getSensorData() 
+activate RoboticCar #FFBBBB
+F -> RoboticCar: getErrorMessage()
+
+alt Successful connection between Web Portal and Robotic Car
+RoboticCar --> F: setSensorData(string)
+RoboticCar --> F: setErrorMessage(string)
+
+F --> E: sendFeedback(sensorData, errorMessage)
+
+E -> D: sendStatus()
+
+D -> C: recieveStatus()
+
+C -> B: Success()
+
+B -> A: setSpeed(int)
+B -> A: setMovement(string)
+
+A -> Kid: Displays Status
+
+else Failed connection between web portal and robotic car
+RoboticCar --> F: connectionError()
+deactivate RoboticCar
+
+F --> E: connectionError()
+deactivate F 
+
+E -> D: connectionError()
+deactivate E
+
+D -> C: connectionError()
+deactivate D
+
+C -> B: connectionError()
+deactivate C
+
+B -> A: connectionError()
+deactivate B
+
+
+A -> Kid: Displays Connection Error Message
+deactivate A
+
+end
+@enduml
