@@ -2,10 +2,11 @@
 actor Kid
 participant "//<<Boundary>>//\n**IWebPortal**" as A
 participant "//<<control>>//\n**StatusManagement**" as B
-participant "//<<control>>//\n**WebPortalManagement**" as C
-participant "//<<control>>//\n**RoboticCarManagement**" as D
-participant "//<<control>>//\n**CommunicationManagement**" as E
-participant "//<<entity>>// \n **WIFIModule**" as F
+participant "//<<control>>//\n**FeedbackManagement**" as C
+participant "//<<control>>//\n**WebPortalManagement**" as D
+participant "//<<control>>//\n**RoboticCarManagement**" as E
+participant "//<<control>>//\n**CommunicationManagement**" as F
+participant "//<<entity>>// \n **WIFIModule**" as G
 actor RoboticCar
 
 Kid-> A:View Status of Robotic Car(speed & movement)
@@ -15,57 +16,60 @@ A -> B: getSpeed()
 activate B #FFBBBB
 A -> B: getMovement()
 
-B -> C: getStatus(status)
-activate C #FFBBBB
-
-C -> D: recieveStatus()
+B -> D: getStatus(status)
 activate D #FFBBBB
 
-D -> E: gatherStatus()
+D -> E: recieveStatus()
 activate E #FFBBBB
 
-E -> F: receiveFeedback(sensorData, errorMessage)
+E -> F: gatherStatus()
 activate F #FFBBBB
 
-F -> RoboticCar: getSensorData() 
+F -> G: receiveFeedback(sensorData, errorMessage)
+activate G #FFBBBB
+
+G -> RoboticCar: getSensorData() 
 activate RoboticCar #FFBBBB
-F -> RoboticCar: getErrorMessage()
+G -> RoboticCar: getErrorMessage()
 
 alt Successful connection between Web Portal and Robotic Car
-RoboticCar --> F: setSensorData(string)
-RoboticCar --> F: setErrorMessage(string)
+RoboticCar --> G: setSensorData(string)
+RoboticCar --> G: setErrorMessage(string)
 
-F --> E: sendFeedback(sensorData, errorMessage)
+G --> F: sendFeedback(sensorData, errorMessage)
 
-E -> D: sendStatus()
+F -> E: sendStatus()
 
-D -> C: Success()
+E -> D: Success()
 
-C -> B: Success()
+D -> B: Success()
 
 B -> A: setSpeed(int)
 B -> A: setMovement(string)
+deactivate B
 
 A -> Kid: Displays Status(speed & movement)
 
 else Failed connection between web portal and robotic car
-RoboticCar --> F: connectionError()
+RoboticCar --> G: connectionError()
+RoboticCar --> G: setErrorMessage(string)
 deactivate RoboticCar
 
-F --> E: connectionError()
-deactivate F 
+G --> F: sendFeedback(sensorData, errorMessage)
+deactivate G 
 
-E -> D: connectionError()
+F -> E: sendFeedback()
+deactivate F
+
+E -> D: recieveFeedback()
 deactivate E
 
-D -> C: connectionError()
+D -> C: getFeedback(feedback)
 deactivate D
+activate C #FFBBBB
 
-C -> B: connectionError()
+C -> A: setMessage(string)
 deactivate C
-
-B -> A: connectionError()
-deactivate B
 
 
 A -> Kid: Displays Connection Error Message
