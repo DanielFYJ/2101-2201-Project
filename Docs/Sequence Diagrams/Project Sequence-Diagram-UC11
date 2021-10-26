@@ -17,6 +17,7 @@ RoboticCar-> A:Sends Robotic Car Feedback information
 activate A #FFBBBB
 
 A -> B: establishCommunication()
+activate B #FFBBBB
 B --> A: Success()
 A -> B: setErrorMessage(string)
 
@@ -47,9 +48,8 @@ A --> RoboticCar: Success()
 
 else Failed due to connection failure between web portal and robotic car
 
-RoboticCar-> A:Unable to connect to WebPortal
+RoboticCar-> A:Sends Robotic Car Feedback information
 A -> B: establishCommunication()
-activate B #FFBBBB
 B --> A: Failure()
 A -> B: setErrorMessage(string)
 
