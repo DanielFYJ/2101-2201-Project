@@ -1,0 +1,88 @@
+@startuml
+actor RoboticCar
+participant "//<<entity>>// \n **WIFIModule**" as A
+participant "//<<control>>//\n**CommunicationManagement**" as B
+participant "//<<control>>//\n**RoboticCarManagement**" as C
+participant "//<<control>>//\n**WebPortalManagement**" as D
+participant "//<<control>>//\n**StatusManagement**" as E
+participant "//<<control>>//\n**FeedbackManagement**" as F
+participant "//<<entity>>//\n**Dashboard**" as G
+
+
+alt Successful transmission of Feedback between Web Portal and Robotic Car
+
+
+
+RoboticCar-> A:Sends Robotic Car Feedback information
+activate A #FFBBBB
+
+A -> B: establishCommunication()
+B --> A: Success()
+A -> B: setErrorMessage(string)
+
+
+B -> C: sendFeedback(sensorData, errorMessage)
+activate C #FFBBBB
+
+C -> D: sendFeedback()
+activate D #FFBBBB
+
+D -> F: recieveFeedback()
+activate F #FFBBBB
+
+F -> G: getFeedback(feedback)
+activate G #FFBBBB
+
+G --> F: Success()
+ 
+F --> D: Success()
+
+D --> C: Success()
+
+C --> B: Success()
+
+B --> A: Success()
+
+A --> RoboticCar: Success()
+
+else Failed due to connection failure between web portal and robotic car
+
+RoboticCar-> A:Unable to connect to WebPortal
+A -> B: establishCommunication()
+activate B #FFBBBB
+B --> A: Failure()
+A -> B: setErrorMessage(string)
+
+
+B -> C: sendFeedback(sensorData, errorMessage)
+
+
+C -> D: sendFeedback()
+
+
+D -> F: recieveFeedback()
+
+
+F -> G: getFeedback(feedback)
+
+G --> F: Success()
+
+deactivate G
+
+F --> D: Success()
+deactivate F 
+
+
+D --> C: Success()
+deactivate D
+
+C --> B: Success()
+deactivate C
+
+B --> A: Success()
+deactivate B
+
+A --> RoboticCar: Success()
+deactivate A
+end
+@enduml
