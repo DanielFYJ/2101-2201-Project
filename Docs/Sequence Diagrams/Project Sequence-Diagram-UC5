@@ -2,11 +2,11 @@
 skinparam sequenceArrowThickness 2
 skinparam roundcorner 20
 skinparam maxmessagesize 200
-participant "//<<Queue>>//\n**Queue**" as Queue
-participant "//<<entity>>//\n**WebPortal**" as WebPortal
+participant "//<<Entity>>//\n**Queue**" as Queue
+participant "//<<Entity>>//\n**WebPortal**" as WebPortal
 participant "//<<Control>>//\n**RoboticCarManagement**" as RoboticCarManagement
-participant "//<<control>>//\n**MovementManagement**" as B
-participant "//<<entity>>//\n**MotorDriver**" as C
+participant "//<<Control>>//\n**MovementManagement**" as B
+participant "//<<Entity>>//\n**MotorDriver**" as C
 actor "Robotic Car" as RC
 
 Queue -> RoboticCarManagement: Recieve Queue Commands

@@ -6,7 +6,7 @@ skinparam maxmessagesize 60
 actor Kids
 participant "//<<Boundary>>//\n**WebPortalUI**" as A
 participant "//<<Control>>//\n**QueueManagement**" as B
-participant "//<<Queue>>//\n**Queue**" as C
+participant "//<<Entity>>//\n**Queue**" as C
 
 Kids-> A: ViewQueue
 activate A

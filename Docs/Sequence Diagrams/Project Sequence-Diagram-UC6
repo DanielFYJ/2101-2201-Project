@@ -2,10 +2,10 @@
 skinparam sequenceArrowThickness 2
 skinparam roundcorner 20
 skinparam maxmessagesize 200
-participant "//<<entity>>//\n**WebPortal**" as WebPortal
-participant "//<<control>>//\n**RoboticCarManagement**" as RoboticCarManagement
-participant "//<<control>>//\n**MovementManagement**" as B
-participant "//<<entity>>//\n**Movement**" as C
+participant "//<<Entity>>//\n**WebPortal**" as WebPortal
+participant "//<<Control>>//\n**RoboticCarManagement**" as RoboticCarManagement
+participant "//<<Control>>//\n**MovementManagement**" as B
+participant "//<<Entity>>//\n**Movement**" as C
 actor "RobticCar" as RC
 RoboticCarManagement -> B : Obstacle Detected
 activate RoboticCarManagement
