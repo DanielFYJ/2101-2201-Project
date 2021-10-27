@@ -4,6 +4,8 @@ participant "//<<Boundary>>// \n **QueueUI**" as A
 participant "//<<Control>>//\n**QueueManagement**" as B
 participant "//<<Control>>//\n**WebPortalManagement**" as C
 participant "//<<Control>>// \n **RoboticCarManagement**" as D
+participant "//<<Entity>>// \n **Robotic Car**" as E
+
 
 Kid -> A:submit Queue
 activate A #FFBBBB
@@ -11,11 +13,18 @@ activate A #FFBBBB
 A -> B: SubmitQueue()
 activate B #FFBBBB
 
+alt Successful Connection to Robotic Car 
 B -> C: sendQueue()
 activate C #FFBBBB
 
 C -> D: receiveQueue()
 activate D #FFBBBB
+
+D -> E: storeQueue()
+activate E #FFBBBB
+
+E --> D: success()
+deactivate E
 
 D --> C: success()
 deactivate D
@@ -28,7 +37,7 @@ deactivate B
 A -> Kid: Success()
 deactivate A
 
-alt Failed Connection to Robotic Car 
+else Failed Connection to Robotic Car 
 Kid -> A:submit Queue
 activate A #FFBBBB
 

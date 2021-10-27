@@ -10,6 +10,7 @@ activate A #FFBBBB
 A -> B: DeleteFromQueue()
 activate B #FFBBBB
 
+alt Success in Deleting Action from Queue
 B -> C: UpdateQueue()
 activate C #FFBBBB
 C --> B: Success()
@@ -21,7 +22,7 @@ deactivate B
 A -> Kid: Success()
 deactivate A
 
-alt Failure in Deleting Action from Queue
+else Failure in Deleting Action from Queue
 Kid -> A:Delete action
 activate A #FFBBBB
 
