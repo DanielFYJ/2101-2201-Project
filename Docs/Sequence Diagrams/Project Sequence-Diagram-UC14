@@ -1,0 +1,92 @@
+@startuml SendStatus
+
+actor RoboticCar
+
+participant "//<<control>>//\n**RoboticCarManagement**" as A
+participant "//<<control>>//\n**MovementManagement**" as B
+participant "//<<control>>//\n**CommunicationManagement**" as C
+participant "//<<control>>//\n**WebPortalManagement**" as D
+participant "//<<entity>>// \n **WebPortal**" as E
+
+
+RoboticCar -> A: Retrieve Data
+activate A #FFBBBB
+
+alt Robotic car transmits status to web portal via the WIFI module
+A -> B: gatherStatus()
+activate B #FFBBBB
+
+B --> A: success()
+deactivate B
+
+A -> C: establishCommunication()
+activate C #FFBBBB 
+
+C --> A: success()
+
+C->A: receiveFeedback()
+deactivate C
+
+A->D: sendStatus()
+activate D #FFBBBB
+
+D-->A: success()
+deactivate D
+
+D->E: receiveStatus()
+activate E #FFBBBB
+
+E --> A: Status received successfully
+deactivate E
+
+else  Robotic car is unable to retrieve data from the sensors 
+
+A -> B: gatherStatus()
+activate B #FFBBBB
+
+B --> A: failure()
+deactivate B
+
+A -> C: establishCommunication()
+activate C #FFBBBB
+
+C --> A: success()
+
+C->A: receiveFeedback() (error feedback)
+deactivate C
+
+A -> D: sendFeedback()
+activate D #FFBBBB
+
+D-->A: success()
+deactivate D
+
+D -> E: receiveFeedback()
+activate E #FFBBBB
+
+E --> A: Feedback received successfully
+deactivate E
+
+
+else Connection error between web portal and robotic car
+
+A -> B: gatherStatus()
+activate B #FFBBBB
+
+B --> A: success()
+deactivate B
+
+A -> C: establishCommunication()
+activate C #FFBBBB
+
+C --> A: failure()
+deactivate C
+
+A -> E: Display error message 
+activate E #FFBBBB
+
+E --> A: success()
+deactivate E
+deactivate A
+end
+@enduml
