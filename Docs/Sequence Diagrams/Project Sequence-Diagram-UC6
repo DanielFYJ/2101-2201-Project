@@ -2,27 +2,28 @@
 skinparam sequenceArrowThickness 2
 skinparam roundcorner 20
 skinparam maxmessagesize 200
+actor "Kid" as kid
 participant "//<<Entity>>//\n**WebPortal**" as WebPortal
 participant "//<<Control>>//\n**RoboticCarManagement**" as RoboticCarManagement
 participant "//<<Control>>//\n**MovementManagement**" as B
-participant "//<<Entity>>//\n**Movement**" as C
-actor "RobticCar" as RC
-RoboticCarManagement -> B : Obstacle Detected
-activate RoboticCarManagement
-activate B
-B -> B : stop
-activate B #DarkSalmon
-B-> C : setPWM(PWM)
-activate C
+participant "//<<Entity>>//\n**MotorDriver**" as C
+actor "RobticCar" as RC 
+kid -> WebPortal : "Submit stop command"
+activate WebPortal #FFBBBB
+WebPortal -> RoboticCarManagement : sendStopCommand()
+activate RoboticCarManagement #FFBBBB
+RoboticCarManagement -> B : receiveStopCommand()
+
+activate B #FFBBBB
+B-> C : stop()
+activate C #FFBBBB
 C -> RC : "Car stop successfully"
 C --> B : Success()
 deactivate C
-deactivate B
 B --> RoboticCarManagement: Success()
 deactivate B
-
 RoboticCarManagement --> WebPortal: sendStatus()
-activate WebPortal
-deactivate WebPortal
 deactivate RoboticCarManagement
+WebPortal -> kid : "Stop command executed successfully"
+deactivate WebPortal
 @enduml
