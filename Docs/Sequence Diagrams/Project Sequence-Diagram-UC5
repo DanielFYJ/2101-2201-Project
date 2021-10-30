@@ -7,16 +7,16 @@ participant "//<<Entity>>//\n**WebPortal**" as WebPortal
 participant "//<<Control>>//\n**RoboticCarManagement**" as RoboticCarManagement
 participant "//<<Control>>//\n**MovementManagement**" as B
 participant "//<<Entity>>//\n**MotorDriver**" as C
-actor "Robotic Car" as RC #FFBBBB
+actor "Robotic Car" as RC
 
-Queue -> RoboticCarManagement: Recieve queue commands
-activate RoboticCarManagement #FFBBBB
+Queue -> RoboticCarManagement: Recieve Queue Commands
+activate RoboticCarManagement
 RoboticCarManagement -> B : recieveQueue()
-activate B #FFBBBB
+activate B
 B -> C: getCommands()
-activate C #FFBBBB
+activate C
 C --> B: Success()
-B-> C : adjustPWM(PWM)
+B-> C : setPWM(PWM)
 C -> RC : "Car able to move"
 C --> B : Success()
 B -> C: turn(direction)
@@ -27,23 +27,24 @@ deactivate C
 B --> RoboticCarManagement: Success()
 deactivate B
 RoboticCarManagement --> WebPortal: sendStatus()
-activate WebPortal #FFBBBB
+activate WebPortal
 deactivate WebPortal
-RoboticCarManagement -> Queue : "Queue command executed successfully"
+RoboticCarManagement --> Queue : "Queue command executed unsuccessfully"
 deactivate RoboticCarManagement
 
+
 alt car unable to move
-Queue -> RoboticCarManagement: Recieve queue commands
-activate RoboticCarManagement #FFBBBB
+Queue -> RoboticCarManagement: Recieve Queue Commands
+activate RoboticCarManagement
 RoboticCarManagement -> B : recieveQueue()
-activate B #FFBBBB
+activate B
 B -> C: getCommands()
-activate C #FFBBBB
+activate C
 C --> B: Fail()
 B --> RoboticCarManagement : Fail()
 RoboticCarManagement --> WebPortal: sendStatus()
-activate WebPortal #FFBBBB
-B-> C : adjustPWM(PWM)
+activate WebPortal
+B-> C : setPWM(PWM)
 C -> RC : "Car unable to move"
 C --> B : Fail()
 B --> RoboticCarManagement : Fail()
@@ -56,7 +57,7 @@ B --> RoboticCarManagement : Fail()
 deactivate B
 RoboticCarManagement --> WebPortal: sendStatus()
 deactivate WebPortal
-RoboticCarManagement -> Queue : "Queue command executed unsuccessfully"
+RoboticCarManagement --> Queue : "Queue Command Executed Unsuccessfully"
 deactivate RoboticCarManagement
 end
 @enduml

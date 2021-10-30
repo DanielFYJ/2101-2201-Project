@@ -9,20 +9,20 @@ participant "//<<Control>>//\n**QueueManagement**" as B
 participant "//<<Entity>>//\n**Queue**" as C
 
 Kids-> A: ViewQueue
-activate A #FFBBBB
+activate A
 
 A -> B: getQueue()
-activate B #FFBBBB
+activate B
 
 B -> C: getMoveCommand()
-activate C #FFBBBB
+activate C
 C --> B: Success()
 deactivate C
 
 B --> A: Success()
-deactivate B 
+deactivate B
 
-A -> Kids: "Queue Displayed Successfully"
+A --> Kids: "Queue Displayed Successfully"
 deactivate A
 
 @enduml
