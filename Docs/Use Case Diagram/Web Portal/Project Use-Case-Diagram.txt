@@ -5,7 +5,7 @@ actor "Robotic Car" as Car << Robotic Car>>
 
 rectangle "Web Portal" {
     usecase "Display Feedback" as UC2
-    usecase "View Virtual Map" as UC3
+    usecase "View Game Map" as UC3
     usecase "View Dashboard" as UC4
     usecase "Display Status" as UC23
     usecase "View Queue" as UC5
@@ -17,9 +17,11 @@ rectangle "Web Portal" {
 rectangle "Robotic_Car_Management" {
     usecase UC16 as "Detect Obstacle" 
     usecase UC20 as "Detect black tile"
+    usecase UC21 as "Detect white tile"
+
     usecase UC22 as "Send Feedback
     --
-    **Extension point**\nObstacle and black tile detection"
+    **Extension point**\nObstacle and black/white tile detection"
     usecase UC24 as "Send Status
     --
     **Extension point**\nChange of speed"
@@ -38,11 +40,13 @@ rectangle "Robotic_Car_Management" {
 
     Car -- UC16
     Car -- UC20
+    Car -- UC21
     Car -- MV
     Car -- UC19
 
     UC16 ..> UC22 : <<extend>>
     UC20 ..> UC22 : <<extend>>
+    UC21 ..> UC22 : <<extend>>
     MV ..> UC24 : <<extend>>
     UC19 ..> UC24 : <<extend>>
     UC4 ..> UC2 : <<include>>
