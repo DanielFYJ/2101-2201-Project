@@ -3,12 +3,12 @@ skinparam sequenceArrowThickness 2
 skinparam roundcorner 20
 skinparam maxmessagesize 60
 
-actor Kids
+actor Kid
 participant "//<<Boundary>>//\n**WebPortalUI**" as A
 participant "//<<Control>>//\n**QueueManagement**" as B
 participant "//<<Entity>>//\n**Queue**" as C
 
-Kids-> A: ViewQueue
+Kid-> A: ViewQueue
 activate A
 
 A -> B: getQueue()
@@ -22,7 +22,7 @@ deactivate C
 B --> A: Success()
 deactivate B
 
-A --> Kids: "Queue Displayed Successfully"
+A --> Kid: "Queue Displayed Successfully"
 deactivate A
 
 @enduml
