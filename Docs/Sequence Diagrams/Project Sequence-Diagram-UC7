@@ -1,0 +1,76 @@
+@startuml
+actor RoboticCar
+actor Kid
+participant "//<<control>>// \n **GameMapManagement**" as A
+participant "//<<control>>//\n**RoboticCarManagement**" as B
+participant "//<<control>>//\n**MovementManagement**" as C
+participant "//<<control>>//\n**CommunicationManagement**" as D
+participant "//<<control>>//\n**WebPortalManagement**" as E
+participant "//<<entity>>// \n **WebPortal**" as F
+participant "//<<entity>>//\n**GameMap**" as G
+
+
+Kid -> A: View virtual map
+activate A #FFBBBB
+
+A -> G: getVirtualMap()
+activate G #FFBBBB
+
+G --> A: Success()
+deactivate G 
+    
+A -> Kid: Success()
+deactivate A
+
+RoboticCar -> B: Send robotic car movement
+activate B #FFBBBB
+
+alt Successful connection between web portal and robotic car
+B -> C: gatherStatus()
+activate C #FFBBBB
+
+C --> B: success()
+deactivate C
+
+B -> D: establishCommunication()
+activate D #FFBBBB 
+
+D --> B: success()
+
+
+D -> B: receiveFeedback()
+deactivate D
+
+B -> E: sendStatus()
+activate E #FFBBBB
+
+E-->B: success()
+
+E->F: receiveStatus()
+deactivate E
+activate F #FFBBBB
+
+F --> B: Status received successfully
+deactivate F
+
+else Connection error between web portal and robotic car 
+B -> C: gatherStatus()
+activate C #FFBBBB
+
+C --> B: success()
+deactivate C
+
+B -> D: establishCommunication()
+activate D #FFBBBB 
+
+D --> B: failure()
+deactivate D
+
+B -> F: Display error message 
+activate F #FFBBBB
+
+F --> B: success()
+deactivate F
+deactivate B
+end
+@enduml

@@ -1,0 +1,74 @@
+@startuml
+actor RoboticCar
+actor Kid
+participant "//<<control>>// \n **GameMapManagement**" as A
+participant "//<<control>>//\n**RoboticCarManagement**" as B
+participant "//<<control>>//\n**CommunicationManagement**" as D
+participant "//<<control>>//\n**WebPortalManagement**" as E
+participant "//<<entity>>// \n **WebPortal**" as F
+participant "//<<entity>>//\n**GameMap**" as G
+
+
+Kid -> A: View virtual map
+activate A #FFBBBB
+
+A -> G: getVirtualMap()
+activate G #FFBBBB
+
+G --> A: Success()
+deactivate G 
+    
+A --> Kid: Success()
+deactivate A
+
+RoboticCar -> B: Send robotic car movement
+activate B #FFBBBB
+
+alt Successful connection between web portal and robotic car
+B -> D: establishCommunication()
+activate D #FFBBBB 
+
+D --> B: Success()
+
+D --> B: receiveFeedback()
+deactivate D
+
+B -> E: sendStatus()
+activate E #FFBBBB
+
+
+
+E->F: receiveStatus()
+deactivate E
+activate F #FFBBBB
+
+F --> B: Success()
+deactivate F
+
+B --> RoboticCar: Success()
+
+else Failed connection between web portal and robotic car
+B -> D: establishCommunication()
+activate D #FFBBBB 
+
+D --> B: Failure()
+
+D --> B: receiveFeedback()
+deactivate D
+
+B -> E: sendFeedback()
+activate E #FFBBBB
+
+
+
+E->F: receiveFeedback()
+deactivate E
+activate F #FFBBBB
+
+F --> B: Success()
+deactivate F
+deactivate B
+
+B --> RoboticCar: Success()
+end
+@enduml
