@@ -8,21 +8,30 @@ participant "//<<Boundary>>//\n**WebPortalUI**" as A
 participant "//<<Control>>//\n**QueueManagement**" as B
 participant "//<<Entity>>//\n**Queue**" as C
 
+<<<<<<< HEAD
 Kid-> A: ViewQueue
 activate A
+=======
+Kids-> A: ViewQueue
+activate A #FFBBBB
+>>>>>>> parent of 21d9891 (Revert "Update Sequence Diagram For UC4-6")
 
 A -> B: getQueue()
-activate B
+activate B #FFBBBB
 
 B -> C: getMoveCommand()
-activate C
+activate C #FFBBBB
 C --> B: Success()
 deactivate C
 
 B --> A: Success()
-deactivate B
+deactivate B 
 
+<<<<<<< HEAD
 A --> Kid: "Queue Displayed Successfully"
+=======
+A -> Kids: "Queue Displayed Successfully"
+>>>>>>> parent of 21d9891 (Revert "Update Sequence Diagram For UC4-6")
 deactivate A
 
 @enduml
