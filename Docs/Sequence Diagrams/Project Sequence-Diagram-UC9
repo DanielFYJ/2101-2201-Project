@@ -1,74 +1,88 @@
 @startuml
-actor RoboticCar
 actor Kid
-participant "//<<control>>// \n **GameMapManagement**" as A
-participant "//<<control>>//\n**RoboticCarManagement**" as B
-participant "//<<control>>//\n**CommunicationManagement**" as D
-participant "//<<control>>//\n**WebPortalManagement**" as E
-participant "//<<entity>>// \n **WebPortal**" as F
-participant "//<<entity>>//\n**GameMap**" as G
+participant "//<<Boundary>>//\n**IWebPortal**" as A
+participant "//<<control>>//\n**FeedbackManagement**" as C
+participant "//<<control>>//\n**WebPortalManagement**" as D
+participant "//<<control>>//\n**RoboticCarManagement**" as E
+participant "//<<control>>//\n**CommunicationManagement**" as F
+participant "//<<entity>>// \n **WIFIModule**" as G
+actor RoboticCar
 
-
-Kid -> A: View virtual map
+Kid-> A:View feedback of robotic car(message)
 activate A #FFBBBB
 
-A -> G: getVirtualMap()
+A -> C: getFeedback()
+activate C #FFBBBB
+
+C -> D: receiveFeedback()
+activate D #FFBBBB
+
+D -> E: gatherFeedback()
+activate E #FFBBBB
+
+alt Successful connection between Web Portal and Robotic Car
+E -> F: establishCommunication()
+activate F #FFBBBB
+
+F --> E: Success()
+
+E -> F: receiveFeedback(sensorData, errorrMessage)
+
+
+F -> G: getErrorMessage()
 activate G #FFBBBB
 
-G --> A: Success()
-deactivate G 
-    
-A --> Kid: Success()
-deactivate A
+G -> RoboticCar: Success()
+activate RoboticCar #FFBBBB
 
-RoboticCar -> B: Send robotic car movement
-activate B #FFBBBB
+RoboticCar --> G: setErrorMessage(string)
+deactivate RoboticCar
 
-alt Successful connection between web portal and robotic car
-B -> D: establishCommunication()
-activate D #FFBBBB 
+G --> F: sendFeedback(sensorData, errorMessage)
+deactivate G
 
-D --> B: Success()
-
-D --> B: receiveFeedback()
-deactivate D
-
-B -> E: sendStatus()
-activate E #FFBBBB
-
-
-
-E->F: receiveStatus()
-deactivate E
-activate F #FFBBBB
-
-F --> B: Success()
+F --> E: sendFeedback()
 deactivate F
 
-B --> RoboticCar: Success()
+E --> D: receiveFeedback()
+deactivate E
+
+D --> C: Success()
+deactivate D
+
+C --> A: setMessage(string)
+deactivate C
+
+A -> Kid: Displays feedback(message)
+
 
 else Failed connection between web portal and robotic car
-B -> D: establishCommunication()
-activate D #FFBBBB 
+A -> E: gatherFeedback()
 
-D --> B: Failure()
-
-D --> B: receiveFeedback()
-deactivate D
-
-B -> E: sendFeedback()
 activate E #FFBBBB
 
-
-
-E->F: receiveFeedback()
-deactivate E
+E -> F: establishCommunication()
 activate F #FFBBBB
 
-F --> B: Success()
-deactivate F
-deactivate B
+F --> E: Failure()
 
-B --> RoboticCar: Success()
+F --> E: sendFeedback()
+deactivate F
+
+E --> D: receiveFeedback()
+deactivate E
+activate D #FFBBBB
+
+D --> C: Success()
+deactivate D
+activate C #FFBBBB
+
+C --> A: setMessage(string)
+deactivate C
+
+
+A --> Kid: Displays feedback(connection error message)
+deactivate A
+
 end
 @enduml
