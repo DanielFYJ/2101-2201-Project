@@ -1,0 +1,104 @@
+@startuml
+actor Kid
+participant "//<<Boundary>>//\n**IWebPortal**" as A
+participant "//<<control>>//\n**FeedbackManagement**" as C
+participant "//<<control>>//\n**StatusManagement**" as B
+participant "//<<control>>//\n**WebPortalManagement**" as D
+participant "//<<control>>//\n**RoboticCarManagement**" as E
+participant "//<<control>>//\n**CommunicationManagement**" as F
+participant "//<<entity>>// \n **WIFIModule**" as G
+actor RoboticCar
+
+Kid-> A:View dashboard
+activate A #FFBBBB
+
+A -> C: getFeedback()
+activate C #FFBBBB
+
+A -> B: getStatus()
+activate B #FFBBBB
+
+C -> D: receiveFeedback()
+activate D #FFBBBB
+
+B -> D: receiveStatus()
+
+D -> E: gatherFeedback()
+activate E #FFBBBB
+
+D -> E: gatherStatus()
+
+alt Successful connection between Web Portal and Robotic Car
+E -> F: establishCommunication()
+activate F #FFBBBB
+
+F --> E: Success()
+
+E -> F: receiveFeedback(sensorData, errorrMessage)
+
+F -> G: getErrorMessage()
+activate G #FFBBBB
+
+F -> G: getSensorData()
+
+G -> RoboticCar: Success()
+activate RoboticCar #FFBBBB
+
+RoboticCar --> G: setErrorMessage(string)
+RoboticCar --> G: setSensorData(string)
+deactivate RoboticCar
+
+G --> F: sendFeedback(sensorData, errorMessage)
+deactivate G
+
+F --> E: sendFeedback()
+F --> E: sendStatus()
+deactivate F
+
+E --> D: Success()
+deactivate E
+
+D --> C: Success()
+
+C --> A: setMessage(string)
+deactivate C
+
+D --> B: Success()
+deactivate D
+
+B --> A: setSpeed(int)
+B --> A: setMovement(string)
+deactivate B
+
+A -> Kid: Displays dashboard
+
+else Failed connection between web portal and robotic car
+A -> E: gatherFeedback()
+activate E #FFBBBB
+A -> E: gatherStatus()
+
+E -> F: establishCommunication()
+activate F #FFBBBB
+
+F --> E: Failure()
+
+F --> E: sendFeedback()
+deactivate F
+
+E --> D: receiveFeedback()
+deactivate E
+activate D #FFBBBB
+
+D --> C: Success()
+deactivate D
+activate C #FFBBBB
+
+C --> A: setMessage(string)
+deactivate C
+
+
+A --> Kid: Displays feedback(connection error message)
+deactivate A
+
+end
+@enduml

@@ -59,16 +59,14 @@ deactivate D
 B -> E: sendFeedback()
 activate E #FFBBBB
 
-
-
 E->F: receiveFeedback()
 deactivate E
 activate F #FFBBBB
 
 F --> B: Success()
 deactivate F
-deactivate B
 
 B --> RoboticCar: Success()
+deactivate B
 end
 @enduml
