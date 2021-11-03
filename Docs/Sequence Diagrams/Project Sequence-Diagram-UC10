@@ -19,25 +19,30 @@ A -> B: getMovement()
 B -> D: getStatus(status)
 activate D #FFBBBB
 
-D -> E: recieveStatus()
+D -> E: receiveStatus()
 activate E #FFBBBB
 
-E -> F: gatherStatus()
+alt Successful connection between Web Portal and Robotic Car
+E -> F:establishCommunication()
 activate F #FFBBBB
+F--> E: Success()
+E -> F: gatherStatus()
+
 
 F -> G: receiveFeedback(sensorData, errorMessage)
 activate G #FFBBBB
 
-alt Successful connection between Web Portal and Robotic Car
-G -> RoboticCar: establishCommunication()
+
 activate RoboticCar #FFBBBB
-RoboticCar --> G: Success()
+
 G -> RoboticCar: getSensorData() 
 
 
 RoboticCar --> G: setSensorData(string)
+deactivate RoboticCar
 
 G --> F: sendFeedback(sensorData, errorMessage)
+deactivate G 
 
 F --> E: sendStatus()
 
@@ -52,18 +57,14 @@ deactivate B
 A -> Kid: Displays Status(speed & movement)
 
 else Failed connection between web portal and robotic car
-G -> RoboticCar: establishCommunication()
-RoboticCar --> G: Failure()
-RoboticCar --> G: setErrorMessage(string)
-deactivate RoboticCar
 
-G --> F: sendFeedback(sensorData, errorMessage)
-deactivate G 
 
+E -> F:establishCommunication()
+F--> E: Failure()
 F --> E: sendFeedback()
 deactivate F
 
-E --> D: recieveFeedback()
+E --> D: receiveFeedback()
 deactivate E
 
 D --> C: getFeedback(feedback)
