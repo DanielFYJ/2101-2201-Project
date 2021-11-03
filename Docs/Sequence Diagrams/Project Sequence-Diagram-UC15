@@ -1,0 +1,43 @@
+@startuml DetectWT
+
+actor RoboticCar
+participant "//<<control>>//\n**WhiteTilesDetection**" as A
+participant "//<<control>>//\n**RoboticCarManagement**" as B
+participant "//<<control>>//\n**CommunicationManagement**" as C
+participant "//<<control>>//\n**WebPortalManagement**" as D
+participant "//<<entity>>// \n **WebPortal**" as E
+
+RoboticCar -> A: Detects white tiles
+activate A #FFBBBB
+A -> B: gatherFeedback()
+deactivate A
+activate B #FFBBBB
+
+B -> C: establishCommunication()
+activate C #FFBBBB
+
+C --> B: success()
+
+C -> B: receiveFeedback()
+deactivate C
+
+B -> D: sendFeedback()
+activate D #FFBBBB 
+
+D --> B: success()
+
+D -> E: receivefeedback()
+deactivate D
+activate E #FFBBBB
+
+E --> B: success()
+deactivate E
+
+B -> RoboticCar: receiveQueue()
+
+deactivate B
+
+
+@enduml
+
+
