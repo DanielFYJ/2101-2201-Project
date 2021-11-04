@@ -1,5 +1,4 @@
 @startuml
-
 actor "Robotic Car" as Car << Car>>
 
 rectangle "Robotic Car Management" {
@@ -54,7 +53,7 @@ rectangle "Robotic Car Management" {
 
     UC1 ..> UC3 : <<extend>>
     UC2 ..> UC3 : <<extend>>
-    UC1 ..> UC5 : <<extend>>
+    UC1 <.. UC5 : <<extend>>
 
     CM2 ..> CM3 : <<extend>>
     CM2 ..> CM4 : <<extend>>
