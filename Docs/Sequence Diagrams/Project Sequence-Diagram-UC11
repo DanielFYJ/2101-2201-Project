@@ -1,13 +1,12 @@
 @startuml
 actor RoboticCar
-participant "//<<entity>>// \n **WIFIModule**" as A
+participant "//<<control>>//\n**RoboticCarManagement**" as A
 participant "//<<control>>//\n**CommunicationManagement**" as B
-participant "//<<control>>//\n**RoboticCarManagement**" as C
-participant "//<<control>>//\n**WebPortalManagement**" as D
-participant "//<<control>>//\n**StatusManagement**" as E
-participant "//<<control>>//\n**FeedbackManagement**" as F
-participant "//<<entity>>//\n**Dashboard**" as G
-
+participant "//<<control>>//\n**WebPortalManagement**" as C
+participant "//<<control>>//\n**StatusManagement**" as D
+participant "//<<control>>//\n**FeedbackManagement**" as E
+participant "//<<entity>>//\n**Dashboard**" as F
+database Database
 
 alt Successful transmission of Feedback between Web Portal and Robotic Car
 
@@ -16,11 +15,11 @@ alt Successful transmission of Feedback between Web Portal and Robotic Car
 RoboticCar-> A:Sends Robotic Car Feedback information
 activate A #FFBBBB
 
-A -> B: establishCommunication()
+A -> B: isConnectedtoWeb()
 activate B #FFBBBB
 B --> A: Success()
-A -> B: setErrorMessage(string)
-
+A -> B: seterrorMessage(string)
+A -> B: setSensorData(string)
 
 B -> C: sendFeedback(sensorData, errorMessage)
 activate C #FFBBBB
@@ -31,10 +30,10 @@ activate D #FFBBBB
 D -> F: recieveFeedback()
 activate F #FFBBBB
 
-F -> G: getFeedback(feedback)
-activate G #FFBBBB
+F -> Database: getFeedback(feedback)
+activate Database #FFBBBB
 
-G --> F: Success()
+Database--> F: Success()
  
 F --> D: Success()
 
@@ -49,9 +48,9 @@ A --> RoboticCar: Success()
 else Failed due to connection failure between web portal and robotic car
 
 RoboticCar-> A:Sends Robotic Car Feedback information
-A -> B: establishCommunication()
+A -> B: isConnectedtoWeb()
 B --> A: Failure()
-A -> B: setErrorMessage(string)
+A -> B: seterrorMessage(string)
 
 
 B -> C: sendFeedback(sensorData, errorMessage)
@@ -63,11 +62,11 @@ C -> D: sendFeedback()
 D -> F: recieveFeedback()
 
 
-F -> G: getFeedback(feedback)
+F -> Database: getFeedback(feedback)
 
-G --> F: Success()
+Database--> F: Success()
 
-deactivate G
+deactivate Database
 
 F --> D: Success()
 deactivate F 
