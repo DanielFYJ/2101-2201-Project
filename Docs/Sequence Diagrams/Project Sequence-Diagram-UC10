@@ -4,9 +4,8 @@ participant "//<<Boundary>>//\n**IWebPortal**" as A
 participant "//<<control>>//\n**StatusManagement**" as B
 participant "//<<control>>//\n**FeedbackManagement**" as C
 participant "//<<control>>//\n**WebPortalManagement**" as D
-participant "//<<control>>//\n**RoboticCarManagement**" as E
-participant "//<<control>>//\n**CommunicationManagement**" as F
-participant "//<<entity>>// \n **WIFIModule**" as G
+participant "//<<control>>//\n**CommunicationManagement**" as E
+participant "//<<control>>//\n**RoboticCarManagement**" as F
 actor RoboticCar
 
 Kid-> A:View Status of Robotic Car(speed & movement)
@@ -23,28 +22,19 @@ D -> E: receiveStatus()
 activate E #FFBBBB
 
 alt Successful connection between Web Portal and Robotic Car
-E -> F:establishCommunication()
+E -> F:isConnectedtoWeb()
 activate F #FFBBBB
 F--> E: Success()
-E -> F: gatherStatus()
+E -> F: sendStatus()()
 
 
-F -> G: receiveFeedback(sensorData, errorMessage)
-activate G #FFBBBB
-
-
+F -> RoboticCar: gatherStatus(sensorData)
 activate RoboticCar #FFBBBB
 
-G -> RoboticCar: getSensorData() 
-
-
-RoboticCar --> G: setSensorData(string)
+RoboticCar --> F:Success()
 deactivate RoboticCar
 
-G --> F: sendFeedback(sensorData, errorMessage)
-deactivate G 
-
-F --> E: sendStatus()
+F --> E: Success()
 
 E --> D: Success()
 
@@ -59,7 +49,7 @@ A -> Kid: Displays Status(speed & movement)
 else Failed connection between web portal and robotic car
 
 
-E -> F:establishCommunication()
+E -> F:isConnectedtoWeb()
 F--> E: Failure()
 F --> E: sendFeedback()
 deactivate F
