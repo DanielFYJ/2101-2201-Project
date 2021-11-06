@@ -1,0 +1,56 @@
+@startuml SendStatus
+
+actor RoboticCar
+participant "//<<control>>//\n**RoboticCarManagement**" as A
+participant "//<<control>>//\n**CarCommunicationManagement**" as B
+participant "//<<control>>//\n**WebCommunicationManagement**" as C
+participant "//<<control>>//\n**StatusManagement**" as D
+participant "//<<entity>>// \n **Dashboard**" as E
+database Database
+
+
+RoboticCar -> A: Retrieve Data
+activate A #FFBBBB
+alt Robotic car transmits status to web portal via the WIFI module
+
+A -> B: gatherStatus()
+activate B #FFBBBB
+B -> C: receiveStatus()
+activate C #FFBBBB
+C -> D: getStatus()
+activate D #FFBBBB
+D -> E: getStatus()
+activate E #FFBBBB
+E -> Database: Stores Status
+activate Database #FFBBBB
+Database --> E: success()
+deactivate Database
+
+E --> D: success()
+D --> C: success()
+deactivate D 
+C --> B: success()
+B --> A: success()
+
+
+else  Robotic car is unable to retrieve data from the sensors 
+
+A --> RoboticCar: failure()
+A -> B: gatherStatus (failed)
+B -> E: Send Error Feedback 
+
+
+else Connection error between web portal and robotic car
+
+A -> B: gatherStatus()
+deactivate A
+
+B -> C: receiveStatus
+C --> B:failure()
+deactivate C 
+
+B -> E: Display error message 
+deactivate E
+deactivate B 
+end
+@enduml

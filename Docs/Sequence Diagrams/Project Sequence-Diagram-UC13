@@ -1,0 +1,44 @@
+@startuml DetectBT
+
+actor RoboticCar
+participant "//<<control>>//\n**BlackTilesDetection**" as A
+participant "//<<control>>//\n**RoboticCarManagement**" as B
+participant "//<<control>>//\n**CarCommunicationManagement**" as C
+participant "//<<control>>//\n**WebCommunicationManagement**" as D
+participant "//<<control>>//\n**FeedbackManagement**" as E
+participant "//<<entity>>// \n **Dashboard**" as F
+database Database
+
+RoboticCar -> A: Detects black tiles
+activate A #FFBBBB
+A -> B: gatherFeedback()
+deactivate A
+activate B #FFBBBB
+B -> C: gatherFeedback()
+activate C #FFBBBB
+C -> D: sendFeedback()
+activate D #FFBBBB
+D -> E: getFeedback()
+activate E #FFBBBB
+E -> F: getFeedback()
+activate F #FFBBBB
+F -> Database: Stores Feedback
+activate Database #FFBBBB
+Database --> F: success()
+deactivate Database
+F --> E: success()
+deactivate F
+E --> D: success()
+deactivate E
+D --> C: success()
+deactivate D 
+C --> B: success()
+deactivate C 
+
+B -> RoboticCar: receiveQueue()
+deactivate B 
+
+
+@enduml
+
+
