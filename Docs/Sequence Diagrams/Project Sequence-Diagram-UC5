@@ -1,8 +1,6 @@
 @startuml
-skinparam sequenceArrowThickness 2
-skinparam roundcorner 20
-skinparam maxmessagesize 200
-participant "//<<Control>>//\n**WebCommunicationManagement**" as WebPortal
+
+participant "**WebPortal**" as WebPortal
 participant "//<<Control>>//\n**CarCommunicationManagement**" as RoboticCarManagement
 participant "//<<Control>>//\n**MovementManagement**" as B
 participant "//<<Entity>>//\n**Motor**" as C
@@ -36,17 +34,17 @@ RoboticCarManagement -> B : recieveQueue()
 activate B #FFBBBB
 B -> C: getCommands()
 activate C #FFBBBB
-C --> B: Fail()
-B --> RoboticCarManagement : Fail()
+C --> B: failure()
+B --> RoboticCarManagement : failure()
 B-> C : adjustPWM(PWM)
 C -> RC : "Car unable to move"
-C --> B : Fail()
-B --> RoboticCarManagement : Fail()
+C --> B : failure()
+B --> RoboticCarManagement : failure()
 B -> C: turn(direction)
 C -> RC : "Car unable to turn"
-C --> B : Fail()
+C --> B : failure()
 deactivate C
-B --> RoboticCarManagement : Fail()
+B --> RoboticCarManagement : failure()
 deactivate B
 deactivate WebPortal
 RoboticCarManagement -> WebPortal : "Queue command executed unsuccessfully"

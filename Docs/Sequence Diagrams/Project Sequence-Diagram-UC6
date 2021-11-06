@@ -1,7 +1,5 @@
 @startuml
-skinparam sequenceArrowThickness 2
-skinparam roundcorner 20
-skinparam maxmessagesize 200
+
 actor "Kid" as kid
 participant "//<<Boundary>>//\n**QueueUI**" as Queue
 participant "//<<Control>>//\n**WebCommunicationManagement**" as WebPortal
@@ -10,11 +8,12 @@ participant "//<<Control>>//\n**MovementManagement**" as B
 participant "//<<Entity>>//\n**Motor**" as C
 actor "RoboticCar" as RC 
 kid -> Queue : Submit stop command
+activate Queue #FFBBBB
+Queue -> WebPortal : sendStop()
 activate WebPortal #FFBBBB
 WebPortal -> RoboticCarManagement : sendStopCommand()
 activate RoboticCarManagement #FFBBBB
 RoboticCarManagement -> B : receiveStopCommand()
-
 activate B #FFBBBB
 B-> C : stop()
 activate C #FFBBBB
@@ -23,8 +22,10 @@ C --> B : Success()
 deactivate C
 B --> RoboticCarManagement: Success()
 deactivate B
-RoboticCarManagement --> WebPortal: sendStatus()
+RoboticCarManagement --> WebPortal: Success()
 deactivate RoboticCarManagement
-WebPortal -> kid : "Stop command executed successfully"
+WebPortal --> Queue: Success()
 deactivate WebPortal
+Queue -> kid : "Stop command executed successfully"
+deactivate Queue
 @enduml
