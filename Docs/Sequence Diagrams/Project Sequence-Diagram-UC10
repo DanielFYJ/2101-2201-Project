@@ -4,7 +4,7 @@ participant "//<<control>>//\n**StatusManagement**" as A
 participant "//<<control>>//\n**WebCommunicationManagement**" as B
 participant "//<<control>>//\n**CarCommunicationManagement**" as C
 participant "//<<control>>//\n**RoboticCarManagement**" as D
-participant "//<<Entity>>//\n**RoboticCar**" as E
+participant "//<<Entity>>//\n**CarStatus**" as E
 
 Kid-> A:View Status of Robotic Car(speed & movement)
 activate A #FFBBBB
