@@ -1,11 +1,10 @@
 @startuml
 actor RoboticCar
 participant "//<<control>>//\n**RoboticCarManagement**" as A
-participant "//<<control>>//\n**CommunicationManagement**" as B
-participant "//<<control>>//\n**WebPortalManagement**" as C
-participant "//<<control>>//\n**StatusManagement**" as D
-participant "//<<control>>//\n**FeedbackManagement**" as E
-participant "//<<entity>>//\n**Dashboard**" as F
+participant "//<<control>>//\n**CarCommunicationManagement**" as B
+participant "//<<control>>//\n**WebCommunicationManagement**" as C
+participant "//<<control>>//\n**FeedbackManagement**" as D
+participant "//<<entity>>//\n**Dashboard**" as E
 database Database
 
 alt Successful transmission of Feedback between Web Portal and Robotic Car
@@ -27,15 +26,15 @@ activate C #FFBBBB
 C -> D: sendFeedback()
 activate D #FFBBBB
 
-D -> F: recieveFeedback()
-activate F #FFBBBB
+D -> E: recieveFeedback()
+activate E #FFBBBB
 
-F -> Database: getFeedback(feedback)
+E -> Database: getFeedback(feedback)
 activate Database #FFBBBB
 
-Database--> F: Success()
+Database--> E: Success()
  
-F --> D: Success()
+E --> D: Success()
 
 D --> C: Success()
 
@@ -59,18 +58,17 @@ B -> C: sendFeedback(sensorData, errorMessage)
 C -> D: sendFeedback()
 
 
-D -> F: recieveFeedback()
+D -> E: recieveFeedback()
 
 
-F -> Database: getFeedback(feedback)
+E -> Database: getFeedback(feedback)
 
-Database--> F: Success()
+Database--> E: Success()
 
 deactivate Database
 
-F --> D: Success()
-deactivate F 
-
+E --> D: Success()
+deactivate E 
 
 D --> C: Success()
 deactivate D
