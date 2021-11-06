@@ -1,13 +1,13 @@
 @startuml
 actor Kid
-participant "//<<boundary>>//\n**IDashboard**" as a
+participant "//<<boundary>>//\n**DashboardUI**" as a
 participant "//<<control>>//\n**FeedbackManagement**" as A
 participant "//<<control>>//\n**WebCommunicationManagement**" as B
 participant "//<<control>>//\n**CarCommunicationManagement**" as C
 participant "//<<control>>//\n**RoboticCarManagement**" as D
 participant "//<<entity>>//\n**CarFeedback**" as E
 
-Kid-> a: View Feedback of Robotic Car(message)
+Kid-> a: View Feedback of Robotic Car
 activate a #FFBBBB
 
 a -> A: displayFeedback()
