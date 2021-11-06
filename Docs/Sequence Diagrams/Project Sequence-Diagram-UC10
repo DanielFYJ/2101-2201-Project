@@ -1,60 +1,48 @@
 @startuml
 actor Kid
 participant "//<<control>>//\n**StatusManagement**" as A
-participant "//<<control>>//\n**FeedbackManagement**" as B
-participant "//<<control>>//\n**WebCommunicationManagement**" as C
-participant "//<<control>>//\n**CarCommunicationManagement**" as D
-participant "//<<control>>//\n**RoboticCarManagement**" as E
-actor RoboticCar
+participant "//<<control>>//\n**WebCommunicationManagement**" as B
+participant "//<<control>>//\n**CarCommunicationManagement**" as C
+participant "//<<control>>//\n**RoboticCarManagement**" as D
+participant "//<<Entity>>//\n**RoboticCar**" as E
 
 Kid-> A:View Status of Robotic Car(speed & movement)
 activate A #FFBBBB
 
-A -> C: getStatus(status)
-activate C #FFBBBB
-
-C -> D: receiveStatus()
-activate D #FFBBBB
-
 alt Successful connection between Web Portal and Robotic Car
-D -> E:isConnectedtoWeb()
-activate E #FFBBBB
-E--> D: Success()
-D -> E: sendStatus()
-
-
-E -> RoboticCar: gatherStatus(sensorData)
-activate RoboticCar #FFBBBB
-
-RoboticCar --> E:Success()
-deactivate RoboticCar
-
-E --> D: Success()
-
-D --> C: Success()
-
-C --> A: Success()
-
-
-A -> Kid: Displays Status(speed & movement)
-deactivate A
-else Failed connection between web portal and robotic car
-
-
-D -> E:isConnectedtoWeb()
-E--> D: Failure()
-E --> D: sendFeedback()
-deactivate E
-
-D --> C: receiveFeedback()
-deactivate D
-
-C --> B: getFeedback(feedback)
-deactivate C
+A -> B: getStatus(status)
 activate B #FFBBBB
 
-B -> Kid: Displays Connection Error Message
+B -> C: receiveStatus()
+activate C #FFBBBB
+
+
+C -> D:isConnectedtoWeb()
+activate D #FFBBBB
+D--> C: Success()
+C -> D: sendStatus()
+
+
+D -> E: gatherStatus(sensorData)
+activate E #FFBBBB
+
+E --> D:Success()
+deactivate E
+
+D --> C: Success()
+deactivate D
+C --> B: Success()
+deactivate C
+B --> A: Success()
+
+A -> Kid: Displays Status(speed & movement)
+else Failed connection between web portal and robotic car
+A -> B: getStatus(status)
+B --> A: failure()
 deactivate B
+
+A -> Kid: Displays Connection Error Message
+deactivate A
 
 end
 @enduml
