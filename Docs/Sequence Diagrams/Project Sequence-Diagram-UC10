@@ -1,11 +1,11 @@
 @startuml
 actor Kid
-participant "//<<Boundary>>// \n **DashboardUI**" as A
+participant "//<<boundary>>// \n **DashboardUI**" as A
 participant "//<<control>>//\n**StatusManagement**" as B
 participant "//<<control>>//\n**WebCommunicationManagement**" as C
 participant "//<<control>>//\n**CarCommunicationManagement**" as D
 participant "//<<control>>//\n**RoboticCarManagement**" as E
-participant "//<<Entity>>//\n**CarStatus**" as F
+participant "//<<entity>>//\n**CarStatus**" as F
 
 Kid-> A:View Status of Robotic Car
 activate A #FFBBBB
