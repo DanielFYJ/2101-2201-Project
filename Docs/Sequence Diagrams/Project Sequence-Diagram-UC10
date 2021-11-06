@@ -53,7 +53,7 @@ C --> B: getFeedback(feedback)
 deactivate C
 activate B #FFBBBB
 
-B --> Kid: Displays Connection Error Message
+B -> Kid: Displays Connection Error Message
 deactivate B
 
 end
