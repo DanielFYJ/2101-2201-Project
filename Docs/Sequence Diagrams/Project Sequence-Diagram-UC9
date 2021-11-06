@@ -1,123 +1,46 @@
 @startuml
-actor RoboticCar
 actor Kid
-participant "//<<control>>//\n**RoboticCarManagement**" as B
-participant "//<<control>>//\n**CarCommunicationManagement**" as D
-participant "//<<control>>//\n**WebCommunicationManagement**" as E
-participant "//<<control>>//\n**FeedbackManagement**" as H
-participant "//<<entity>>//\n**Dashboard**" as I
-database Database 
+participant "//<<control>>//\n**FeedbackManagement**" as A
+participant "//<<control>>//\n**WebCommunicationManagement**" as B
+participant "//<<control>>//\n**CarCommunicationManagement**" as C
+participant "//<<control>>//\n**RoboticCarManagement**" as D
+participant "//<<Entity>>//\n**CarFeedback**" as E
 
-Kid-> B: View feedback
+Kid-> A:View Feedback of Robotic Car(message)
+activate A #FFBBBB
+
+alt Successful connection between Web Portal and Robotic Car
+A -> B: getFeedback(feedback)
 activate B #FFBBBB
 
-B-> E: receiveFeedback()
-activate E #FFBBBB
+B -> C: receiveFeedback()
+activate C #FFBBBB
 
-E-> H: getFeedback(feedback)
-activate H #FFBBBB
-
-H-> I: getFeedback()
-activate I #FFBBBB
-
-I-> Database: Retrieve feedback
-activate Database #FFBBBB
-
-Database-->I: Success()
-deactivate Database
-
-I-->H: Success()
-deactivate I
-
-H-->E: Success()
-deactivate H
-
-E-->B: Success()
-deactivate E
-
-B-->Kid: Success()
-deactivate B
-
-RoboticCar -> B: Send robotic car movement
-activate B #FFBBBB
-
-alt Successful connection between web portal and robotic car
-B -> D: isConnectedtoWeb()
-activate D #FFBBBB 
-
-D --> B: Success()
-deactivate D
-
-B -> D: sendFeedback(sensorData, errorMessage)
-activate D #FFBBBB 
-
-D -> E: receiveFeedback()
-activate E #FFBBBB
-
-E -> H: getFeedback(feedback)
-activate H #FFBBBB
-
-H -> I: getFeedback()
-activate I #FFBBBB
-
-I -> Database: Retrieve feedback
-activate Database #FFBBBB
-
-Database --> I: Success()
-deactivate Database
-
-I --> H: Success()
-deactivate I
-
-H --> E: Success()
-deactivate H
-
-E --> D: Success()
-deactivate E
-
-D --> B: Success()
-deactivate D
-
-B --> RoboticCar: Success()
-
-else Failed connection between web portal and robotic car
-B -> D: isConnectedtoWeb()
-activate D #FFBBBB 
-
-D --> B: Failure()
-deactivate D
-
-B -> D: sendFeedback(sensorData, errorMessage)
+C -> D:isConnectedtoWeb()
 activate D #FFBBBB
+D--> C: Success()
+C -> D: sendFeedback(sensorData, errorMessage)
 
-D -> E: receiveFeedback()
+D -> E: gatherFeedback(sensorData, errorrMessage)
 activate E #FFBBBB
 
-E -> H: getFeedback(feedback)
-activate H #FFBBBB
-
-H -> I: getFeedback()
-activate I #FFBBBB
-
-I -> Database: Retrieve feedback
-activate Database #FFBBBB
-
-Database --> I: Success()
-deactivate Database
-
-I --> H: Success()
-deactivate I
-
-H --> E: Success()
-deactivate H
-
-E --> D: Success()
+E --> D:Success()
 deactivate E
 
-D --> B: Success()
+D --> C: Success()
 deactivate D
+C --> B: Success()
+deactivate C
+B --> A: Success()
 
-B --> RoboticCar: Success()
+A -> Kid: Displays Feedback(message)
+else Failed connection between web portal and robotic car
+A -> B: getFeedback(feedback)
+B --> A: failure()
 deactivate B
+
+A -> Kid: Displays Connection Error Message
+deactivate A
+
 end
 @enduml
