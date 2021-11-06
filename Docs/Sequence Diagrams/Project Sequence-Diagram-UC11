@@ -1,85 +1,40 @@
 @startuml
 actor RoboticCar
-participant "//<<control>>//\n**RoboticCarManagement**" as A
-participant "//<<control>>//\n**CarCommunicationManagement**" as B
-participant "//<<control>>//\n**WebCommunicationManagement**" as C
-participant "//<<control>>//\n**FeedbackManagement**" as D
-participant "//<<entity>>//\n**Dashboard**" as E
+participant "//<<control>>//\n**WebCommunicationManagement**" as A
+participant "//<<control>>//\n**FeedbackManagement**" as B
+participant "//<<entity>>//\n**Dashboard**" as C
 database Database
 
 alt Successful transmission of Feedback between Web Portal and Robotic Car
 
-
-
 RoboticCar-> A:Sends Robotic Car Feedback information
 activate A #FFBBBB
 
-A -> B: isConnectedtoWeb()
+A -> B: sendFeedback()
 activate B #FFBBBB
-B --> A: Success()
-A -> B: seterrorMessage(string)
-A -> B: setSensorData(string)
 
-B -> C: sendFeedback(sensorData, errorMessage)
+B -> C: receiveFeedback()
 activate C #FFBBBB
 
-C -> D: sendFeedback()
-activate D #FFBBBB
-
-D -> E: recieveFeedback()
-activate E #FFBBBB
-
-E -> Database: getFeedback(feedback)
+C -> Database: getFeedback(feedback)
 activate Database #FFBBBB
 
-Database--> E: Success()
+Database--> C: Success()
+deactivate Database
  
-E --> D: Success()
-
-D --> C: Success()
-
 C --> B: Success()
-
+deactivate C
 B --> A: Success()
+deactivate B
 
 A -> RoboticCar: Success()
 
 else Failed due to connection failure between web portal and robotic car
 
 RoboticCar-> A:Sends Robotic Car Feedback information
-A -> B: isConnectedtoWeb()
-B --> A: Failure()
-A -> B: seterrorMessage(string)
-
-
-B -> C: sendFeedback(sensorData, errorMessage)
-
-
-C -> D: sendFeedback()
-
-
-D -> E: recieveFeedback()
-
-
-E -> Database: getFeedback(feedback)
-
-Database--> E: Success()
-
-deactivate Database
-
-E --> D: Success()
-deactivate E 
-
-D --> C: Success()
-deactivate D
-
-C --> B: Success()
-deactivate C
-
-B --> A: Success()
-deactivate B
-
-A -> RoboticCar: Success()
+A -> RoboticCar: Failure()
 deactivate A
+
+
 end
 @enduml
