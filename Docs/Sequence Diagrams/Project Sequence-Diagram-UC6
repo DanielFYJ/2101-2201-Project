@@ -3,12 +3,13 @@ skinparam sequenceArrowThickness 2
 skinparam roundcorner 20
 skinparam maxmessagesize 200
 actor "Kid" as kid
-participant "//<<Control>>//\n**WebPortalManagement**" as WebPortal
-participant "//<<Control>>//\n**CommunicationManagement**" as RoboticCarManagement
+participant "//<<Boundary>>//\n**QueueUI**" as Queue
+participant "//<<Control>>//\n**WebCommunicationManagement**" as WebPortal
+participant "//<<Control>>//\n**CarCommunicationManagement**" as RoboticCarManagement
 participant "//<<Control>>//\n**MovementManagement**" as B
 participant "//<<Entity>>//\n**Motor**" as C
 actor "RoboticCar" as RC 
-kid -> WebPortal : Submit stop command
+kid -> Queue : Submit stop command
 activate WebPortal #FFBBBB
 WebPortal -> RoboticCarManagement : sendStopCommand()
 activate RoboticCarManagement #FFBBBB

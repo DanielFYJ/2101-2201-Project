@@ -4,7 +4,7 @@ skinparam roundcorner 20
 skinparam maxmessagesize 60
 
 actor Kid
-participant "//<<Boundary>>//\n**WebPortalUI**" as A
+participant "//<<Boundary>>//\n**QueueUI**" as A
 participant "//<<Control>>//\n**QueueManagement**" as B
 participant "//<<Entity>>//\n**Queue**" as C
 database database
