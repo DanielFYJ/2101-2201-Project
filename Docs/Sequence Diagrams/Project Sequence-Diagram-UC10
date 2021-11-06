@@ -1,47 +1,52 @@
 @startuml
 actor Kid
-participant "//<<control>>//\n**StatusManagement**" as A
-participant "//<<control>>//\n**WebCommunicationManagement**" as B
-participant "//<<control>>//\n**CarCommunicationManagement**" as C
-participant "//<<control>>//\n**RoboticCarManagement**" as D
-participant "//<<Entity>>//\n**CarStatus**" as E
+participant "//<<Boundary>>// \n **DashboardUI**" as A
+participant "//<<control>>//\n**StatusManagement**" as B
+participant "//<<control>>//\n**WebCommunicationManagement**" as C
+participant "//<<control>>//\n**CarCommunicationManagement**" as D
+participant "//<<control>>//\n**RoboticCarManagement**" as E
+participant "//<<Entity>>//\n**CarStatus**" as F
 
-Kid-> A:View Status of Robotic Car(speed & movement)
+Kid-> A:View Status of Robotic Car
 activate A #FFBBBB
 
-alt Successful connection between Web Portal and Robotic Car
-A -> B: getStatus(status)
+A -> B:displaystatus()
 activate B #FFBBBB
 
-B -> C: receiveStatus()
+alt Successful connection between Web Portal and Robotic Car
+B -> C: getStatus(status)
 activate C #FFBBBB
 
-
-C -> D:isConnectedtoWeb()
+C -> D: receiveStatus()
 activate D #FFBBBB
-D--> C: Success()
-C -> D: sendStatus()
 
 
-D -> E: gatherStatus(sensorData)
+D -> E:isConnectedtoWeb()
 activate E #FFBBBB
+E--> D: Success()
+D -> E: sendStatus()
 
-E --> D:Success()
+
+E -> F: gatherStatus(sensorData)
+activate F #FFBBBB
+
+F --> E:Success()
+deactivate F
+
+E --> D: Success()
 deactivate E
-
 D --> C: Success()
 deactivate D
 C --> B: Success()
-deactivate C
-B --> A: Success()
-
-A -> Kid: Displays Status(speed & movement)
+B -> A: Success()
+A -> Kid: DisplayStatus()
 else Failed connection between web portal and robotic car
-A -> B: getStatus(status)
-B --> A: failure()
+B -> C: getStatus(status)
+C --> B: failure()
+deactivate C
+B -> A: failure()
 deactivate B
-
-A -> Kid: Displays Connection Error Message
+A -> Kid: "Connection Unsuccessful"
 deactivate A
 
 end
