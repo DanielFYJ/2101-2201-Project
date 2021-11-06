@@ -3,17 +3,25 @@ actor RoboticCar
 actor Kid
 participant "//<<control>>// \n **GameMapManagement**" as A
 participant "//<<control>>//\n**RoboticCarManagement**" as B
-participant "//<<control>>//\n**CommunicationManagement**" as D
-participant "//<<control>>//\n**WebPortalManagement**" as E
-participant "//<<entity>>// \n **WebPortal**" as F
+participant "//<<control>>//\n**CarCommunicationManagement**" as D
+participant "//<<control>>//\n**WebCommunicationManagement**" as E
+participant "//<<control>>//\n**FeedbackManagement**" as H
+participant "//<<control>>//\n**StatusManagement**" as J
 participant "//<<entity>>//\n**GameMap**" as G
+participant "//<<entity>>//\n**Dashboard**" as I
+database Database 
 
-
-Kid -> A: View virtual map
+Kid -> A: View game map
 activate A #FFBBBB
 
-A -> G: getVirtualMap()
+A -> G: getId()
 activate G #FFBBBB
+
+G -> Database: Retrieve Game Map
+activate Database #FFBBBB
+
+Database --> G: Success()
+deactivate Database
 
 G --> A: Success()
 deactivate G 
@@ -25,46 +33,80 @@ RoboticCar -> B: Send robotic car movement
 activate B #FFBBBB
 
 alt Successful connection between web portal and robotic car
-B -> D: establishCommunication()
+B -> D: isConnectedtoWeb()
 activate D #FFBBBB 
 
 D --> B: Success()
-
-D --> B: receiveFeedback()
 deactivate D
 
-B -> E: sendStatus()
+B -> D: sendFeedback(sensorData, errorMessage)
+activate D #FFBBBB 
+
+D -> E: receiveStatus()
 activate E #FFBBBB
 
+E -> J: getStatus(status)
+activate J #FFBBBB
 
+J -> I: getStatus()
+activate I #FFBBBB
 
-E->F: receiveStatus()
+I -> Database: Retrieve status
+activate Database #FFBBBB
+
+Database --> I: Success()
+deactivate Database
+
+I --> J: Success()
+deactivate I
+
+J --> E: Success()
+deactivate J
+
+E --> D: Success()
 deactivate E
-activate F #FFBBBB
 
-F --> B: Success()
-deactivate F
+D --> B: Success()
+deactivate D
 
 B --> RoboticCar: Success()
 
 else Failed connection between web portal and robotic car
-B -> D: establishCommunication()
+B -> D: isConnectedtoWeb()
 activate D #FFBBBB 
 
 D --> B: Failure()
-
-D --> B: receiveFeedback()
 deactivate D
 
-B -> E: sendFeedback()
+B -> D: sendFeedback(sensorData, errorMessage)
+activate D #FFBBBB
+
+D -> E: receiveFeedback()
 activate E #FFBBBB
 
-E->F: receiveFeedback()
-deactivate E
-activate F #FFBBBB
+E -> H: getFeedback(feedback)
+activate H #FFBBBB
 
-F --> B: Success()
-deactivate F
+H -> I: getFeedback()
+activate I #FFBBBB
+
+I -> Database: Retrieve feedback
+activate Database #FFBBBB
+
+Database --> I: Success()
+deactivate Database
+
+I --> H: Success()
+deactivate I
+
+H --> E: Success()
+deactivate H
+
+E --> D: Success()
+deactivate E
+
+D --> B: Success()
+deactivate D
 
 B --> RoboticCar: Success()
 deactivate B
