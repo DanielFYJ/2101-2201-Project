@@ -42,7 +42,7 @@ C --> B: Success()
 
 B --> A: Success()
 
-A --> RoboticCar: Success()
+A -> RoboticCar: Success()
 
 else Failed due to connection failure between web portal and robotic car
 
@@ -79,7 +79,7 @@ deactivate C
 B --> A: Success()
 deactivate B
 
-A --> RoboticCar: Success()
+A -> RoboticCar: Success()
 deactivate A
 end
 @enduml
