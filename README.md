@@ -2,11 +2,11 @@
 
 ## Lab Group P5-2
 Groups Members
-Eddie Tan DeJun (2002226) 
-Chow Wen Jun (2000530) 
-Chua Xue Ning Joey (2002230)
-Ong Jia Yan, Celeste (2001882)
-Foo Yong Jian Daniel (2000864) 
+1. Eddie Tan DeJun (2002226) 
+2. Chow Wen Jun (2000530) 
+3. Chua Xue Ning Joey (2002230)
+4. Ong Jia Yan, Celeste (2001882)
+5. Foo Yong Jian Daniel (2000864) 
 
 ## Install Python Venv and the Python Libs
 1. Clone the repository
