@@ -12,7 +12,7 @@ Groups Members
 1. Clone the repository
 2. Open terminal in the cloned repository and run the script below
 ```sh
-sudo pip3 install virtualenv
+pip3 install virtualenv
 cd src
 python -m venv venv-win
 venv-win\Scripts\Activate
