@@ -12,13 +12,13 @@ Groups Members
 1. Clone the repository
 2. Open terminal in the cloned repository and run the script below
 ```sh
-sudo pip3 install virtualenv
-cd flask-gradient-able
-virtualenv -p /usr/bin/python3.9 venv
-source venv/bin/activate
+pip3 install virtualenv
+cd src
+python -m venv venv-win
+venv-win\Scripts\Activate
 pip install -r requirements.txt
 ```
 ## Start the Web Server
 ```sh
-./start_server.sh
+start_server.bat
 ```
