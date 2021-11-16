@@ -3,16 +3,17 @@
     height: 200px;
     overflow: auto;
     }
-    .table-wrapper-scroll-y {
+
+.table-wrapper-scroll-y {
     display: block;
     }
 
-    .card-header{
-        padding: 0px; 
-        margin: 10px 25px ;
+.card-header{
+    padding: 0px; 
+    margin: 10px 25px ;
     }
 
-.keys {
+/* .keys {
     text-align: left;
     width: 1000px;
     height: 200px;
@@ -33,7 +34,6 @@
         border-bottom: 8px solid darken(grey, 20);
         text-shadow: 0 0 10px white, 0 0 10px white, 0 0 20px white;    
         transform: translate(0, 2px);
-    
     }
     
     .arr2{
@@ -45,14 +45,14 @@
     display: inline-block;
     margin: 5px;
     transition: all .05s linear;
-    
     }
+
     .arr2:active {
         border-bottom: 8px solid darken(grey, 20);
         text-shadow: 0 0 10px white, 0 0 10px white, 0 0 20px white;    
         transform: translate(0, 2px);
     
-    }
+    } */
     
     .control {
         cursor: pointer;
@@ -60,25 +60,28 @@
         align-items: center;
         transition: all .05s linear;
         margin: 10px;
+        
     }
-    .control:active {
+.control:active {
         text-shadow: 0 0 2px white, 0 0 2px white, 0 0 1px white;    
         transform: translate(0, 1px);
+        align-items: flex-end;
+    }
+
+    .flex-container {
+        /* display: flex;
+        flex-flow: row wrap; */
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-between;
+      }
+      
+
+.up {
+    float: right;
     }
     
-    .up .rotate .star{
-    position: relative;
-    top: -4px;
-    }
-    
-    .pressed {
-    border-bottom: 8px solid darken(black, 20);
-    transform: translate(0, 2px);
-    }
-    
-    .up {
-    margin-right: 120px;
-    }
+
     
     .star {
         margin-right: 50px;
