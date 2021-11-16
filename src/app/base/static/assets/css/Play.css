@@ -12,55 +12,15 @@
     padding: 0px; 
     margin: 10px 25px ;
     }
-
-/* .keys {
-    text-align: left;
-    width: 1000px;
-    height: 200px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    }
-    
-    .arr3{
+  
+.control {
     cursor: pointer;
-    text-align: center;
     color: white;
-    font-size: 20px;
-    display: inline-block;
-    margin: 5px;
+    align-items: center;
     transition: all .05s linear;
-    }
-    .arr3:active {
-        border-bottom: 8px solid darken(grey, 20);
-        text-shadow: 0 0 10px white, 0 0 10px white, 0 0 20px white;    
-        transform: translate(0, 2px);
-    }
+    margin: 10px;
     
-    .arr2{
-    cursor: pointer;
-    text-align: center;
-    line-height: 100px;
-    color: white;
-    font-size: 20px;
-    display: inline-block;
-    margin: 5px;
-    transition: all .05s linear;
-    }
-
-    .arr2:active {
-        border-bottom: 8px solid darken(grey, 20);
-        text-shadow: 0 0 10px white, 0 0 10px white, 0 0 20px white;    
-        transform: translate(0, 2px);
-    
-    } */
-    
-    .control {
-        cursor: pointer;
-        color: white;
-        align-items: center;
-        transition: all .05s linear;
-        margin: 10px;
-    }
+}
 .control:active {
         text-shadow: 0 0 2px white, 0 0 2px white, 0 0 1px white;    
         transform: translate(0, 1px);
@@ -71,25 +31,18 @@
         display: flex;
         flex-flow: row wrap;
       }
-      
-/* 
-.up {
-    float: right;
-    }
-    
 
-    
-    .star {
-        margin-right: 50px;
-    }
-    
-    .nostar {
-        margin-right: 50px;
-        margin-left: 182px;
-    }
-    
-    .stop {
-        margin-left: 5px;
-        margin-right: 50px;
-    } */
+.star {
+    margin-right: 50px;
+}
+
+.nostar {
+    margin-right: 50px;
+    margin-left: 182px;
+}
+
+.stop {
+    margin-left: 5px;
+    margin-right: 50px;
+}
     

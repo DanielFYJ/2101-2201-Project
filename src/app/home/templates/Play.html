@@ -1,12 +1,7 @@
-{% extends "layouts/base.html" %}
-
-{% block title %} Maps Google {% endblock %}
-
+{% extends "layouts/base.html" %} {% block title %} Maps Google {% endblock %}
 {% block stylesheets %}
-<link rel="stylesheet" href="/static/assets/css/Play.css">
-{% endblock stylesheets %}
-
-{% block content %}
+<link rel="stylesheet" href="/static/assets/css/Play.css" />
+{% endblock stylesheets %} {% block content %}
 
 <section class="pcoded-main-container">
     <div class="pcoded-content">
@@ -68,41 +63,50 @@
                 </div>
                 <!-- [ basic-table ] end -->
             </div>
+        </div>
+    </div>
+    <!-- [ basic-table ] end -->
+    </div>
 
-            <!-- [ Main Content ] end -->
+    <!-- [ Main Content ] end -->
 
 
-            <!-- [ basic-map ] start -->
-            <div class="col-md-7">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Controls</h5>
-                    </div>
-                    <div class="card-body flex-container">
-                        <button type="button" class="textbtn control btn btn-primary">Force Stop</button>
-                        <button type="button" class="textbtn control btn btn-primary">When <i class="fas fa-star fa-2x"></i> on black tile</button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55 " onkeypress="return allowOnlyAlphabets(event);">
-                                <i class="fa fa-undo fa-2x"></i>
-                            </button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55">
-                                <i class="fa fa-arrow-up fa-2x"></i>
-                            </button>
-                            <button type="button" class="textbtn control btn btn-primary">When on black tile</button>
-                            <button type="button" class="up control btn btn-icon btn-primary wid-55 hei-55">
-                                <i class="fa fa-arrow-left fa-2x"></i>
-                            </button>
-
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55">
-                                <i class="fa fa-arrow-down fa-2x"></i>
-                            </button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55">
-                                <i class="fa fa-arrow-right fa-2x"></i>
-                            </button>
-                     
-                    </div>
+    <!-- [ basic-controls ] start -->
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header">
+                <h5>Controls</h5>
+            </div>
+            <div class="card-body">
+                <div class="flex-container">
+                    <button type="button" class="control btn btn-primary" id="stop">Force Stop</button>
+                    <button type="button" class="control btn btn-primary" id="stars">When star on black tiles</button>
+                    <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="rotate">
+                        <i class="fa fa-undo fa-2x"></i>
+                    </button>
+                    <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="up">
+                        <i class="fa fa-arrow-up fa-2x"></i>
+                    </button>
+                    <button type="button" class="control btn btn-primary" id="black_tiles">When on black tiles</button>
+                    <button type="button" class="up control btn btn-icon btn-primary wid-55 hei-55" id="left">
+                        <i class="fa fa-arrow-left fa-2x"></i>
+                    </button>
+                    <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="down">
+                        <i class="fa fa-arrow-down fa-2x"></i>
+                    </button>
+                    <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="right">
+                        <i class="fa fa-arrow-right fa-2x"></i>
+                    </button>
                 </div>
+
             </div>
         </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
 </section>
 <!-- [ Main Content ] end -->
@@ -115,8 +119,8 @@
 <!-- google-map Js -->
 <script
     src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-<script src="https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<script src="/static/assets/js/plugins/gmaps.min.js"></script>
+<script src="https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE"></scrip >
+        <script src="/static/assets/js/plugins/gmaps.min.js"></script>
 <script src="/static/assets/js/pages/google-maps.js"></script>
 <script src="/static/assets/js/pages/play.js"></script>
 
