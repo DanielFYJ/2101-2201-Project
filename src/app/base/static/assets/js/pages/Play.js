@@ -23,7 +23,7 @@ Queue.prototype.peek = function () {
 }
 
 // Display all the items in queue
-printQueue()
+function printQueue()
 {
   var str = "";
   for (var i = 0; i < this.items.length; i++)
@@ -102,4 +102,4 @@ function stop() {
   console.log(q.commands);
 }
 
-
+var table = document.getElementById('tableCommands'), rowIndex;
