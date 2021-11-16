@@ -60,7 +60,6 @@
         align-items: center;
         transition: all .05s linear;
         margin: 10px;
-        
     }
 .control:active {
         text-shadow: 0 0 2px white, 0 0 2px white, 0 0 1px white;    
@@ -69,14 +68,11 @@
     }
 
     .flex-container {
-        /* display: flex;
-        flex-flow: row wrap; */
         display: flex;
-        flex-wrap: wrap;
-        align-content: space-between;
+        flex-flow: row wrap;
       }
       
-
+/* 
 .up {
     float: right;
     }
@@ -95,5 +91,5 @@
     .stop {
         margin-left: 5px;
         margin-right: 50px;
-    }
+    } */
     
