@@ -49,7 +49,6 @@ function down() {
     console.log("down");
     q.enqueue("S");
     console.log(q.commands);
-    console.log(q.peek());
 };
 
 // when left button is click, store A in queue
