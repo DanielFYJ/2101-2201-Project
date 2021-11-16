@@ -1,5 +1,4 @@
 .keys {
-    font-family: 'Lato', sans-serif;    
     text-align: left;
     width: 1000px;
     height: 200px;
@@ -9,11 +8,7 @@
     
     .arr3{
     cursor: pointer;
-    width: 120px;
-    height: 100px;
     text-align: center;
-    line-height: 100px;
-    background: black;
     color: white;
     font-size: 20px;
     display: inline-block;
@@ -29,11 +24,8 @@
     
     .arr2{
     cursor: pointer;
-    width: 250px;
-    height: 100px;
     text-align: center;
     line-height: 100px;
-    background: black;
     color: white;
     font-size: 20px;
     display: inline-block;
@@ -48,15 +40,22 @@
     
     }
     
+    .control {
+        cursor: pointer;
+        color: white;
+        align-items: center;
+        transition: all .05s linear;
+    }
+    .control:active {
+        text-shadow: 0 0 5px white, 0 0 5px white, 0 0 5px white;    
+        transform: translate(0, 2px);
+    
+    }
+
     .arr {
     cursor: pointer;
-    width: 100px;
-    height: 100px;
     text-align: center;
-    line-height: 100px;
-    background: black;
     color: white;
-    font-size: 50px;
     display: inline-block;
     margin: 5px;
     transition: all .05s linear;
