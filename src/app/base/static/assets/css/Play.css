@@ -67,31 +67,5 @@
     
     }
     
-    .up .rotate .star{
-    position: relative;
-    top: -4px;
-    }
-    
-    .pressed {
-    border-bottom: 8px solid darken(black, 20);
-    transform: translate(0, 2px);
-    }
-    
-    .up {
-    margin-right: 120px;
-    }
-    
-    .star {
-        margin-right: 50px;
-    }
-    
-    .nostar {
-        margin-right: 50px;
-        margin-left: 182px;
-    }
-    
-    .stop {
-        margin-left: 5px;
-        margin-right: 50px;
-    }
+
     

@@ -1,113 +1,172 @@
-{% extends "layouts/base.html" %}
-
-{% block title %} Maps Google {% endblock %}
-
+{% extends "layouts/base.html" %} {% block title %} Maps Google {% endblock %}
 {% block stylesheets %}
-<link rel="stylesheet" href="/static/assets/css/Play.css">
-{% endblock stylesheets %}
-
-{% block content %}
+<link rel="stylesheet" href="/static/assets/css/Play.css" />
+{% endblock stylesheets %} {% block content %}
 
 <section class="pcoded-main-container">
-    <div class="pcoded-content">
-        <h5 class="m-b-100">Car Play</h5>
-        <div class="row">
-            <!-- [ basic-map ] start -->
-            <div class="col-md-7">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Game Map</h5>
-                        <span class="d-block m-t-5">Navigation of Car</span>
-                    </div>
-                    <div class="card-body">
-                        <div id="basic-map" class="set-map" style="height:300px;"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- [ basic-map ] end -->
-            <!-- [ basic-table ] start -->
-            <div class="col-md-5">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Basic Table</h5>
-                        <span class="d-block m-t-5">use class <code>table</code> inside table element</span>
-                    </div>
-                    <div class="card-body table-border-style">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Username</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- [ basic-table ] end -->
-            </div>
-
-            <!-- [ Main Content ] end -->
-
-
-            <!-- [ basic-map ] start -->
-            <div class="col-md-7">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Controls</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="">
-                            <button type="button" class="btn btn-icon btn-primary">Force Stop</button>
-                            <button type="button" class="btn btn-icon btn-primary">When star on black tiles</button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55 ">
-                                <i class="fa fa-undo fa-2x"></i>
-                            </button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55">
-                                <i class="fa fa-arrow-up fa-2x"></i>
-                            </button>
-                            <br />
-                            <button type="button" class="control btn btn-icon btn-primary">When on black tiles</button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55">
-                                <i class="fa fa-arrow-left"></i>
-                            </button>
-
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55">
-                                <i class="fa fa-arrow-down"></i>
-                            </button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55">
-                                <i class="fa fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="pcoded-content">
+    <h5 class="m-b-100">Car Play</h5>
+    <div class="row">
+      <!-- [ basic-map ] start -->
+      <div class="col-md-7">
+        <div class="card">
+          <div class="card-header">
+            <h5>Game Map</h5>
+            <span class="d-block m-t-5">Navigation of Car</span>
+          </div>
+          <div class="card-body">
+            <div id="basic-map" class="set-map" style="height: 300px"></div>
+          </div>
         </div>
+      </div>
+      <!-- [ basic-map ] end -->
+      <!-- [ basic-table ] start -->
+      <div class="col-md-5">
+        <div class="card">
+          <div class="card-header">
+            <h5>Basic Table</h5>
+            <span class="d-block m-t-5"
+              >use class <code>table</code> inside table element</span
+            >
+          </div>
+          <div class="card-body table-border-style">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- [ basic-table ] end -->
+      </div>
+
+      <!-- [ Main Content ] end -->
+
+      <!-- [ basic-map ] start -->
+      <div class="col-md-7">
+        <div class="card">
+          <div class="card-header">
+            <h5>Controls</h5>
+          </div>
+          <div class="card-body">
+            <div class="col-md-12">
+              <div class="row justify-content-start">
+                <button
+                  type="button"
+                  class="btn btn-icon btn-primary btn-lg"
+                  style="margin: 10px 20px"
+                  id = "stop"
+                >
+                  Force Stop
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-icon btn-primary btn-lg"
+                  style="margin: 10px 20px"
+                  id = "star"
+                >
+                  When star on black tiles
+                </button>
+                <button
+                  type="button"
+                  class="control btn btn-icon btn-primary wid-55 hei-55 btn-lg"
+                  style="margin: 10px 5px"
+                  id = "rotate"
+                >
+                  <i class="fa fa-undo fa-2x "></i>
+                </button>
+                <button
+                  type="button"
+                  class="control btn btn-icon btn-primary wid-55 hei-55 btn-lg"
+                  style="margin: 10px 5px"
+                  id ="up"
+                >
+                  <i class="fa fa-arrow-up fa-2x justify-content-center"></i>
+                </button>
+                <br />
+              </div>
+              <div class="row justify-content-start">
+                <div class="col-md-6">
+                  <button
+                    type="button"
+                    class="control btn btn-icon btn-primary btn-lg"
+                    style="margin: 10px 10px"
+                    id = "black_tiles"
+                  >
+                    When on black tiles
+                  </button>
+                </div>
+                <div class="col-md-6">
+                  <button
+                    type="button"
+                    class="control btn btn-icon btn-primary wid-55 hei-55"
+                    id = "left"
+                  >
+                    <i class="fa fa-arrow-left fa-2x justify-content-center"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="
+                      control
+                      btn btn-icon btn-primary
+                      wid-55
+                      hei-55
+                      btn-lg
+                    "
+                    id = "down"
+                    style="margin: 10px 10px"
+                  >
+                    <i class="fa fa-arrow-down fa-2x justify-content-center"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="
+                      control
+                      btn btn-icon btn-primary
+                      wid-55
+                      hei-55
+                      btn-lg
+                    "
+                    id = "right"
+                    style="margin: 10,10"
+                  >
+                    <i class="fa fa-arrow-right fa-2x justify-content-center"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 <!-- [ Main Content ] end -->
 
@@ -117,9 +176,8 @@
 {% block javascripts %}
 
 <!-- google-map Js -->
-<script
-    src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-<script src="https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script src="https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE"></scrip>
 <script src="/static/assets/js/plugins/gmaps.min.js"></script>
 <script src="/static/assets/js/pages/google-maps.js"></script>
 <script src="/static/assets/js/pages/play.js"></script>
