@@ -7,6 +7,11 @@ Queue.prototype.enqueue = function (cmd) {
   this.commands.push(cmd);
 };
 
+// Remove all comdands from queue
+Queue.prototype.clear = function () {
+  this.commands = [];
+};
+
 // Remove a command from the queue
 Queue.prototype.dequeue = function () {
   // remove the first command
@@ -31,8 +36,10 @@ function printQueue()
   return str;
 }
 
-
-let q = new Queue();
+// This queue is for the table
+var q = new Queue();
+// This queue is to send the commands to the car
+var qCommands = new Queue();
 
 // Enqueue to queue 
 $(document).ready(function () {
@@ -42,49 +49,69 @@ $(document).ready(function () {
   $("#right").click(right);
   $("#rotate").click(rotate);
   $("#black_tiles").click(black_tiles);
-  $("#star").click(star);
+  $("#stars").click(star);
   $("#stop").click(stop);
 });
 
 //When up button is click, store W in queue
 function up() {
-  console.log("up");
+  // console.log("up");
   q.enqueue("W");
-  console.log(q.commands);
+  qCommands.enqueue("W");
+  // console.log(q.commands);
+  data = convertToString();
+  getCommands(data);
+  q.clear();
 };
 
 // when down button is click, store S in queue
 function down() {
-  console.log("down");
+  // console.log("down");
   q.enqueue("S");
-  console.log(q.commands);
+  qCommands.enqueue("S");
+  data = convertToString();
+  getCommands(data);
+  q.clear();
 };
 
 // when left button is click, store A in queue
 function left() {
-  console.log("left");
+  // console.log("left");
   q.enqueue("A");
-  console.log(q.commands);
+  qCommands.enqueue("A");
+  // console.log(q.commands);
+  data = convertToString();
+  getCommands(data);
+  q.clear();
 };
 
 // when right button is click, store D in queue
 function right() {
-  console.log("right");
+  // console.log("right");
   q.enqueue("D");
-  console.log(q.commands);
+  qCommands.enqueue("D");
+  // console.log(q.commands);
+  data = convertToString();
+  getCommands(data);
+  q.clear();
 };
 
 // when rotate button is click, store R in queue
 function rotate() {
-  console.log("rotate");
+  // console.log("rotate");
   q.enqueue("R");
-  console.log(q.commands);
+  qCommands.enqueue("R");
+  // console.log(q.commands);
+  data = convertToString();
+  getCommands(data);
+  q.clear();
 };
 
 // Wehn black tiles button is click, store B in queue
 function black_tiles() {
   console.log("black_tiles");
   q.enqueue("B");
+  qCommands.enqueue("B");
   console.log(q.commands);
 }
 
@@ -92,14 +119,68 @@ function black_tiles() {
 function star() {
   console.log("star");
   q.enqueue("*");
+  qCommands.enqueue("*");
   console.log(q.commands);
 }
 
 // When stop is click, store T in queue
 function stop() {
-  console.log("stop");
-  q.enqueue("T");
-  console.log(q.commands);
+  //console.log("stop");
+  q.commands.enqueue("T");
+  // console.log(q.commands);
 }
 
-var table = document.getElementById('tableCommands'), rowIndex;
+// Convert  the queue into string datatype
+function convertToString() {
+  var json = JSON.stringify(q.commands);
+  // console.log(json);
+  return json;
+}
+
+// var table = document.getElementById('tableCommands'), rowIndex;
+var row = 0;
+
+//using ajax to get the commands from queues when it GET to the server
+function getCommands(data) {
+  var queue = data;
+  // console.log(data);
+  $.ajax({
+    type: "POST",
+    url: "/getCommands",
+    data: {
+      queue: queue
+    },
+    success: function (commands) {
+      for (var i = 0; i < commands.length; i++) {
+        row++;
+        switch (commands[i]) {
+          case "W":
+            console.log("up");
+            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Forward" + "</td></tr>");
+            break;
+          case "S":
+            console.log("down");
+            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Backward" + "</td></tr>");
+            break;
+          case "A":
+            console.log("left");
+            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Left" + "</td></tr>");
+            break;
+          case "D":
+            console.log("right");
+            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Right" + "</td></tr>");
+            break;
+          case "R":
+            console.log("rotate");
+            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Rotate" + "</td></tr>");
+            break;
+          default:
+            break;
+        }
+        //$("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + commands[i] + "</td></tr>");
+      }
+    }
+  });
+}
+
+/* TODO:Delete Queue Commands from the queue commands*/
