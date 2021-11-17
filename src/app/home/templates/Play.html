@@ -20,7 +20,7 @@
             <div class="col-md-5">
                 <div class="card" style="height:310px;">
                     <div class="card-header">
-                        <h5>Basic Table</h5>
+                        <h5>Queue Commands</h5>
                     </div>
                     <div class="card-body table-wrapper-scroll-y my-custom-scrollbar">
                         <table class="table table-bordered table-striped mb-0" style="height:310px;" id="tableCommands">
@@ -32,16 +32,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr>
-                                    <th>
-                                        <input type="checkbox" aria-label="Checkbox to select following commands" id="">
-                                    </th>
-                                    <th scope="row">1</th>
-                                    <td>Move Left</td>
-                                </tr> -->
                             </tbody>
                         </table>
-                        <button type="button" class="control btn btn-icon btn-primary" id="submitQueue">Submit</button>
+                            <button type="button" class="control btn btn-icon btn-primary float-right" id="submitQueue">Submit</button>
+                            <button type="button" class="control btn btn-icon btn-danger float-right" id="deleteQueue">Delete</button>
                     </div>
                 </div>
                 <!-- [ basic-table ] end -->
@@ -67,7 +61,7 @@
                             </button>
                             <button type="button" class="control btn btn-primary" id="black_tiles">When on black
                                 tiles</button>
-                            <button type="button" class="up control btn btn-icon btn-primary wid-55 hei-55" id="left">
+                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="left">
                                 <i class="fa fa-arrow-left fa-2x"></i>
                             </button>
                             <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="down">

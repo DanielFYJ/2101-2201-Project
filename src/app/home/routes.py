@@ -57,12 +57,10 @@ def get_segment( request ):
 def getCommands():
     if request.method == "POST":
         commands = request.form['queue']
-        print(type(commands))
-        print(commands)
+        # Remove the brackets "" and coma
         commands = commands.replace("[","")
         commands = commands.replace("]","")
         commands = commands.replace("\"","")
         commands = commands.replace(",","")
-        print(commands)
         return jsonify(commands)
-    
+    return jsonify("")

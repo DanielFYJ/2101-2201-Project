@@ -1,3 +1,5 @@
+/* This file will created 2 queue. One is used to insert to the basic table and the other is used to send the commands to the robor over the socket. */
+
 // Implement a queue for the commands
 function Queue() {
   this.commands = [];
@@ -18,6 +20,11 @@ Queue.prototype.dequeue = function () {
   return this.commands.shift();
 };
 
+// Remove a command from the queue based on index
+Queue.prototype.removebyIndex = function (index) {
+  this.commands.splice(index, 1);
+}
+
 // Check if the queue is empty
 Queue.prototype.isEmpty = function () {
   return this.commands.length === 0;
@@ -28,8 +35,7 @@ Queue.prototype.peek = function () {
 }
 
 // Display all the items in queue
-function printQueue()
-{
+function printQueue() {
   var str = "";
   for (var i = 0; i < this.items.length; i++)
     str += this.items[i] + " ";
@@ -109,41 +115,34 @@ function rotate() {
 
 // Wehn black tiles button is click, store B in queue
 function black_tiles() {
-  console.log("black_tiles");
   q.enqueue("B");
   qCommands.enqueue("B");
-  console.log(q.commands);
+  data = convertToString();
+  getCommands(data);
+  q.clear();
 }
 
 // When star is click, store * in queue
 function star() {
-  console.log("star");
   q.enqueue("*");
   qCommands.enqueue("*");
-  console.log(q.commands);
+  data = convertToString();
+  getCommands(data);
+  q.clear();
 }
 
-// When stop is click, store T in queue
-function stop() {
-  //console.log("stop");
-  q.commands.enqueue("T");
-  // console.log(q.commands);
-}
+/* TODO: Submit the stop command directly to the server */
+function stop() { }
 
 // Convert  the queue into string datatype
 function convertToString() {
   var json = JSON.stringify(q.commands);
-  // console.log(json);
   return json;
 }
-
-// var table = document.getElementById('tableCommands'), rowIndex;
-var row = 0;
 
 //using ajax to get the commands from queues when it GET to the server
 function getCommands(data) {
   var queue = data;
-  // console.log(data);
   $.ajax({
     type: "POST",
     url: "/getCommands",
@@ -152,35 +151,70 @@ function getCommands(data) {
     },
     success: function (commands) {
       for (var i = 0; i < commands.length; i++) {
-        row++;
         switch (commands[i]) {
           case "W":
             console.log("up");
-            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Forward" + "</td></tr>");
+            $("#tableCommands").append("<tr><td>" + "<input type=\"checkbox\" aria-label=\"Checkbox to select following commands\" name=\"record\">" + "</td>" + "<td>" + "</td>" + "<td>" + "Forward" + "</td></tr>");
+            addNo();
             break;
           case "S":
             console.log("down");
-            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Backward" + "</td></tr>");
+            $("#tableCommands").append("<tr><td>" + "<input type=\"checkbox\" aria-label=\"Checkbox to select following commands\" name=\"record\">" + "</td>" + "<td>" + "</td>" + "<td>" + "Backward" + "</td></tr>");
+            addNo();
             break;
           case "A":
             console.log("left");
-            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Left" + "</td></tr>");
+            $("#tableCommands").append("<tr><td>" + "<input type=\"checkbox\" aria-label=\"Checkbox to select following commands\" name=\"record\">" + "</td>" + "<td>" + "</td>" + "<td>" + "Left" + "</td></tr>");
+            addNo();
             break;
           case "D":
             console.log("right");
-            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Right" + "</td></tr>");
+            $("#tableCommands").append("<tr><td>" + "<input type=\"checkbox\" aria-label=\"Checkbox to select following commands\" name=\"record\">" + "</td>" + "<td>" + "</td>" + "<td>" + "Right" + "</td></tr>");
+            addNo();
             break;
           case "R":
             console.log("rotate");
-            $("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + "Rotate" + "</td></tr>");
+            $("#tableCommands").append("<tr><td>" + "<input type=\"checkbox\" aria-label=\"Checkbox to select following commands\" name=\"record\">" + "</td>" + "<td>" + "</td>" + "<td>" + "Rotate" + "</td></tr>");
+            addNo();
+            break;
+          case "B":
+            console.log("black_tiles");
+            $("#tableCommands").append("<tr><td>" + "<input type=\"checkbox\" aria-label=\"Checkbox to select following commands\" name=\"record\">" + "</td>" + "<td>" + "</td>" + "<td>" + "When On black tiles" + "</td></tr>");
+            addNo();
+            break;
+          case "*":
+            console.log("star");
+            $("#tableCommands").append("<tr><td>" + "<input type=\"checkbox\" aria-label=\"Checkbox to select following commands\" name=\"record\">" + "</td>" + "<td>" + "</td>" + "<td>" + "When " + "<i class=\"fas fa-star\"></i> " + " On Black Tiles" + "</td></tr>");
+            addNo();
             break;
           default:
             break;
         }
-        //$("#tableCommands").append("<tr><td>" + "</td>" +"<td>" + row + "</td>" +  "<td>" + commands[i] + "</td></tr>");
+        //$("#tableCommands").append("<tr><td>" +  +"</td>" +"<td>" + row + "</td>" +  "<td>" + commands[i] + "</td></tr>");
       }
     }
   });
 }
 
-/* TODO:Delete Queue Commands from the queue commands*/
+// Delete  row in  table
+$("#deleteQueue").click(function () {
+  $("table tbody").find('input[name="record"]').each(function () {
+    if ($(this).is(":checked")) {
+      // Extract the row index
+      var row = $(this).closest("tr").index();
+      //console.log(row);
+      qCommands.removebyIndex(row);
+      console.log(qCommands.commands);
+      $(this).parents("tr").remove();
+    }
+  });
+  addNo();
+});
+
+// Add serial number to table
+function addNo() {
+  var table = document.getElementById('tableCommands');
+  for (var i = 1, row; row = table.rows[i]; i++) {
+    row.cells[1].innerHTML = i;
+  }
+}
