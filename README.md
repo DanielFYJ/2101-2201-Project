@@ -22,4 +22,3 @@ pip install -r requirements.txt
 ```sh
 ./start_server.sh
 ```
-
