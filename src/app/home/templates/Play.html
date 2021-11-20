@@ -3,6 +3,10 @@
 <link rel="stylesheet" href="/static/assets/css/Play.css" />
 {% endblock stylesheets %} {% block content %}
 
+<style>
+
+</style>
+
 <section class="pcoded-main-container">
     <div class="pcoded-content">
         <h5>Car Play</h5>
@@ -34,8 +38,10 @@
                             <tbody>
                             </tbody>
                         </table>
-                            <button type="button" class="control btn btn-icon btn-primary float-right" id="submitQueue">Submit</button>
-                            <button type="button" class="control btn btn-icon btn-danger float-right" id="deleteQueue">Delete</button>
+                        <button type="button" class="control btn btn-icon btn-primary float-right"
+                            id="submitQueue">Submit</button>
+                        <button type="button" class="control btn btn-icon btn-danger float-right"
+                            id="deleteQueue">Delete</button>
                     </div>
                 </div>
                 <!-- [ basic-table ] end -->
@@ -50,32 +56,52 @@
                     </div>
                     <div class="card-body">
                         <div class="flex-container">
-                            <button type="button" class="control btn btn-primary" id="stop">Force Stop</button>
-                            <button type="button" class="control btn btn-primary" id="stars">When <i
-                                    class="fas fa-star"></i> on black tiles</button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="rotate">
-                                <i class="fa fa-undo fa-2x"></i>
-                            </button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="up">
-                                <i class="fa fa-arrow-up fa-2x"></i>
-                            </button>
-                            <button type="button" class="control btn btn-primary" id="black_tiles">When on black
-                                tiles</button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="left">
-                                <i class="fa fa-arrow-left fa-2x"></i>
-                            </button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="down">
-                                <i class="fa fa-arrow-down fa-2x"></i>
-                            </button>
-                            <button type="button" class="control btn btn-icon btn-primary wid-55 hei-55" id="right">
-                                <i class="fa fa-arrow-right fa-2x"></i>
-                            </button>
+                            <div>
+                                <button type="button" class="control btn btn-primary" id="stop">Force Stop</button>
+                                <button type="button" class="control btn btn-primary" id="stars">When <i
+                                        class="fas fa-star"></i> on black tiles</button>
+                                <button type="button" class="control btn btn-primary" id="black_tiles">When on black
+                                    tiles</button>
+                            </div>
+                        </div>
+   
+                                <button type="button" class="rotate control btn btn-icon btn-primary wid-55 hei-55"
+                                    id="rotate">
+                                    <i class="fa fa-undo fa-2x"></i>
+                                </button>
+                                <button type="button" class="up control btn btn-icon btn-primary wid-55 hei-55" id="up">
+                                    <i class="fa fa-arrow-up fa-2x"></i>
+                                </button>
+                                <br>
+
+                                <button type="button" class="left control btn btn-icon btn-primary wid-55 hei-55" id="left">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </button>
+                                <button type="button" class="down control btn btn-icon btn-primary wid-55 hei-55" id="down">
+                                    <i class="fa fa-arrow-down fa-2x"></i>
+                                </button>
+                                <button type="button" class="right control btn btn-icon btn-primary wid-55 hei-55" id="right">
+                                    <i class="fa fa-arrow-right fa-2x"></i>
+                                </button>
+               
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Your Robo Car Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="flex-container">
+                            <i class="fas fa-car-side fa-3x" style="font-size: 3em; color: #449cfc;"></i>
+                            <div class="rectangle"></div>
+                            <div class="parallelogram"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </section>
 <!-- [ Main Content ] end -->
 

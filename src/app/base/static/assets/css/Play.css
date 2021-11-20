@@ -18,7 +18,7 @@
     color: white;
     align-items: center;
     transition: all .05s linear;
-    margin: 10px;
+    margin: 7px;
     
 }
 .control:active {
@@ -32,7 +32,9 @@
         flex-flow: row wrap;
       }
 
-.star {
+
+
+/* .star {
     margin-right: 50px;
 }
 
@@ -44,5 +46,17 @@
 .stop {
     margin-left: 5px;
     margin-right: 50px;
+} */
+
+.rectangle {
+    height: 40px;
+    width: 10px;
+    background-color: #222;
+  }
+
+  .parallelogram {
+	width: 60px;
+	height: 10px;
+	transform: skew(20deg);
+	background: #222;
 }
-    
