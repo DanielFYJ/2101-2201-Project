@@ -64,3 +64,13 @@ def getCommands():
         commands = commands.replace(",","")
         return jsonify(commands)
     return jsonify("")
+
+@blueprint.route('/api/car/commands', methods=["GET" , "POST"])
+@login_required
+def submitQueue():
+    if request.method == "GET":
+        #Get the queue from AJAX GET request
+        queue = request.args.get('qCommands')
+        return jsonify(queue)
+    return jsonify("")
+        
