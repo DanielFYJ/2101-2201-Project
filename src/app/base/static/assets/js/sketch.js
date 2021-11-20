@@ -8,18 +8,18 @@ let gamePlayer;
 
 function setup() {
   // var canvas = createCanvas(700, 600);
-  var canvas = createCanvas(700, 600);
+  var canvas = createCanvas(500, 300);
   canvas.parent('canvas');
   gameState = new GameState();
   gameMenu = new GameMenu();
-  gameScore = new GameScore();
-  gamePlayer = new GamePlayer(100, 100);
+  // gameScore = new GameScore();
+  gamePlayer = new GamePlayer(455, 300);
   // windowResized();
 }
 
 function draw() {
   clear();
-  background('red');
+  // background('red');
   //print(mouseX, mouseY);
   //In game Menu
   if (gameState.getGameState() == 0) {
@@ -27,8 +27,10 @@ function draw() {
   }
 
   if (gameState.getGameState() == 1) {
-    gameScore.display();
-    gameScore.setScore(gameScore.getScore() + 1);
+    text('START', 0, 10);
+    CreateGrid(); 
+    // gameScore.display();
+    // gameScore.setScore(gameScore.getScore() + 1);
     gamePlayer.keyPressed();
     gamePlayer.display();
   }
@@ -156,16 +158,16 @@ class GamePlayer {
 
   keyPressed() {
     if (keyIsDown(LEFT_ARROW)) {
-      this.move(-10,0);
+      this.move(-2,0);
     }
     if (keyIsDown(RIGHT_ARROW)) {
-      this.move(10,0);
+      this.move(2,0);
     }
     if (keyIsDown(UP_ARROW)) {
-      this.move(0,-10);
+      this.move(0,-2);
     }
     if (keyIsDown(DOWN_ARROW)) {
-      this.move(0,10);
+      this.move(0,2);
     }
 
     if (keyIsDown(ESCAPE)) {
@@ -184,11 +186,11 @@ class GamePlayer {
     if(this.y < 0+(this.diameter/2)){
       this.y = 10;
     }
-    if(this.x > 800-(this.diameter/2)){
-      this.x = 790;
+    if(this.x > 500-(this.diameter/2)){
+      this.x = 490;
     }
-    if(this.y > 600-(this.diameter/2)){
-      this.y = 590;
+    if(this.y > 300-(this.diameter/2)){
+      this.y = 290;
     }
   }
 
@@ -198,37 +200,48 @@ class GamePlayer {
   }
 }
 
-class GameScore {
-  //Class to render Score
-  constructor() {
-    this.score = 0;
-  }
+// class GameScore {
+//   //Class to render Score
+//   constructor() {
+//     this.score = 0;
+//   }
 
-  setScore(score) {
-    this.score = score;
-  }
+//   setScore(score) {
+//     this.score = score;
+//   }
 
-  getScore() {
-    return this.score;
-  }
+//   getScore() {
+//     return this.score;
+//   }
 
-  display() {
+//   display() {
 
-    fill(255, 255, 255);
-    //Set outline to black
-    stroke(255);
-    rect(50, 50, 350, 75);
-    //Defines text size
-    textSize(50)
-    //Fill here defines text color
-    fill(0);
-    text('SCORE = ' + this.score, 110, 106);
-  }
-}
+//     fill(255, 255, 255);
+//     //Set outline to black
+//     stroke(255);
+//     rect(50, 50, 350, 75);
+//     //Defines text size
+//     textSize(50)
+//     //Fill here defines text color
+//     fill(0);
+//     text('SCORE = ' + this.score, 110, 106);
+//   }
+// }
 
-function windowResized() {
-  var canvasDiv = document.getElementById('canvas');
-  // var height = canvasDiv.offsetHeight;
-  var width = canvasDiv.offsetWidth;
-  resizeCanvas(width, 600);
+// function windowResized() {
+//   var canvasDiv = document.getElementById('canvas');
+//   // var height = canvasDiv.offsetHeight;
+//   var width = canvasDiv.offsetWidth;
+//   resizeCanvas(width, 600);
+// }
+
+function CreateGrid() {
+  for (var x = 0; x <= width; x += width / 6) {
+		for (var y = 0; y <= height; y += height / 4) {
+			stroke(0);
+			strokeWeight(1);
+			line(x, 0, x, height);
+			line(0, y, width, y);
+		}
+	}
 }
