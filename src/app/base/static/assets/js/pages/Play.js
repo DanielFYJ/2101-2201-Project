@@ -268,10 +268,10 @@ if (isObstacleDetected == false) {
   rightRect.translate(0.5, 0.5);
   rightRect.beginPath();
   rightRect.setLineDash([5]);
-  rightRect.rect(10, 8, 15, 35);
+  rightRect.rect(15, 8, 12, 35);
   rightRect.stroke();
 
 } else {
   // display filled rectangle
-  rightRect.fillRect(15, 8, 15, 35);
+  rightRect.fillRect(15, 8, 12, 35);
 }
