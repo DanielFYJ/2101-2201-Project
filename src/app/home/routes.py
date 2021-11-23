@@ -3,6 +3,7 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
+from flask.json import jsonify
 from app.home import blueprint
 from flask import render_template, redirect, url_for, request
 from flask_login import login_required, current_user
@@ -50,3 +51,26 @@ def get_segment( request ):
 
     except:
         return None  
+
+@blueprint.route('/getCommands', methods=["GET" , "POST"])
+@login_required
+def getCommands():
+    if request.method == "POST":
+        commands = request.form['queue']
+        # Remove the brackets "" and coma
+        commands = commands.replace("[","")
+        commands = commands.replace("]","")
+        commands = commands.replace("\"","")
+        commands = commands.replace(",","")
+        return jsonify(commands)
+    return jsonify("")
+
+@blueprint.route('/api/car/commands', methods=["GET" , "POST"])
+@login_required
+def submitQueue():
+    if request.method == "GET":
+        #Get the queue from AJAX GET request
+        queue = request.args.get('qCommands')
+        return jsonify(queue)
+    return jsonify("")
+        

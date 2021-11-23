@@ -1,0 +1,62 @@
+.my-custom-scrollbar {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+    }
+
+.table-wrapper-scroll-y {
+    display: block;
+    }
+
+.card-header{
+    padding: 0px; 
+    margin: 10px 25px ;
+    }
+  
+.control {
+    cursor: pointer;
+    color: white;
+    align-items: center;
+    transition: all .05s linear;
+    margin: 7px;
+    
+}
+.control:active {
+        text-shadow: 0 0 2px white, 0 0 2px white, 0 0 1px white;    
+        transform: translate(0, 1px);
+        align-items: flex-end;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-flow: row wrap;
+      }
+
+
+
+/* .star {
+    margin-right: 50px;
+}
+
+.nostar {
+    margin-right: 50px;
+    margin-left: 182px;
+}
+
+.stop {
+    margin-left: 5px;
+    margin-right: 50px;
+} */
+
+.rectangle {
+    height: 40px;
+    width: 10px;
+    background-color: #222;
+  }
+
+  .parallelogram {
+	width: 60px;
+	height: 10px;
+	transform: skew(20deg);
+	background: #222;
+}
