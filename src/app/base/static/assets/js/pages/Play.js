@@ -267,11 +267,11 @@ if (isObstacleDetected == false) {
   // display dotted rectangle
   rightRect.translate(0.5, 0.5);
   rightRect.beginPath();
-  rightRect.setLineDash([5]);
-  rightRect.rect(15, 8, 12, 35);
+  rightRect.setLineDash([3]);
+  rightRect.rect(10, 0, 12, 24);
   rightRect.stroke();
 
 } else {
   // display filled rectangle
-  rightRect.fillRect(15, 8, 12, 35);
+  rightRect.fillRect(10, 8, 12, 35);
 }

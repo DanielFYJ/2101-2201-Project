@@ -3,14 +3,13 @@
 <link rel="stylesheet" href="/static/assets/css/Play.css" />
 {% endblock stylesheets %} {% block content %}
 
-<style>
-
-</style>
-
 <section class="pcoded-main-container">
     <div class="pcoded-content">
         <h5>Car Play</h5>
+        <!-- [ first row of play page ] start -->
         <div class="row">
+            <!-- [ game map section ] start -->
+
             <div class="col-md-7">
                 <div class="card" style="height:310px;">
                     <div class="card-header">
@@ -21,6 +20,9 @@
                     </div>
                 </div>
             </div>
+            <!-- [ game map section ] end -->
+            <!-- [ queue commands section ] start -->
+
             <div class="col-md-5">
                 <div class="card" style="height:310px;">
                     <div class="card-header">
@@ -47,7 +49,9 @@
                     </div>
                 </div>
             </div>
+            <!-- [ queue commands section ] end -->
         </div>
+        <!-- [ first row of play page ] end -->
         <!-- [ second row of play page ] start -->
         <div class="row">
             <!-- [ controls section ] start -->
@@ -97,32 +101,33 @@
                     </div>
                     <div class="card-body">
                         <div class="flex-container">
+                            <!-- illustration -->
                             <div>
-                            <i class="fas fa-car-side fa-3x" style="font-size: 3em; color: #449cfc;"></i>
-                            <canvas id="bottomRect" width="60" height="35" style=" display: block;">Your browser does not support the HTML5 canvas tag.</canvas>
-
-                        </div>
+                                <i class="fas fa-car-side fa-3x" style="font-size: 3em; color: #449cfc;"></i>
+                                <canvas id="bottomRect" width="60" height="35" style=" display: block;">Your browser does not support the HTML5 canvas tag.</canvas>
+                            </div>
                             <canvas id="rightRect" width="35" height="45">Your browser does not support the HTML5 canvas tag.</canvas>
+                            <!-- status information -->
+                            <div class="status">
+                                <p>Current Movement: </p>
+                                <p>Speed (cm/s): </p>
+                                <p>Total distance travelled (cm): </p>
+                            </div>
                         </div>
-                  
                     </div>
                 </div>
             </div>
+            <!-- [ Robo car status section ] end -->
         </div>
-        <!-- [ Robo car status section ] end -->
         <!-- [ second row of play page ] end -->
-
 </section>
-<!-- [ Main Content ] end -->
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
 <!-- google-map Js -->
-<script
-    src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script src="https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <script src="/static/assets/js/plugins/gmaps.min.js"></script>
 <script src="/static/assets/js/pages/google-maps.js"></script>
