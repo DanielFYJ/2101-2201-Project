@@ -47,16 +47,3 @@
     margin-left: 5px;
     margin-right: 50px;
 } */
-
-.rectangle {
-    height: 40px;
-    width: 10px;
-    background-color: #222;
-  }
-
-  .parallelogram {
-	width: 60px;
-	height: 10px;
-	transform: skew(20deg);
-	background: #222;
-}
