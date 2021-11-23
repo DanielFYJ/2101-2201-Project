@@ -254,12 +254,12 @@ if (isBlackTileDetected == false) {
   bottomRect.translate(0.5, 0.5);
   bottomRect.beginPath();
   bottomRect.setLineDash([5]);
-  bottomRect.rect(0, 15, 55, 12);
+  bottomRect.rect(0, 5, 55, 12);
   bottomRect.stroke();
 
 } else {
   // display filled rectangle
-  bottomRect.fillRect(0, 15, 55, 12);
+  bottomRect.fillRect(0, 5, 55, 12);
 }
 
 var rightRect = document.getElementById("rightRect").getContext('2d');
@@ -268,10 +268,10 @@ if (isObstacleDetected == false) {
   rightRect.translate(0.5, 0.5);
   rightRect.beginPath();
   rightRect.setLineDash([5]);
-  rightRect.rect(15, 0, 15, 40);
+  rightRect.rect(10, 8, 15, 35);
   rightRect.stroke();
 
 } else {
   // display filled rectangle
-  rightRect.fillRect(15, 0, 15, 40);
+  rightRect.fillRect(15, 8, 15, 35);
 }
