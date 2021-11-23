@@ -1,4 +1,9 @@
-/* This file will created 2 queue. One is used to insert to the basic table and the other is used to send the commands to the robor over the socket. */
+/* This file is for 'queue commands' and 'robo car status' section in the play page*/
+
+//#region Queue Commands
+/* There are 2 queues created. 
+One is used to insert to the basic table and 
+the other is used to send the commands to the robot over the socket. */
 
 // Create Queue in OOP using ES6
 class Queue {
@@ -161,7 +166,7 @@ function rotate() {
   q.clear();
 };
 
-// Wehn black tiles button is click, store B in queue
+// When black tiles button is click, store B in queue
 function black_tiles() {
   q.enqueue("B");
   qCommands.enqueue("B");
@@ -236,3 +241,4 @@ function submitQueue() {
     }
   });
 }
+//#endregion
