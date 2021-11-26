@@ -65,12 +65,17 @@ def getCommands():
         return jsonify(commands)
     return jsonify("")
 
-@blueprint.route('/api/car/commands', methods=["GET" , "POST"])
-@login_required
+@blueprint.route('/api/car/commands', methods=["GET", "POST"])
 def submitQueue():
     if request.method == "GET":
         #Get the queue from AJAX GET request
         queue = request.args.get('qCommands')
-        return jsonify(queue)
+        print("Command",queue)
+        return queue + "\0"
     return jsonify("")
+
+@blueprint.route("/espmodule", methods=['GET'])
+def helloHandler():
+    if request.method == 'GET':
+        return 'Hello EcSP8266'
         
