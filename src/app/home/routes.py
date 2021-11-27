@@ -103,11 +103,11 @@ def dequeue():
             c.execute("DELETE FROM Queue WHERE QueueID = (SELECT QueueID FROM Queue ORDER BY QueueID ASC LIMIT 1)")
             conn.commit()
             conn.close()
-            return data[0][0]
+            return data[0][0] + '\0'
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
-            return "No commands in queue"
+            return "No commands in queue" + '\0'
     return "Fail"
 
 
@@ -123,11 +123,11 @@ def getFirstCommand():
             c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC LIMIT 1")
             data = c.fetchall()
             conn.close()
-            return data[0][0]+"\0"
+            return data[0][0] + '\0'
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
-            return "No commands in queue\0"
+            return "No commands in queue" + '\0'
     return "Fail"
 
 @blueprint.route("/espmodule", methods=['GET'])
