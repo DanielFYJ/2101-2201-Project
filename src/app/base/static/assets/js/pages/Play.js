@@ -273,5 +273,5 @@ if (isObstacleDetected == false) {
 
 } else {
   // display filled rectangle
-  rightRect.fillRect(10, 8, 12, 35);
+  rightRect.fillRect(10, 0, 12, 24);
 }
