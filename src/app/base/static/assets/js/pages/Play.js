@@ -120,6 +120,7 @@ function up() {
   qCommands.enqueue("W");
   data = q.convertToString();
   q.getCommands(data);
+  console.log(qCommands.front);
   q.clear();
 };
 
@@ -231,7 +232,7 @@ function submitQueue() {
   console.log(qCommandsString);
   $.ajax({
     type: "GET",
-    url: "/api/car/commands",
+    url: "/submitCommands",
     data: {
       "qCommands": qCommandsString
     },
