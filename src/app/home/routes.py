@@ -107,7 +107,7 @@ def dequeue():
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
-            return "No commands in queue"
+            return "No commands in queue" + '\0'
     return "Fail"
 
 
@@ -127,7 +127,7 @@ def getFirstCommand():
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
-            return "No commands in queue\0"
+            return "No commands in queue" + '\0'
     return "Fail"
 
 # Route to test the ESP8266 connection
