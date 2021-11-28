@@ -5,6 +5,10 @@
 One is used to insert to the basic table and 
 the other is used to send the commands to the robot over the socket. */
 
+let isBlackTileDetected = false;
+let isObstacleDetected = false;
+let movement = '';
+
 // Create Queue in OOP using ES6
 class Queue {
   constructor() {
@@ -112,6 +116,13 @@ $(document).ready(function () {
   $("#deleteQueue").click(deleteQueue);
   $("#deleteAllQueue").click(deleteAllQueue);
   $("#submitQueue").click(submitQueue);
+  checkFeedback();
+  display();
+  checkFirstCommand();
+  setInterval(function () {checkFeedback()}, 10000);
+  setInterval(function () {display()}, 10000);
+  setInterval(function () {checkFirstCommand()}, 10000);
+
 });
 
 //When up button is click, store W in queue
@@ -246,33 +257,111 @@ function submitQueue() {
 
 //#region 
 /**/
-const isBlackTileDetected = false;
-const isObstacleDetected = false;
+// let isBlackTileDetected = false;
+// let isObstacleDetected = false;
 
-var bottomRect = document.getElementById("bottomRect").getContext('2d');
-if (isBlackTileDetected == false) {
-  // display dotted rectangle
-  bottomRect.translate(0.5, 0.5);
-  bottomRect.beginPath();
-  bottomRect.setLineDash([5]);
-  bottomRect.rect(0, 5, 55, 12);
-  bottomRect.stroke();
+function display() {
+    var bottomRect = document.getElementById("bottomRect").getContext('2d');
+    if (isBlackTileDetected == false) {
+      // display dotted rectangle
+      bottomRect.clearRect(0, 5, 55, 12);
+      // bottomRect.translate(0.5, 0.5);
+      bottomRect.beginPath();
+      bottomRect.setLineDash([5]);
+      bottomRect.rect(0, 5, 55, 12);
+      bottomRect.stroke();
 
-} else {
-  // display filled rectangle
-  bottomRect.fillRect(0, 5, 55, 12);
+    } else {
+      // display filled rectangle
+      bottomRect.clearRect(0, 5, 55, 12);
+      bottomRect.fillRect(0, 5, 55, 12);
+    }
+
+  var rightRect = document.getElementById("rightRect").getContext('2d');
+  if (isObstacleDetected == false) {
+    // display dotted rectangle
+    rightRect.clearRect(10, 0, 12, 24);
+    // rightRect.translate(0.5, 0.5);
+    rightRect.beginPath();
+    rightRect.setLineDash([3]);
+    rightRect.rect(10, 0, 12, 24);
+    rightRect.stroke();
+  } else {
+    // display filled rectangle
+    rightRect.clearRect(10, 0, 12, 24);
+    rightRect.fillRect(10, 0, 12, 24);
+  }
 }
 
-var rightRect = document.getElementById("rightRect").getContext('2d');
-if (isObstacleDetected == false) {
-  // display dotted rectangle
-  rightRect.translate(0.5, 0.5);
-  rightRect.beginPath();
-  rightRect.setLineDash([3]);
-  rightRect.rect(10, 0, 12, 24);
-  rightRect.stroke();
+// AJAX call to check if the car detect obstacle
+function checkFeedback() {
+  $.ajax({
+    type: "POST",
+    url: "/checkFeedback",
+    async: false,
+    success: function (data) {
+      // console.log(data);
+      if (data.includes("obstacle") == true) {
+        isObstacleDetected = true;
+      } 
+      else {
+        isObstacleDetected = false;
+      }
+      if (data.includes("black") == true) {
+        isBlackTileDetected = true;
+      }
+      else {
+        isBlackTileDetected = false;
+      }
+      console.log("Obstacle detected: " + isObstacleDetected);
+      console.log("Black Tiles detected: " + isBlackTileDetected);
+    }
+  });
+}
 
-} else {
-  // display filled rectangle
-  rightRect.fillRect(10, 8, 12, 35);
+// AJAX call to check if the car detect obstacle
+function checkFirstCommand() {
+  $.ajax({
+    type: "GET",
+    url: "/api/commands/getFirstCommands",
+    async: false,
+    success: function (data) {
+      // console.log(data);
+      switch (data)
+      {
+      case 'W':
+          // Move foward
+          movement = "Forward"
+          break;
+      
+      case 'A':
+          // Turn left
+          movement = "Left"
+          break;
+
+      case 'S':
+          // Move backward
+          movement = "Backward"
+          break;
+      
+      case 'D':
+          // Turn right
+          movement = "Right"
+          break;
+      
+      case 'R':
+          // Rotate 360 degrees clockwise
+          movement = "Rotate"
+          break;
+      
+      default:
+          // Do nothing
+          break;
+      }
+      console.log("Current Movement: " + movement);
+      // Writing data back to HTML
+      $("#Movement").html(movement);
+      // document.getElementById("Movement").innerHTML = movement;
+    }
+  });
 }
