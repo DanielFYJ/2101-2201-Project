@@ -46,3 +46,35 @@ def request_loader(request):
     username = request.form.get('username')
     user = User.query.filter_by(username=username).first()
     return user if user else None
+
+class GameMap(db.Model):
+    __tablename__ = 'GameMap'
+    game_id = Column(Integer, primary_key=True)
+    game_mode = Column(String(7), unique=False, nullable=False)
+    map_location= Column(String(100), unique=True, nullable=False)
+
+    def __init__(self, id, game_mode, map_location):
+        self.game_id = id
+        self.game_mode = game_mode
+        self.map_location = map_location
+    
+    def getId(self):
+        return self.game_id
+    
+    def getGameMode(self):
+        return self.game_mode
+    
+    def getMapLocation(self):
+        return self.map_location
+
+    def setId(self, id):
+        self.game_id = id
+    
+    def setGameMode(self, game_mode):
+        self.game_mode = game_mode
+    
+    def setMapLocation(self, map_location):
+        self.map_location = map_location
+    
+    def __repr__(self):
+        return f"GameMap('{self.game_mode}','{self.map_location}')"
