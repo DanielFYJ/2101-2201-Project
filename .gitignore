@@ -58,3 +58,6 @@ Release/*
 .xdchelp
 config/*
 .launches/*
+
+#Enviroment
+src/venv/
