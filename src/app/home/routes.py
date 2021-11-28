@@ -103,7 +103,7 @@ def dequeue():
             c.execute("DELETE FROM Queue WHERE QueueID = (SELECT QueueID FROM Queue ORDER BY QueueID ASC LIMIT 1)")
             conn.commit()
             conn.close()
-            return data[0][0]
+            return data[0][0] + ''
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
@@ -123,14 +123,27 @@ def getFirstCommand():
             c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC LIMIT 1")
             data = c.fetchall()
             conn.close()
-            return data[0][0]+"\0"
+            return data[0][0] + ''
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
             return "No commands in queue\0"
     return "Fail"
 
+# Route to test the ESP8266 connection
 @blueprint.route("/espmodule", methods=['GET'])
 def helloHandler():
     if request.method == 'GET':
-        return 'Hello EcSP8266'
+        return 'Hello ESP8266'
+
+# Route for reciving data from ESP8266
+@blueprint.route("/espmodule/recieveData", methods=['GET'])
+def recieveData():
+    if request.method == 'GET':
+        # Get data from URL parameters
+        data = request.args.get('data')
+        print (data)
+        #store the data in the session
+        return 'Success'
+    return 'Fail'
+        
