@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="/static/assets/css/Play.css" />
 {% endblock stylesheets %} {% block content %}
 
+<!-- [ Main Content ] start -->
 <section class="pcoded-main-container">
     <div class="pcoded-content">
         <h5>Car Play</h5>
@@ -10,21 +11,20 @@
         <div class="row">
             <!-- [ game map section ] start -->
 
-            <div class="col-md-7">
-                <div class="card" style="height:310px;">
+            <div class="col-lg-12 col-xl-6">
+                <div class="card">
                     <div class="card-header">
                         <h5>Game Map</h5>
+                        <span class="d-block m-t-5">Navigation of Car</span>
                     </div>
-                    <div class="card-body">
-                        <div id="basic-map" class="set-map" style="height:250px;"></div>
-                    </div>
+                    <div id="canvas" class="card-body"></div>
                 </div>
             </div>
             <!-- [ game map section ] end -->
             <!-- [ queue commands section ] start -->
 
-            <div class="col-md-5">
-                <div class="card" style="height:310px;">
+            <div class="col-md-6">
+                <div class="card" style="height:500px;">
                     <div class="card-header">
                         <h5>Queue Commands</h5>
                     </div>
@@ -50,25 +50,12 @@
                 </div>
             </div>
             <!-- [ breadcrumb ] end -->
-            <!-- [ Main Content ] start -->
-            <div class="row">
-                <!-- [ basic-map ] start -->
-                <div class="col-lg-12 col-xl-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Game Map</h5>
-                            <span class="d-block m-t-5">Navigation of Car</span>
-                        </div>
-                        <div id="canvas" class="card-body">
-                            <!-- <div id="basic-map" class="set-map" style="height:400px;"></div> -->
-                            <!-- <div id="canvas" class="set-map"></div> -->
-            <!-- [ queue commands section ] end -->
-        </div>
         <!-- [ first row of play page ] end -->
+        </div>
         <!-- [ second row of play page ] start -->
         <div class="row">
             <!-- [ controls section ] start -->
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h5>Controls</h5>
@@ -104,47 +91,8 @@
 
                     </div>
                 </div>
-                <!-- [ basic-map ] end -->
-                 <!-- [ basic-table ] start -->
-                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Basic Table</h5>
-                            <span class="d-block m-t-5">use class <code>table</code> inside table element</span>
-                        </div>
-                        <div class="card-body table-border-style">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
             </div>
+        
             <!-- [ controls section ] end -->
             <!-- [ Robo car status section ] start -->
             <div class="col-md-5">
