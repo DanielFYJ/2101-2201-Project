@@ -257,15 +257,12 @@ function submitQueue() {
 
 //#region 
 /**/
-// let isBlackTileDetected = false;
-// let isObstacleDetected = false;
 
 function display() {
     var bottomRect = document.getElementById("bottomRect").getContext('2d');
     if (isBlackTileDetected == false) {
       // display dotted rectangle
       bottomRect.clearRect(0, 5, 55, 12);
-      // bottomRect.translate(0.5, 0.5);
       bottomRect.beginPath();
       bottomRect.setLineDash([5]);
       bottomRect.rect(0, 5, 55, 12);
@@ -281,7 +278,6 @@ function display() {
   if (isObstacleDetected == false) {
     // display dotted rectangle
     rightRect.clearRect(10, 0, 12, 24);
-    // rightRect.translate(0.5, 0.5);
     rightRect.beginPath();
     rightRect.setLineDash([3]);
     rightRect.rect(10, 0, 12, 24);

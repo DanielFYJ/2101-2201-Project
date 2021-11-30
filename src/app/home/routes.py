@@ -14,18 +14,16 @@ from app import login_manager
 from jinja2 import TemplateNotFound
 import sqlite3
 
+
 @blueprint.route('/index')
 @login_required
 def index():
-
     return render_template('index.html', segment='index')
 
 @blueprint.route('/<template>')
 @login_required
 def route_template(template):
-
     try:
-
         if not template.endswith( '.html' ):
             template += '.html'
 
@@ -51,6 +49,13 @@ def get_segment( request ):
     except:
         return None  
 
+# Route to test the ESP8266 connection
+@blueprint.route("/espmodule", methods=['GET'])
+def helloHandler():
+    if request.method == 'GET':
+        return 'Hello ESP8266'
+
+# Route to get the commands in the queue
 @blueprint.route('/getCommands', methods=["GET" , "POST"])
 @login_required
 def getCommands():
@@ -64,6 +69,7 @@ def getCommands():
         return jsonify(commands)
     return jsonify("")
 
+# Route to set the commands in the queue
 @blueprint.route('/submitCommands', methods=["GET", "POST"])
 def submitQueue():
     if request.method == "GET":
@@ -86,6 +92,7 @@ def submitQueue():
             return "Fail to submit queue commands"
     return "Fail"
 
+# Route to get the first command then delete the first command in database
 @blueprint.route('/api/commands/deqeue', methods=["GET", "POST"])
 def dequeue():
     if request.method == "GET":
@@ -104,14 +111,14 @@ def dequeue():
                 c.execute("DELETE FROM Queue WHERE QueueID = (SELECT QueueID FROM Queue ORDER BY QueueID ASC LIMIT 1)")
             conn.commit()
             conn.close()
-            return data[0][0] + ''
+            return data[0][0] + '\0'
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
             return "No commands in queue" + '\0'
     return "Fail"
 
-
+# Route to get the first command
 @blueprint.route('/api/commands/getFirstCommands', methods=["GET", "POST"])
 def getFirstCommand():
     if request.method == "GET":
@@ -125,27 +132,49 @@ def getFirstCommand():
             data = c.fetchall()
             conn.close()
             #Indicate end of string
-            return data[0][0] + ''
+            return data[0][0] + '\0'
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
             return "No commands in queue" + ''
     return "Fail"
 
-# Route to test the ESP8266 connection
-@blueprint.route("/espmodule", methods=['GET'])
-def helloHandler():
-    if request.method == 'GET':
-        return 'Hello ESP8266'
+# # Route for reciving feedback from ESP8266
+# @blueprint.route("/api/data/feedback", methods=['GET'])
+# def recieveData():
+#     if request.method == 'GET':
+#         # Get data from URL parameters
+#         feedback = request.args.get('feedback')
+#         print (feedback)
+#         if (feedback != None):
+#             #Store the data into the database
+#             try:
+#                 # Establish database Connection
+#                 conn = sqlite3.connect('db.sqlite3')
+#                 c = conn.cursor()
+#             except:
+#                 return "Fail to connect to database"
+#             try:
+#                 #Insert data to DB here
+#                 c.execute("INSERT INTO Feedback(Data) VALUES (?)", (feedback,))
+#                 conn.commit()
+#                 conn.close()
+#                 return "Success"
+#             except:
+#                 return "Fail to store feedback into database"
+#         else:
+#             return "Fail to recieve feedback"
+#     return "Fail to connect to web portal"
 
 # Route for reciving feedback from ESP8266
-@blueprint.route("/api/data/feedback", methods=['GET'])
-def recieveData():
+# Joey version
+@blueprint.route("/api/data/feedback/<Data>", methods=['GET'])
+def recieveData(Data):
     if request.method == 'GET':
         # Get data from URL parameters
-        feedback = request.args.get('feedback')
-        print (feedback)
-        if (feedback != None):
+        # feedback = request.args.get('feedback')
+        print (Data)
+        if (Data != None):
             #Store the data into the database
             try:
                 # Establish database Connection
@@ -155,7 +184,7 @@ def recieveData():
                 return "Fail to connect to database"
             try:
                 #Insert data to DB here
-                c.execute("INSERT INTO Feedback(Data) VALUES (?)", (feedback,))
+                c.execute("INSERT INTO Feedback(Data) VALUES (?)", (Data,))
                 conn.commit()
                 conn.close()
                 return "Success"
@@ -197,3 +226,25 @@ def checkFeedback():
         except:
             return "Fail to fetch data from the database"
     return "Fail to connect to web portal"
+
+
+# Route to test send data
+@blueprint.route('/api/commands/sendtest/<data>', methods=["GET", "POST"])
+def sendtest(data):
+    # print(data)
+    # return data
+    if request.method == "GET":
+        # Establish database Connection
+        conn = sqlite3.connect('db.sqlite3')
+        # conn.close()
+        c = conn.cursor()
+        try:
+            #Get the queue from AJAX GET request
+            c.execute("INSERT INTO Queue(Commands) VALUES(?)", (data,))
+            c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC LIMIT 1")
+            data = c.fetchall()
+            conn.close()
+            print(data)
+        except:
+            return "No commands in queue" + '\0'
+    return "Fail"
