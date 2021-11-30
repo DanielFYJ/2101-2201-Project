@@ -119,7 +119,7 @@ def dequeue():
     return "Fail"
 
 # Route to get the first command
-@blueprint.route('/api/commands/getFirstCommands', methods=["GET", "POST"])
+@blueprint.route('/api/commands/getFirstCommand', methods=["GET", "POST"])
 def getFirstCommand():
     if request.method == "GET":
         # Establish database Connection
@@ -132,11 +132,12 @@ def getFirstCommand():
             data = c.fetchall()
             conn.close()
             #Indicate end of string
+            print (data[0][0])
             return data[0][0] + '\0'
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
-            return "No commands in queue" + ''
+            return "No commands in queue" + '\0'
     return "Fail"
 
 # Route for reciving feedback from ESP8266
