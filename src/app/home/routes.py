@@ -139,42 +139,14 @@ def getFirstCommand():
             return "No commands in queue" + ''
     return "Fail"
 
-# # Route for reciving feedback from ESP8266
-# @blueprint.route("/api/data/feedback", methods=['GET'])
-# def recieveData():
-#     if request.method == 'GET':
-#         # Get data from URL parameters
-#         feedback = request.args.get('feedback')
-#         print (feedback)
-#         if (feedback != None):
-#             #Store the data into the database
-#             try:
-#                 # Establish database Connection
-#                 conn = sqlite3.connect('db.sqlite3')
-#                 c = conn.cursor()
-#             except:
-#                 return "Fail to connect to database"
-#             try:
-#                 #Insert data to DB here
-#                 c.execute("INSERT INTO Feedback(Data) VALUES (?)", (feedback,))
-#                 conn.commit()
-#                 conn.close()
-#                 return "Success"
-#             except:
-#                 return "Fail to store feedback into database"
-#         else:
-#             return "Fail to recieve feedback"
-#     return "Fail to connect to web portal"
-
 # Route for reciving feedback from ESP8266
-# Joey version
-@blueprint.route("/api/data/feedback/<Data>", methods=['GET'])
-def recieveData(Data):
+@blueprint.route("/api/data/feedback", methods=['GET'])
+def recieveData():
     if request.method == 'GET':
         # Get data from URL parameters
-        # feedback = request.args.get('feedback')
-        print (Data)
-        if (Data != None):
+        feedback = request.args.get('feedback')
+        print (feedback)
+        if (feedback != None):
             #Store the data into the database
             try:
                 # Establish database Connection
@@ -184,7 +156,7 @@ def recieveData(Data):
                 return "Fail to connect to database"
             try:
                 #Insert data to DB here
-                c.execute("INSERT INTO Feedback(Data) VALUES (?)", (Data,))
+                c.execute("INSERT INTO Feedback(Data) VALUES (?)", (feedback,))
                 conn.commit()
                 conn.close()
                 return "Success"
@@ -193,7 +165,6 @@ def recieveData(Data):
         else:
             return "Fail to recieve feedback"
     return "Fail to connect to web portal"
-
 
 # Route for check obstacle feedback from ESP8266
 @blueprint.route("/checkFeedback", methods=['POST'])
@@ -226,25 +197,3 @@ def checkFeedback():
         except:
             return "Fail to fetch data from the database"
     return "Fail to connect to web portal"
-
-
-# Route to test send data
-@blueprint.route('/api/commands/sendtest/<data>', methods=["GET", "POST"])
-def sendtest(data):
-    # print(data)
-    # return data
-    if request.method == "GET":
-        # Establish database Connection
-        conn = sqlite3.connect('db.sqlite3')
-        # conn.close()
-        c = conn.cursor()
-        try:
-            #Get the queue from AJAX GET request
-            c.execute("INSERT INTO Queue(Commands) VALUES(?)", (data,))
-            c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC LIMIT 1")
-            data = c.fetchall()
-            conn.close()
-            print(data)
-        except:
-            return "No commands in queue" + '\0'
-    return "Fail"
