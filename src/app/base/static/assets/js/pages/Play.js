@@ -253,35 +253,32 @@ function submitQueue() {
     }
   });
 }
+
 //#endregion
 
 //#region 
 /**/
-// let isBlackTileDetected = false;
-// let isObstacleDetected = false;
 
 function display() {
-    var bottomRect = document.getElementById("bottomRect").getContext('2d');
-    if (isBlackTileDetected == false) {
-      // display dotted rectangle
-      bottomRect.clearRect(0, 5, 55, 12);
-      // bottomRect.translate(0.5, 0.5);
-      bottomRect.beginPath();
-      bottomRect.setLineDash([5]);
-      bottomRect.rect(0, 5, 55, 12);
-      bottomRect.stroke();
+  var bottomRect = document.getElementById("bottomRect").getContext('2d');
+  if (isBlackTileDetected == false) {
+    // display dotted rectangle
+    bottomRect.clearRect(0, 5, 55, 12);
+    bottomRect.beginPath();
+    bottomRect.setLineDash([5]);
+    bottomRect.rect(0, 5, 55, 12);
+    bottomRect.stroke();
 
-    } else {
-      // display filled rectangle
-      bottomRect.clearRect(0, 5, 55, 12);
-      bottomRect.fillRect(0, 5, 55, 12);
-    }
+  } else {
+    // display filled rectangle
+    bottomRect.clearRect(0, 5, 55, 12);
+    bottomRect.fillRect(0, 5, 55, 12);
+  }
 
   var rightRect = document.getElementById("rightRect").getContext('2d');
   if (isObstacleDetected == false) {
     // display dotted rectangle
     rightRect.clearRect(10, 0, 12, 24);
-    // rightRect.translate(0.5, 0.5);
     rightRect.beginPath();
     rightRect.setLineDash([3]);
     rightRect.rect(10, 0, 12, 24);
@@ -303,7 +300,7 @@ function checkFeedback() {
       // console.log(data);
       if (data.includes("obstacle") == true) {
         isObstacleDetected = true;
-      } 
+      }
       else {
         isObstacleDetected = false;
       }
@@ -323,39 +320,39 @@ function checkFeedback() {
 function checkFirstCommand() {
   $.ajax({
     type: "GET",
-    url: "/api/commands/getFirstCommands",
+    url: "/api/commands/getFirstCommand",
     async: false,
     success: function (data) {
-      // console.log(data);
-      switch (data)
-      {
-      case 'W':
+      console.log(data);
+      switch (data[0]) {
+        case 'W':
           // Move foward
           movement = "Forward"
           break;
-      
-      case 'A':
+
+        case 'A':
           // Turn left
           movement = "Left"
           break;
 
-      case 'S':
+        case 'S':
           // Move backward
           movement = "Backward"
           break;
-      
-      case 'D':
+
+        case 'D':
           // Turn right
           movement = "Right"
           break;
-      
-      case 'R':
+
+        case 'R':
           // Rotate 360 degrees clockwise
           movement = "Rotate"
           break;
-      
-      default:
-          // Do nothing
+
+        default:
+          // Return dash to indicate null
+          movement = "-"
           break;
       }
       console.log("Current Movement: " + movement);
