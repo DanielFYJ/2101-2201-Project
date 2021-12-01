@@ -201,6 +201,10 @@ function addNo() {
 
 // Delete  row in  table
 function deleteQueue() {
+  if (qCommands.isEmpty()) {
+    alert("Please add a command by selecting a button in the Controls section");
+}
+else{
   $("table tbody").find('input[name="record"]').each(function () {
     if ($(this).is(":checked")) {
       // Extract the row index
@@ -213,6 +217,7 @@ function deleteQueue() {
   });
   addNo();
 }
+}
 
 function deleteAllQueue() {
   // Delete all the rows in the table
@@ -223,6 +228,10 @@ function deleteAllQueue() {
 
 // Submit the qCommands to the server via GET
 function submitQueue() {
+if (qCommands.isEmpty()) {
+    alert("Please add a command by selecting a button in the Controls section");
+}
+else{
   var qCommandsString = qCommands.convertToString();
   // Formatting the string
   qCommandsString = qCommandsString.replace(/[\[\]']+/g, '');
@@ -240,6 +249,25 @@ function submitQueue() {
       deleteAllQueue();
     }
   });
+}
+}
+
+function submitButton() {
+  if (qCommands.isEmpty()) {
+    // var disableSubmit = document.getElementById('submitQueue').disabled;
+    // disableSubmit = true;
+    // disableSubmit.style["cursor"] = "not-allowed";
+    // console.log("disable")
+    $("#submitQueue").addClass('disabled');
+
+  } else {
+    $("#submitQueue").addClass('enabled');
+
+
+    // var disableSubmit = document.getElementById('submitQueue').disabled;
+    // disableSubmit = false;
+    // disableSubmit.style["cursor"] = "pointer";
+  }
 }
 //#endregion
 
