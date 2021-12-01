@@ -202,7 +202,7 @@ function addNo() {
 // Delete  row in  table
 function deleteQueue() {
   if (qCommands.isEmpty()) {
-    alert("Please add a command by selecting a button in the Controls section");
+    alert("There are no commands in queue to delete. Please add a command by selecting a button in the Controls section");
 }
 else{
   $("table tbody").find('input[name="record"]').each(function () {
@@ -220,10 +220,15 @@ else{
 }
 
 function deleteAllQueue() {
+  if (qCommands.isEmpty()) {
+    alert("There are no commands in queue to delete. Please add a command by selecting a button in the Controls section");
+}
+else{
   // Delete all the rows in the table
   qCommands.clear();
   $('#tableCommands').find("tr:gt(0)").remove();
   //console.log(qCommands.items);
+}
 }
 
 // Submit the qCommands to the server via GET
@@ -252,26 +257,13 @@ else{
 }
 }
 
-function submitButton() {
-  if (qCommands.isEmpty()) {
-    // var disableSubmit = document.getElementById('submitQueue').disabled;
-    // disableSubmit = true;
-    // disableSubmit.style["cursor"] = "not-allowed";
-    // console.log("disable")
-    $("#submitQueue").addClass('disabled');
-
-  } else {
-    $("#submitQueue").addClass('enabled');
-
-
-    // var disableSubmit = document.getElementById('submitQueue').disabled;
-    // disableSubmit = false;
-    // disableSubmit.style["cursor"] = "pointer";
-  }
-}
 //#endregion
 
-//#region 
+
+
+//#endregion
+
+//#region illustration to dispaly robo car status
 /**/
 const isBlackTileDetected = false;
 const isObstacleDetected = false;
@@ -303,3 +295,4 @@ if (isObstacleDetected == false) {
   // display filled rectangle
   rightRect.fillRect(10, 8, 12, 35);
 }
+//#endregion
