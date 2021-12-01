@@ -1,9 +1,13 @@
 let GameCar;
 let car;
-
 var cols = 6;
 var rows = 4;
 var colors = [];
+
+var map_color = [[0,3],[2,3],[4,0],[2,0]];
+var rectwstars = [[0,3],[2,3],[4,0],[2,0]];
+// var stars_loc = [];
+var star_obj = [];
 
 function setup() {
   // var canvas = createCanvas(700, 600);
@@ -11,6 +15,9 @@ function setup() {
   canvas.parent('canvas');
   colors = make2Darray(cols, rows); 
   color2Darray();
+  for (var x = 0; x < rectwstars.length; x++) {
+    star_obj[x] = new gameStar(10 + rectwstars[x][0] * 80, 40 + (rectwstars[x][1] * 80));
+  }
   GameCar = new gameCar(410, 300);
   // GameCar = new gameCar(500, 500);
   // windowResized();
@@ -29,8 +36,25 @@ function draw() {
   text('END', 20, 20);
   fill(51);
   text('START', 410, 380);
+  var cmd = retrieveQueue();
   GameCar.keyPressed();
   GameCar.display();
+  for (var x = 0; x < star_obj.length; x++) {
+    star_obj[x].display();
+  }
+}
+
+class gameStar {
+  constructor(x, y, col, row) {
+    this.x = x;
+    this.y = y;
+    this.row = row;
+    this.col = col;
+  }
+  display() {
+    // fill("red");
+    image(star, this.x, this.y, 60, 50);
+  }
 }
 class gameCar {
   constructor(width, height) {
@@ -39,6 +63,34 @@ class gameCar {
     this.diameter = 20;
     this.speed = 1;
   }
+
+  // keyPressed(cmd) {
+  //   if (cmd == "A") {
+  //     this.move(-2,0);
+  //   }
+  //   if (cmd == "S") {
+  //     this.move(2,0);
+  //   }
+  //   if (cmd == "W") {
+  //     this.move(0,-2);
+  //   }
+  //   if (cmd == "S") {
+  //     this.move(0,2);
+  //   }
+  //   if (cmd == "R") {
+  //   }
+  //   if (cmd == "B") {
+  //   }
+    // if (cmd == "*") { 
+      // if (star_obj.length != 0) {
+      //   for (var x = 0; x < star_obj.length; x++) {
+      //     if (dist(star_obj[x].x,star_obj[x].y, GameCar.x, GameCar.y) < 10) {
+      //       star_obj.splice(0,1);  
+      //     }
+      //   }    
+      // }
+    // }
+  // }
 
   keyPressed() {
     if (keyIsDown(LEFT_ARROW)) {
@@ -70,6 +122,13 @@ class gameCar {
     if(this.y > 320-(this.diameter/2)){
       this.y = 310;
     }
+    // if ( (this.x > 10 && this.x < 70) && (this.y > 290 && this.y <= 340)) {
+      // star_obj.splice(0,1);
+    if (star_obj.length != 0) {
+      if (dist(star_obj[0].x,star_obj[0].y, GameCar.x, GameCar.y) < 10) {
+        star_obj.splice(0,1);
+      }
+    }      
   }
   display() {
     // fill("red");
@@ -112,11 +171,18 @@ function draw2Darray() {
       fill(colors[i][j]);
       stroke(0)
       rect(x, y, 80, 80);
-      if(colors[i][j] == 0) {
-        image(star, x+10, y+10, 60, 50);
-      }
-   }
+    }
   }
+}
+
+function retrieveQueue() {
+  $.ajax({
+    type: "GET",
+    url: "/api/commands/deqeue",
+    success: function (data) {
+      console.log(data);
+    }
+  });
 }
 
 
