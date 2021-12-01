@@ -69,7 +69,7 @@ def submitQueue():
     if request.method == "GET":
         try:
             # Establish database Connection
-            conn = sqlite3.connect('db.sqlite3')
+            conn = sqlite3.connect('Database.db')
             c = conn.cursor()
         except:
             return "Fail to connect to database"
@@ -91,7 +91,7 @@ def dequeue():
     if request.method == "GET":
         # Establish database Connection
         try:
-            conn = sqlite3.connect('db.sqlite3')
+            conn = sqlite3.connect('Database.db')
             c = conn.cursor()
         except:
             return "Fail to connect to database"
@@ -116,7 +116,7 @@ def dequeue():
 def getFirstCommand():
     if request.method == "GET":
         # Establish database Connection
-        conn = sqlite3.connect('db.sqlite3')
+        conn = sqlite3.connect('Database.db')
         # conn.close()
         c = conn.cursor()
         try:
@@ -125,11 +125,11 @@ def getFirstCommand():
             data = c.fetchall()
             conn.close()
             #Indicate end of string
-            return data[0][0] + ''
+            return data[0][0] + '\0'
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
-            return "No commands in queue" + ''
+            return "No commands in queue" + '\0'
     return "Fail"
 
 # Route to test the ESP8266 connection
@@ -137,7 +137,9 @@ def getFirstCommand():
 def helloHandler():
     if request.method == 'GET':
         return 'Hello ESP8266'
-
+@blueprint.route("/datatest/<data>", methods=['GET'])
+def data():
+    print(data)
 # Route for reciving feedback from ESP8266
 @blueprint.route("/api/data/feedback", methods=['GET'])
 def recieveData():
@@ -149,7 +151,7 @@ def recieveData():
             #Store the data into the database
             try:
                 # Establish database Connection
-                conn = sqlite3.connect('db.sqlite3')
+                conn = sqlite3.connect('Database.db')
                 c = conn.cursor()
             except:
                 return "Fail to connect to database"
@@ -173,7 +175,7 @@ def checkFeedback():
         #Store the data into the database
         try:
             # Establish database Connection
-            conn = sqlite3.connect('db.sqlite3')
+            conn = sqlite3.connect('Database.db')
             c = conn.cursor()
         except:
             return "Fail to connect to database"
