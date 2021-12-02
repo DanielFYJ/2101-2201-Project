@@ -82,9 +82,9 @@ def submitQueue():
         try:
             #Get the queue from AJAX GET request
             queue = request.args.get('qCommands')
-            for q in queue:
+            # for q in queue:
                 #Insert data to DB here
-                c.execute("INSERT INTO Queue(Commands) VALUES(?)", (q,))
+            c.execute("INSERT INTO Queue(Commands) VALUES(?)", (queue,))
             conn.commit()
             conn.close()
             return "Success"
@@ -198,3 +198,25 @@ def checkFeedback():
         except:
             return "Fail to fetch data from the database"
     return "Fail to connect to web portal"
+
+# Route to get the first command
+@blueprint.route('/api/commands/getAllCommands', methods=["GET", "POST"])
+def getAllCommands():
+    if request.method == "GET":
+        # Establish database Connection
+        conn = sqlite3.connect('db.sqlite3')
+        # conn.close()
+        c = conn.cursor()
+        try:
+            #Get the queue from AJAX GET request
+            c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC")
+            data = c.fetchall()
+            conn.close()
+            #Indicate end of string
+            print (data)
+            return data + '\0'
+        except:
+            # flash("No commands in queue")
+            # return render_template('page-500.html'), 500
+            return "No commands in queue" + '\0'
+    return "Fail"
