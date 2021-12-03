@@ -2,7 +2,6 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
-
 from os import abort, error
 from flask.blueprints import Blueprint
 from flask.helpers import flash
@@ -14,16 +13,18 @@ from app import login_manager
 from jinja2 import TemplateNotFound
 import sqlite3
 
-
 @blueprint.route('/index')
 @login_required
 def index():
+
     return render_template('index.html', segment='index')
 
 @blueprint.route('/<template>')
 @login_required
 def route_template(template):
+
     try:
+
         if not template.endswith( '.html' ):
             template += '.html'
 
@@ -49,13 +50,6 @@ def get_segment( request ):
     except:
         return None  
 
-# Route to test the ESP8266 connection
-@blueprint.route("/espmodule", methods=['GET'])
-def helloHandler():
-    if request.method == 'GET':
-        return 'Hello ESP8266'
-
-# Route to get the commands in the queue
 @blueprint.route('/getCommands', methods=["GET" , "POST"])
 @login_required
 def getCommands():
@@ -69,7 +63,6 @@ def getCommands():
         return jsonify(commands)
     return jsonify("")
 
-# Route to set the commands in the queue
 @blueprint.route('/submitCommands', methods=["GET", "POST"])
 def submitQueue():
     if request.method == "GET":
@@ -92,7 +85,6 @@ def submitQueue():
             return "Fail to submit queue commands"
     return "Fail"
 
-# Route to get the first command then delete the first command in database
 @blueprint.route('/api/commands/deqeue', methods=["GET", "POST"])
 def dequeue():
     if request.method == "GET":
@@ -111,15 +103,15 @@ def dequeue():
                 c.execute("DELETE FROM Queue WHERE QueueID = (SELECT QueueID FROM Queue ORDER BY QueueID ASC LIMIT 1)")
             conn.commit()
             conn.close()
-            return data[0][0] + '\0'
+            return data[0][0] + ''
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
             return "No commands in queue" + '\0'
     return "Fail"
 
-# Route to get the first command
-@blueprint.route('/api/commands/getFirstCommand', methods=["GET", "POST"])
+
+@blueprint.route('/api/commands/getFirstCommands', methods=["GET", "POST"])
 def getFirstCommand():
     if request.method == "GET":
         # Establish database Connection
@@ -132,7 +124,6 @@ def getFirstCommand():
             data = c.fetchall()
             conn.close()
             #Indicate end of string
-            print (data[0][0])
             return data[0][0] + '\0'
         except:
             # flash("No commands in queue")
@@ -149,7 +140,6 @@ def helloHandler():
 def data():
     print(data)
 # Route for reciving feedback from ESP8266
-
 @blueprint.route("/api/data/feedback", methods=['GET'])
 def recieveData():
     if request.method == 'GET':
@@ -175,6 +165,7 @@ def recieveData():
         else:
             return "Fail to recieve feedback"
     return "Fail to connect to web portal"
+
 
 # Route for check obstacle feedback from ESP8266
 @blueprint.route("/checkFeedback", methods=['POST'])
@@ -207,3 +198,31 @@ def checkFeedback():
         except:
             return "Fail to fetch data from the database"
     return "Fail to connect to web portal"
+
+# Route to get the first command
+@blueprint.route('/api/commands/getAllCommands', methods=["GET", "POST"])
+def getAllCommands():
+    if request.method == "GET":
+        # Establish database Connection
+        conn = sqlite3.connect('Database.db')
+        # conn.close()
+        c = conn.cursor()
+        #Get the queue from AJAX GET request
+        c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC")
+        data = c.fetchall()
+        conn.close()
+        #Indicate end of string
+        formatted = str(data)
+        formatted = formatted.replace("[","")
+        formatted = formatted.replace("]","")
+        formatted = formatted.replace("\'","")
+        formatted = formatted.replace("(","")
+        formatted = formatted.replace(")","")
+        formatted = formatted.replace(",","")
+        formatted = formatted.replace(" ","")
+        return formatted + '\0'
+    #     except:
+    #         # flash("No commands in queue")
+    #         # return render_template('page-500.html'), 500
+    #         return "No commands in queue" + '\0'
+    # return "Fail"
