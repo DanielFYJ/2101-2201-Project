@@ -207,7 +207,7 @@ def checkFeedback():
         except:
             return "Fail to fetch data from the database"
     return "Fail to connect to web portal"
-
+ 
 # Route to get the first command
 @blueprint.route('/api/commands/getAllCommands', methods=["GET", "POST"])
 def getAllCommands():
