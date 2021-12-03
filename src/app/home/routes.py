@@ -22,9 +22,7 @@ def index():
 @blueprint.route('/<template>')
 @login_required
 def route_template(template):
-
     try:
-
         if not template.endswith( '.html' ):
             template += '.html'
 
@@ -75,9 +73,9 @@ def submitQueue():
         try:
             #Get the queue from AJAX GET request
             queue = request.args.get('qCommands')
-            # for q in queue:
+            for q in queue:
                 #Insert data to DB here
-            c.execute("INSERT INTO Queue(Commands) VALUES(?)", (queue,))
+                c.execute("INSERT INTO Queue(Commands) VALUES(?)", (q,))
             conn.commit()
             conn.close()
             return "Success"
@@ -85,7 +83,7 @@ def submitQueue():
             return "Fail to submit queue commands"
     return "Fail"
 
-@blueprint.route('/api/commands/deqeue', methods=["GET", "POST"])
+@blueprint.route('/api/commands/dequeue', methods=["GET", "POST"])
 def dequeue():
     if request.method == "GET":
         # Establish database Connection
@@ -134,6 +132,7 @@ def getFirstCommand():
 @blueprint.route("/datatest/<data>", methods=['GET'])
 def data():
     print(data)
+
 # Route for reciving feedback from ESP8266
 @blueprint.route("/api/data/feedback", methods=['GET'])
 def recieveData():
@@ -160,7 +159,6 @@ def recieveData():
         else:
             return "Fail to recieve feedback"
     return "Fail to connect to web portal"
-
 
 # Route for check obstacle feedback from ESP8266
 @blueprint.route("/checkFeedback", methods=['POST'])
@@ -193,32 +191,3 @@ def checkFeedback():
         except:
             return "Fail to fetch data from the database"
     return "Fail to connect to web portal"
-
-
-# Route to get the first command
-@blueprint.route('/api/commands/getAllCommands', methods=["GET", "POST"])
-def getAllCommands():
-    if request.method == "GET":
-        # Establish database Connection
-        conn = sqlite3.connect('Database.db')
-        # conn.close()
-        c = conn.cursor()
-        #Get the queue from AJAX GET request
-        c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC")
-        data = c.fetchall()
-        conn.close()
-        #Indicate end of string
-        formatted = str(data)
-        formatted = formatted.replace("[","")
-        formatted = formatted.replace("]","")
-        formatted = formatted.replace("\'","")
-        formatted = formatted.replace("(","")
-        formatted = formatted.replace(")","")
-        formatted = formatted.replace(",","")
-        formatted = formatted.replace(" ","")
-        return formatted + '\0'
-    #     except:
-    #         # flash("No commands in queue")
-    #         # return render_template('page-500.html'), 500
-    #         return "No commands in queue" + '\0'
-    # return "Fail"
