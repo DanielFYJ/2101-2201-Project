@@ -140,11 +140,6 @@ def getFirstCommand():
             return "No commands in queue" + '\0'
     return "Fail"
 
-# Route to test the ESP8266 connection
-@blueprint.route("/espmodule", methods=['GET'])
-def helloHandler():
-    if request.method == 'GET':
-        return 'Hello ESP8266'
 @blueprint.route("/datatest/<data>", methods=['GET'])
 def data():
     print(data)
@@ -169,7 +164,7 @@ def recieveData():
                 c.execute("INSERT INTO Feedback(Data) VALUES (?)", (feedback,))
                 conn.commit()
                 conn.close()
-                return "Success"
+                return "Successfuly insert feedback"
             except:
                 return "Fail to store feedback into database"
         else:
