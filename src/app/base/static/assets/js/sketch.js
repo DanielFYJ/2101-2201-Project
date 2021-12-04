@@ -126,7 +126,12 @@ class gameCar {
     } else if (cmd == "D" && first_cmd == "D") {
       this.move(80,0);
     } else if (cmd == "R" && first_cmd == "*") {
-      // console.log("hi");
+      // console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
+      if ((star_obj.length != 0) && (dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y) < 85)) {
+        star_obj.splice(slice_index,1);
+        rectwstars.splice(slice_index,1);
+        await delay(2000);
+      }
       //add points function
     } else if (cmd == "B") {
       first_cmd = "B";
