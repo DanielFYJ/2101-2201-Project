@@ -102,21 +102,72 @@ class gameCar {
     // }
   // }
 
-  keyPressed() {
-    if (keyIsDown(LEFT_ARROW)) {
-      this.move(-2,0);
+  async keyPressed() {
+  //   if (keyIsDown(LEFT_ARROW)) {
+  //     this.move(-2,0);
+  //   }
+  //   if (keyIsDown(RIGHT_ARROW)) {
+  //     this.move(2,0);
+  //   }
+  //   if (keyIsDown(UP_ARROW)) {
+  //     this.move(0,-2);
+  //   }
+  //   if (keyIsDown(DOWN_ARROW)) {
+  //     this.move(0,2);
+  //   }
+  // }
+    await delay(3000);
+    if (cmd == "W" && first_cmd == "W") {
+      this.move(0,-80);
+    } else if (cmd == "A" && first_cmd == "A") {
+      this.move(-80,0);
+    } else if (cmd == "S" && first_cmd == "S") {
+      this.move(0,80);;
+    } else if (cmd == "D" && first_cmd == "D") {
+      this.move(80,0);
+    } else if (cmd == "R" && first_cmd == "*") {
+      // console.log("hi");
+      //add points function
+    } else if (cmd == "B") {
+      first_cmd = "B";
+    } else if (cmd == "*") {
+      first_cmd = "*";
+    } else if (first_cmd == "*" || first_cmd == "B" ) {
+      switch(cmd) {
+        case "W":
+          first_cmd = "W";
+          this.move(0,-80);        
+          break;
+        case "A":
+          first_cmd = "A";
+          this.move(-80,0);
+          break;
+        case "D":
+          first_cmd = "D";
+          this.move(80,0);       
+          break;
+        case "S":
+          first_cmd = "S";
+          this.move(0,80);
+          break;
+      }
+    } else if (cmd == "R") {
+      await delay(3000);
+    } else {
+      this.move(0,0);
     }
-    if (keyIsDown(RIGHT_ARROW)) {
-      this.move(2,0);
-    }
-    if (keyIsDown(UP_ARROW)) {
-      this.move(0,-2);
-    }
-    if (keyIsDown(DOWN_ARROW)) {
-      this.move(0,2);
-    }
-  }
+  
+    // else if (cmd[0] == "*") { 
+    //   if (star_obj.length != 0) {
+    //     for (var x = 0; x < star_obj.length; x++) {
+    //       if (dist(star_obj[x].x,star_obj[x].y, GameCar.x, GameCar.y) < 10) {
+    //         star_obj.splice(0,1);  
+    //       }
+    //     }    
+    //   }
+    // }
 
+  }
   move(x, y) {
     this.x += x;
     this.y += y;
