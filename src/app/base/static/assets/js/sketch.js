@@ -39,8 +39,15 @@ function draw() {
   text('END', 20, 20);
   fill(51);
   text('START', 410, 380);
-  var cmd = retrieveQueue();
-  GameCar.keyPressed();
+  if (first_cmd == "") {
+    first_cmd = retrieveQueue().charAt(0);
+    console.log(first_cmd.length);
+    if (first_cmd == "N"){
+      first_cmd = "";
+    }
+  }
+  cmd = retrieveQueue();
+  GameCar.keyPressed(cmd);
   GameCar.display();
   for (var x = 0; x < star_obj.length; x++) {
     star_obj[x].display();
