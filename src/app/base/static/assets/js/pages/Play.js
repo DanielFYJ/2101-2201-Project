@@ -201,6 +201,10 @@ function addNo() {
 
 // Delete  row in  table
 function deleteQueue() {
+  if (qCommands.isEmpty()) {
+    alert("There are no commands in queue to delete. Please add a command by selecting a button in the Controls section");
+}
+else{
   $("table tbody").find('input[name="record"]').each(function () {
     if ($(this).is(":checked")) {
       // Extract the row index
@@ -213,16 +217,26 @@ function deleteQueue() {
   });
   addNo();
 }
+}
 
 function deleteAllQueue() {
+  if (qCommands.isEmpty()) {
+    alert("There are no commands in queue to delete. Please add a command by selecting a button in the Controls section");
+}
+else{
   // Delete all the rows in the table
   qCommands.clear();
   $('#tableCommands').find("tr:gt(0)").remove();
   //console.log(qCommands.items);
 }
+}
 
 // Submit the qCommands to the server via GET
 function submitQueue() {
+if (qCommands.isEmpty()) {
+    alert("Please add a command by selecting a button in the Controls section");
+}
+else{
   var qCommandsString = qCommands.convertToString();
   // Formatting the string
   qCommandsString = qCommandsString.replace(/[\[\]']+/g, '');
@@ -241,9 +255,15 @@ function submitQueue() {
     }
   });
 }
+}
+
 //#endregion
 
-//#region 
+
+
+//#endregion
+
+//#region illustration to dispaly robo car status
 /**/
 const isBlackTileDetected = false;
 const isObstacleDetected = false;
@@ -275,3 +295,4 @@ if (isObstacleDetected == false) {
   // display filled rectangle
   rightRect.fillRect(10, 8, 12, 35);
 }
+//#endregion
