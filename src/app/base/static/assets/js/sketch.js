@@ -41,7 +41,7 @@ function draw() {
   text('START', 410, 380);
   if (first_cmd == "") {
     first_cmd = retrieveQueue().charAt(0);
-    console.log(first_cmd.length);
+    // console.log(first_cmd.length);
     if (first_cmd == "N"){
       first_cmd = "";
     }
@@ -102,7 +102,7 @@ class gameCar {
     // }
   // }
 
-  async keyPressed() {
+  async keyPressed(cmdz) {
   //   if (keyIsDown(LEFT_ARROW)) {
   //     this.move(-2,0);
   //   }
@@ -116,58 +116,58 @@ class gameCar {
   //     this.move(0,2);
   //   }
   // }
-    await delay(3000);
-    if (cmd == "W" && first_cmd == "W") {
-      this.move(0,-80);
-    } else if (cmd == "A" && first_cmd == "A") {
-      this.move(-80,0);
-    } else if (cmd == "S" && first_cmd == "S") {
-      this.move(0,80);;
-    } else if (cmd == "D" && first_cmd == "D") {
-      this.move(80,0);
-    } else if (cmd == "R" && first_cmd == "*") {
-      // console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
-      if ((star_obj.length != 0) && (dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y) < 85)) {
-        star_obj.splice(slice_index,1);
-        rectwstars.splice(slice_index,1);
-        await delay(2000);
-      }
-      //add points function
-    } else if (cmd == "B") {
-      first_cmd = "B";
-    } else if (cmd == "*") {
-      for (var x = 0; x < rectwstars.length; x++) {
-        if (dist(GameCar.x, GameCar.y, 10+rectwstars[x][0]*80, 40+rectwstars[x][1]*80) < 25) {
-          slice_index = x;
-          first_cmd = "*";
-          break;
+    for (const cmd of cmdz) {
+      if (cmd == "W" && first_cmd == "W") {
+        this.move(0,-80);
+      } else if (cmd == "A" && first_cmd == "A") {
+        this.move(-80,0);
+      } else if (cmd == "S" && first_cmd == "S") {
+        this.move(0,80);;
+      } else if (cmd == "D" && first_cmd == "D") {
+        this.move(80,0);
+      } else if (cmd == "R" && first_cmd == "*") {
+        // console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
+        if ((star_obj.length != 0) && (dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y) < 85)) {
+          star_obj.splice(slice_index,1);
+          rectwstars.splice(slice_index,1);
+          await delay(2000);
         }
+        //add points function
+      } else if (cmd == "B") {
+        first_cmd = "B";
+      } else if (cmd == "*") {
+        for (var x = 0; x < rectwstars.length; x++) {
+          if (dist(GameCar.x, GameCar.y, 10+rectwstars[x][0]*80, 40+rectwstars[x][1]*80) < 25) {
+            slice_index = x;
+            first_cmd = "*";
+            break;
+          }
+        }
+      } else if (first_cmd == "*" || first_cmd == "B" ) {
+        switch(cmd) {
+          case "W":
+            first_cmd = "W";
+            this.move(0,-80);        
+            break;
+          case "A":
+            first_cmd = "A";
+            this.move(-80,0);
+            break;
+          case "D":
+            first_cmd = "D";
+            this.move(80,0);       
+            break;
+          case "S":
+            first_cmd = "S";
+            this.move(0,80);
+            break;
+        }
+      } else if (cmd == "R") {
+        await delay(3000);
+      } else {
+        this.move(0,0);
       }
-    } else if (first_cmd == "*" || first_cmd == "B" ) {
-      switch(cmd) {
-        case "W":
-          first_cmd = "W";
-          this.move(0,-80);        
-          break;
-        case "A":
-          first_cmd = "A";
-          this.move(-80,0);
-          break;
-        case "D":
-          first_cmd = "D";
-          this.move(80,0);       
-          break;
-        case "S":
-          first_cmd = "S";
-          this.move(0,80);
-          break;
-      }
-    } else if (cmd == "R") {
-      await delay(3000);
-    } else {
-      this.move(0,0);
     }
-  
     // else if (cmd[0] == "*") { 
     //   if (star_obj.length != 0) {
     //     for (var x = 0; x < star_obj.length; x++) {
@@ -246,13 +246,16 @@ function draw2Darray() {
 }
 
 function retrieveQueue() {
+  var result = "";
   $.ajax({
     type: "GET",
+    async: false,
     url: "/api/commands/deqeue",
     success: function (data) {
-      console.log(data);
+      result = data;
     }
   });
+  return result;
 }
 
 
