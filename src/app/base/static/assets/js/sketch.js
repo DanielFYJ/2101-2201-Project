@@ -3,26 +3,36 @@ let car;
 var cols = 6;
 var rows = 4;
 var colors = [];
-var map_color = [[0,3],[2,3],[5,0],[2,0]];
-var rectwstars = [[0,3],[2,3],[5,0],[2,0]];
+var map_color = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
+var rectwstars = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
+var map_color2 = [[0,1],[0,3],[2,3],[5,2],[5,0],[4,3],[2,0]];
+var rectwstars2 = [[0,3],[2,3],[5,0],[2,0]];
+var map_color3 = [[5,1],[3,1],[3,3],[1,3],[1,1],[2,2],[5,2],[4,0],[0,1]];
+var rectwstars3 = [[0,3],[2,3],[5,0],[2,0]];
 // var stars_loc = [];
 var star_obj = [];
-var slice_index = "";
+var slice_index = 0;
 var cmd = "";
 var first_cmd = "";
-var delay = ms => new Promise(res => setTimeout(res, ms));
+var star_count = 4;
+//var delay = ms => new Promise(res => setTimeout(res, ms));
 
 function setup() {
   // var canvas = createCanvas(700, 600);
-  var canvas = createCanvas(500, 400);
+  var canvas = createCanvas(500, 450);
   canvas.parent('canvas');
   colors = make2Darray(cols, rows); 
   color2Darray();
-  for (var x = 0; x < rectwstars.length; x++) {
-    star_obj[x] = new gameStar(10 + rectwstars[x][0] * 80, 40 + (rectwstars[x][1] * 80));
+  // for (var x = 0; x < rectwstars.length; x++) {
+  //   star_obj[x] = new gameStar(10 + rectwstars[x][0] * 80, 40 + (rectwstars[x][1] * 80));
+  // }
+  for (var x = 0; x < map_color.length; x++) {
+    if (map_color[x][2] == 1) {
+      star_obj[x] = new gameStar(10 + map_color[x][0] * 80, 70 + (map_color[x][1] * 80));
+    }
   }
-  GameCar = new gameCar(410, 300);
-  // GameCar = new gameCar(500, 500);
+  // GameCar = new gameCar(410, 300);
+  GameCar = new gameCar(410, 330);
   // windowResized();
 }
 
@@ -36,18 +46,25 @@ function draw() {
   draw2Darray();
   textSize(20);
   fill(51);
-  text('END', 20, 20);
+  text("Star Counter: "+star_count, 0,20);
+  // text('END', 20, 20);
+  text('END', 20,50);
   fill(51);
-  text('START', 410, 380);
-  if (first_cmd == "") {
-    first_cmd = retrieveQueue().charAt(0);
-    // console.log(first_cmd.length);
-    if (first_cmd == "N"){
-      first_cmd = "";
-    }
-  }
+  // text('START', 410, 380);
+  text('START', 410, 410);
+  // if (first_cmd == "") {
+  //   first_cmd = retrieveQueue().charAt(0);
+  //   // console.log(first_cmd.length);
+  //   if (first_cmd == "N"){
+  //     first_cmd = "";
+  //   }
+  // }
   cmd = retrieveQueue();
-  GameCar.keyPressed(cmd);
+  if (first_cmd == "" && cmd[0] != "N") {
+    first_cmd = cmd[0];
+    console.log(first_cmd);
+  }
+  GameCar.keyPressed(cmd[0]);
   GameCar.display();
   for (var x = 0; x < star_obj.length; x++) {
     star_obj[x].display();
@@ -63,6 +80,7 @@ class gameStar {
   }
   display() {
     // fill("red");
+    // image(star, this.x, this.y, 60, 50);
     image(star, this.x, this.y, 60, 50);
   }
 }
@@ -102,7 +120,8 @@ class gameCar {
     // }
   // }
 
-  async keyPressed(cmdz) {
+  async keyPressed(cmd) {
+      noLoop();
   //   if (keyIsDown(LEFT_ARROW)) {
   //     this.move(-2,0);
   //   }
@@ -116,7 +135,8 @@ class gameCar {
   //     this.move(0,2);
   //   }
   // }
-    for (const cmd of cmdz) {
+    // for (const cmd of cmdz) {
+      await sleep(1000);
       if (cmd == "W" && first_cmd == "W") {
         this.move(0,-80);
       } else if (cmd == "A" && first_cmd == "A") {
@@ -126,23 +146,43 @@ class gameCar {
       } else if (cmd == "D" && first_cmd == "D") {
         this.move(80,0);
       } else if (cmd == "R" && first_cmd == "*") {
-        // console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
+        // await delay(3000);
+        console.log(star_obj.length);
+        console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
         if ((star_obj.length != 0) && (dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y) < 85)) {
           star_obj.splice(slice_index,1);
           rectwstars.splice(slice_index,1);
-          await delay(2000);
+          star_count -= 1;
         }
+        // console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
+        // if ((star_obj.length != 0) && (dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y) < 100)) {
+        //   console.log("2222");
+        //   star_obj.splice(slice_index,1);
+        //   console.log(star_obj.length);
+        //   map_color[slice_index][2] = 0;
+        //   // await delay(2000);
+        // }
         //add points function
       } else if (cmd == "B") {
         first_cmd = "B";
       } else if (cmd == "*") {
         for (var x = 0; x < rectwstars.length; x++) {
-          if (dist(GameCar.x, GameCar.y, 10+rectwstars[x][0]*80, 40+rectwstars[x][1]*80) < 25) {
+          if (dist(GameCar.x, GameCar.y, 10+rectwstars[x][0]*80, 70+rectwstars[x][1]*80) < 25) {
             slice_index = x;
             first_cmd = "*";
             break;
           }
         }
+        // for (var x = 0; x < map_color.length; x++) {
+        //   if (map_color[x][2] == 1) {
+        //     if (dist(GameCar.x, GameCar.y, 10+map_color[x][0]*80, 40+map_color[x][1]*80) < 25) {
+        //       console.log("1111");
+        //       slice_index = x;
+        //       first_cmd = "*";
+        //       break;
+        //     }
+        //   }
+        // }
       } else if (first_cmd == "*" || first_cmd == "B" ) {
         switch(cmd) {
           case "W":
@@ -162,12 +202,10 @@ class gameCar {
             this.move(0,80);
             break;
         }
-      } else if (cmd == "R") {
-        await delay(3000);
       } else {
         this.move(0,0);
       }
-    }
+      loop();
     // else if (cmd[0] == "*") { 
     //   if (star_obj.length != 0) {
     //     for (var x = 0; x < star_obj.length; x++) {
@@ -191,8 +229,8 @@ class gameCar {
     if(this.x > 480-(this.diameter/2)){
       this.x = 470;
     }
-    if(this.y > 320-(this.diameter/2)){
-      this.y = 310;
+    if(this.y > 340-(this.diameter/2)){
+      this.y = 330;
     }
     // if ( (this.x > 10 && this.x < 70) && (this.y > 290 && this.y <= 340)) {
       // star_obj.splice(0,1);
@@ -233,7 +271,8 @@ function draw2Darray() {
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       let x = i * 80;
-      let y = 30 + (j * 80);
+      // let y = 20 + (j * 80);
+      let y = 60 + (j * 80);
       // var x = i * 80;
       // var y = j * 80;
       // c = random(colors);
@@ -256,6 +295,13 @@ function retrieveQueue() {
     }
   });
   return result;
+}
+
+function sleep(millisecondsDuration)
+{
+  return new Promise((resolve) => {
+    setTimeout(resolve, millisecondsDuration);
+  })
 }
 
 
