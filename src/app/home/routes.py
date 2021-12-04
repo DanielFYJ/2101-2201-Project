@@ -70,7 +70,7 @@ def submitQueue():
     if request.method == "GET":
         try:
             # Establish database Connection
-            conn = sqlite3.connect('db.sqlite3')
+            conn = sqlite3.connect('Database.db')
             c = conn.cursor()
         except:
             return "Fail to connect to database"
@@ -92,7 +92,7 @@ def dequeue():
     if request.method == "GET":
         # Establish database Connection
         try:
-            conn = sqlite3.connect('db.sqlite3')
+            conn = sqlite3.connect('Database.db')
             c = conn.cursor()
         except:
             return "Fail to connect to database"
@@ -115,7 +115,7 @@ def dequeue():
 def getFirstCommand():
     if request.method == "GET":
         # Establish database Connection
-        conn = sqlite3.connect('db.sqlite3')
+        conn = sqlite3.connect('Database.db')
         # conn.close()
         c = conn.cursor()
         try:
