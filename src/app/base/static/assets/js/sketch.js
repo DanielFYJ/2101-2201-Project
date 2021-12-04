@@ -7,7 +7,7 @@ var map_color = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
 var rectwstars = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
 var map_color2 = [[0,1],[0,3],[2,3],[5,2],[5,0],[4,3],[2,0]];
 var rectwstars2 = [[0,3],[2,3],[5,0],[2,0]];
-var map_color3 = [[5,1],[3,1],[3,3],[1,3],[1,1],[2,2],[5,2],[4,0],[0,1]];
+var map_color3 = [[5,1],[3,1],[3,3],[1,3,1],[1,1,1],[2,2,1],[5,2,1],[4,0],[0,1]];
 var rectwstars3 = [[0,3],[2,3],[5,0],[2,0]];
 // var stars_loc = [];
 var star_obj = [];
@@ -262,8 +262,8 @@ function color2Darray() {
       colors[i][j] = 255;
     }
   }
-  for(var i = 0; i < map_color.length; i++) {
-    colors[map_color[i][0]][map_color[i][1]] = 0;
+  for(var i = 0; i < map_color3.length; i++) {
+    colors[map_color3[i][0]][map_color3[i][1]] = 0;
   }
 }
 
