@@ -6,7 +6,8 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}	
-
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
         <div class="pcoded-content">
@@ -34,14 +35,14 @@
                     <div class="card bg-c-blue order-card">
                         <div class="card-body">
                             <h6 class="text-white">Current Movement</h6>
-                            <h2 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span>Left</span></h2>
+                            <h2 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span><h4 class="sensor1"> Sensor : </h4></span></h2>
                             <p class="m-b-0">Car Movement<span class="float-right">-</span></p>
                         </div>
                     </div>
                     <div class="card bg-c-green order-card">
                         <div class="card-body">
                             <h6 class="text-white">Speed</h6>
-                            <h2 class="text-right text-white"><i class="feather icon-tag float-left"></i><span>10</span></h2>
+                            <h2 class="text-right text-white"><i class="feather icon-tag float-left"></i><span><h4 class="sensor2">Sensor :</h4></span></h2>
                             <p class="m-b-0">Car Speed<span class="float-right">m/s</span></p>
                         </div>
                     </div>
@@ -120,7 +121,42 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<script>
 
+    function requestData()
+    {
+        // Ajax call to get the Data from Flask
+        var requests = $.get('/testdata');
+
+        var tm = requests.done(function (result)
+        {
+            // Add the Point
+            // Time carmovement\
+            var data1 = [];
+            data1.push(result[0]);
+            data1.push(result[1]);
+
+
+            // Add the Point
+            // Time speed\
+            var data2 = [];
+            data2.push(result[0]);
+            data2.push(result[2]);
+
+            $(".sensor1").text("");
+            $(".sensor1").text( data1[1] );
+
+            $(".sensor2").text("");
+            $(".sensor2").text( Math.round(data2[1]) );
+
+            // call it again after one second
+            setTimeout(requestData, 10000);
+
+        });
+    }
+
+    requestData()
+</script>
     <!-- Apex Chart -->
     <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
     <!-- custom-chart js -->
