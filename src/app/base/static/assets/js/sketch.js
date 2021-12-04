@@ -3,11 +3,14 @@ let car;
 var cols = 6;
 var rows = 4;
 var colors = [];
-
-var map_color = [[0,3],[2,3],[4,0],[2,0]];
-var rectwstars = [[0,3],[2,3],[4,0],[2,0]];
+var map_color = [[0,3],[2,3],[5,0],[2,0]];
+var rectwstars = [[0,3],[2,3],[5,0],[2,0]];
 // var stars_loc = [];
 var star_obj = [];
+var slice_index = "";
+var cmd = "";
+var first_cmd = "";
+var delay = ms => new Promise(res => setTimeout(res, ms));
 
 function setup() {
   // var canvas = createCanvas(700, 600);
