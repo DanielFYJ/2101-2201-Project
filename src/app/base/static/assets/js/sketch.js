@@ -136,7 +136,13 @@ class gameCar {
     } else if (cmd == "B") {
       first_cmd = "B";
     } else if (cmd == "*") {
-      first_cmd = "*";
+      for (var x = 0; x < rectwstars.length; x++) {
+        if (dist(GameCar.x, GameCar.y, 10+rectwstars[x][0]*80, 40+rectwstars[x][1]*80) < 25) {
+          slice_index = x;
+          first_cmd = "*";
+          break;
+        }
+      }
     } else if (first_cmd == "*" || first_cmd == "B" ) {
       switch(cmd) {
         case "W":
@@ -190,11 +196,11 @@ class gameCar {
     }
     // if ( (this.x > 10 && this.x < 70) && (this.y > 290 && this.y <= 340)) {
       // star_obj.splice(0,1);
-    if (star_obj.length != 0) {
-      if (dist(star_obj[0].x,star_obj[0].y, GameCar.x, GameCar.y) < 10) {
-        star_obj.splice(0,1);
-      }
-    }      
+    // if (star_obj.length != 0) {
+    //   if (dist(star_obj[0].x,star_obj[0].y, GameCar.x, GameCar.y) < 10) {
+    //     star_obj.splice(0,1);
+    //   }
+    // }      
   }
   display() {
     // fill("red");
@@ -213,8 +219,6 @@ function make2Darray(cols, rows) {
 
 function color2Darray() {
   // var avail_color = [0, 255];
-  var map_color = [[0,3],[2,3],[4,0],[2,0]]
-  
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       colors[i][j] = 255;
