@@ -3,32 +3,56 @@ let car;
 var cols = 6;
 var rows = 4;
 var colors = [];
-var map_color = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
-var rectwstars = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
-var map_color2 = [[0,1],[0,3],[2,3],[5,2],[5,0],[4,3],[2,0]];
-var rectwstars2 = [[0,3],[2,3],[5,0],[2,0]];
-var map_color3 = [[5,1],[3,1],[3,3],[1,3,1],[1,1,1],[2,2,1],[5,2,1],[4,0],[0,1]];
-var rectwstars3 = [[0,3],[2,3],[5,0],[2,0]];
+var rectwstars = [];
+// var map_color = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
+// var rectwstars = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
+// var map_color2 = [[0,1],[0,3],[2,3],[5,2],[5,0],[4,3],[2,0]];
+// var rectwstars2 = [[0,3],[2,3],[5,0],[2,0]];
+// var map_color3 = [[5,1],[3,1],[3,3],[1,3,1],[1,1,1],[2,2,1],[5,2,1],[4,0],[0,1]];
+// var rectwstars3 = [[0,3],[2,3],[5,0],[2,0]];
 // var stars_loc = [];
 var star_obj = [];
 var slice_index = 0;
 var cmd = "";
 var first_cmd = "";
 var star_count = 4;
-//var delay = ms => new Promise(res => setTimeout(res, ms));
+var game_map = [];
+var map_string;
 
 function setup() {
   // var canvas = createCanvas(700, 600);
   var canvas = createCanvas(500, 450);
   canvas.parent('canvas');
+  // retrieveGameMap();
   colors = make2Darray(cols, rows); 
-  color2Darray();
+  // console.log(map_string[0].length);
+  // var map_string = retrieveGameMap();
+  let i = 0;
+  for (var x = 0; x < map_string[0].length; x+=3) {
+    // console.log(map_string[0][x]);
+    // var temp_arr = [];
+    game_map.push(new Array(map_string[0][x],map_string[0][x+1],map_string[0][x+2]));
+    // console.log(temp_arr);
+    // game_map[i] = temp_arr;
+   
+    // var temp_arr = new Array(map_string[x],map_string[x+1],map_string[x+2]);
+    // var temp_arr = new Array(4);
+    // map[i]temp_arr;
+    i++;
+  }
+  console.log(game_map.length);
+  color2Darray(game_map);
+  // rectwstars = game_map;
   // for (var x = 0; x < rectwstars.length; x++) {
   //   star_obj[x] = new gameStar(10 + rectwstars[x][0] * 80, 40 + (rectwstars[x][1] * 80));
   // }
-  for (var x = 0; x < map_color.length; x++) {
-    if (map_color[x][2] == 1) {
-      star_obj[x] = new gameStar(10 + map_color[x][0] * 80, 70 + (map_color[x][1] * 80));
+  i = 0;
+  for (var x = 0; x < game_map.length; x++) {
+    if (game_map[x][2] == 1) {
+      star_obj[i] = new gameStar(10 + game_map[x][0] * 80, 70 + (game_map[x][1] * 80));
+      i++;
+      rectwstars.push(new Array(game_map[x][0],game_map[x][1],game_map[x][2]));
+      console.log(rectwstars);
     }
   }
   // GameCar = new gameCar(410, 300);
@@ -39,10 +63,12 @@ function setup() {
 function preload(){
   car = loadImage ('/static/assets/images/car.png');
   star = loadImage ('/static/assets/images/star.png');
+  map_string= loadStrings ('/static/assets/json/map.txt'); 
 }
 
 function draw() {
   clear();  
+  // console.log(map_string);
   draw2Darray();
   textSize(20);
   fill(51);
@@ -148,7 +174,7 @@ class gameCar {
       } else if (cmd == "R" && first_cmd == "*") {
         // await delay(3000);
         console.log(star_obj.length);
-        console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
+        // console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
         if ((star_obj.length != 0) && (dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y) < 85)) {
           star_obj.splice(slice_index,1);
           rectwstars.splice(slice_index,1);
@@ -167,15 +193,17 @@ class gameCar {
         first_cmd = "B";
       } else if (cmd == "*") {
         for (var x = 0; x < rectwstars.length; x++) {
-          if (dist(GameCar.x, GameCar.y, 10+rectwstars[x][0]*80, 70+rectwstars[x][1]*80) < 25) {
-            slice_index = x;
-            first_cmd = "*";
-            break;
+          if (rectwstars[x][2] == 1) {
+            if (dist(GameCar.x, GameCar.y, 10+rectwstars[x][0]*80, 70+rectwstars[x][1]*80) < 25) {
+              slice_index = x;
+              first_cmd = "*";
+              break;
+            }
           }
         }
-        // for (var x = 0; x < map_color.length; x++) {
-        //   if (map_color[x][2] == 1) {
-        //     if (dist(GameCar.x, GameCar.y, 10+map_color[x][0]*80, 40+map_color[x][1]*80) < 25) {
+        // for (var x = 0; x < game_map.length; x++) {
+        //   if (game_map[x][2] == 1) {
+        //     if (dist(GameCar.x, GameCar.y, 10+game_map[x][0]*80, 40+game_map[x][1]*80) < 25) {
         //       console.log("1111");
         //       slice_index = x;
         //       first_cmd = "*";
@@ -255,15 +283,15 @@ function make2Darray(cols, rows) {
   return arr;
 }
 
-function color2Darray() {
+function color2Darray(game_map) {
   // var avail_color = [0, 255];
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       colors[i][j] = 255;
     }
   }
-  for(var i = 0; i < map_color3.length; i++) {
-    colors[map_color3[i][0]][map_color3[i][1]] = 0;
+  for(var i = 0; i < game_map.length; i++) {
+    colors[game_map[i][0]][game_map[i][1]] = 0;
   }
 }
 
@@ -296,6 +324,20 @@ function retrieveQueue() {
   });
   return result;
 }
+
+// function retrieveGameMap() {
+//   var result = "";
+//   $.ajax({
+//     type: "GET",
+//     async: false,
+//     url: "/api/commands/retrieveGameMap",
+//     success: function (data) {
+//       console.log(data); 
+//       result = data;
+//     }
+//   });
+//   return result;
+// }
 
 function sleep(millisecondsDuration)
 {
