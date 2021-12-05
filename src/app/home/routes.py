@@ -25,7 +25,7 @@ def index():
 def route_template(template):
 
     try:
-
+        
         if not template.endswith( '.html' ):
             template += '.html'
 
@@ -110,7 +110,6 @@ def dequeue():
             return "No commands in queue" + '\0'
     return "Fail"
 
-
 @blueprint.route('/api/commands/getFirstCommands', methods=["GET", "POST"])
 def getFirstCommand():
     if request.method == "GET":
@@ -134,3 +133,30 @@ def getFirstCommand():
 def helloHandler():
     if request.method == 'GET':
         return 'Hello EcSP8266'
+
+@blueprint.route('/retrieveGameMap', methods=["GET", "POST"])
+@login_required
+def play():
+    if request.method == "POST":
+        # Establish database Connection
+        try:
+            conn = sqlite3.connect('Database.db')
+            c = conn.cursor()
+        except:
+            return render_template('page-500.html'), 500
+        try:
+            mid = request.form['mid']
+            c.execute("SELECT map_string FROM GameMap WHERE map_id = ?", (mid,))
+            data = c.fetchall()
+            conn.close()
+            with open('app/base/static/assets/json/map.txt', 'w') as outf:
+                outf.write(str(data[0][0]))
+            return redirect("play.html")
+        except:
+            return render_template('page-500.html'), 500
+    else:
+        return render_template('play.html')
+
+
+
+
