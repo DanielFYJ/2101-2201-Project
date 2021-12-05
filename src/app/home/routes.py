@@ -95,7 +95,8 @@ def dequeue():
         try:
             #Get the queue from AJAX GET request
             c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC LIMIT 1")
-            data = c.fetchall()
+            data = c.fetchone()
+            print(data);
             if (data):
                 #Remove the first element from the queue
                 c.execute("DELETE FROM Queue WHERE QueueID = (SELECT QueueID FROM Queue ORDER BY QueueID ASC LIMIT 1)")
@@ -119,10 +120,10 @@ def getFirstCommand():
         try:
             #Get the queue from AJAX GET request
             c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC LIMIT 1")
-            data = c.fetchall()
+            data = c.fetchone()
             conn.close()
             #Indicate end of string
-            return data[0][0] + '\0'
+            return "Commands:" + data[0][0] + '\0'
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500

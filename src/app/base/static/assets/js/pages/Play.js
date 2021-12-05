@@ -324,6 +324,7 @@ function checkFirstCommand() {
     async: false,
     success: function (data) {
       console.log(data);
+      console.log(data[0]);
       switch (data[0]) {
         case 'W':
           // Move foward
