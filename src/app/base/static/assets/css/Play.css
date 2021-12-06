@@ -31,3 +31,8 @@
         display: flex;
         flex-flow: row wrap;
       }
+
+
+.status{
+    margin-left: 20px;
+}
