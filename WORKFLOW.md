@@ -9,3 +9,4 @@
 9. Remove all unused pages
 10. Add tutorial
 11. Fix duplicate feedback() routing in routes.py
+12. Remove Login
