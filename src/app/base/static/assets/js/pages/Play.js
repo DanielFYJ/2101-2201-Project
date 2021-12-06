@@ -113,15 +113,15 @@ $(document).ready(function () {
   $("#black_tiles").click(black_tiles);
   $("#stars").click(star);
   $("#stop").click(stop);
-  $("#deleteQueue").click(deleteQueue);
-  $("#deleteAllQueue").click(deleteAllQueue);
-  $("#submitQueue").click(submitQueue);
+  $("#cfmSubmitDelete").click(deleteQueue);
+  $("#cfmSubmitDeleteAll").click(deleteAllQueue);
+  $("#cfmSubmit").click(submitQueue);
   checkFeedback();
   display();
   checkFirstCommand();
-  setInterval(function () {checkFeedback()}, 10000);
-  setInterval(function () {display()}, 10000);
-  setInterval(function () {checkFirstCommand()}, 10000);
+  setInterval(function () { checkFeedback() }, 10000);
+  setInterval(function () { display() }, 10000);
+  setInterval(function () { checkFirstCommand() }, 10000);
 
 });
 
@@ -213,52 +213,65 @@ function addNo() {
 
 // Delete  row in  table
 function deleteQueue() {
-  $("table tbody").find('input[name="record"]').each(function () {
-    if ($(this).is(":checked")) {
-      // Extract the row index
-      var row = $(this).closest("tr").index();
-      //console.log(row);
-      qCommands.removebyIndex(row);
-      //console.log(qCommands.items);
-      $(this).parents("tr").remove();
-    }
-  });
-  addNo();
+  if (qCommands.isEmpty()) {
+    alert("There are no commands in queue to delete. Please add a command by selecting a button in the Controls section");
+  }
+  else {
+    $("table tbody").find('input[name="record"]').each(function () {
+      if ($(this).is(":checked")) {
+        // Extract the row index
+        var row = $(this).closest("tr").index();
+        //console.log(row);
+        qCommands.removebyIndex(row);
+        //console.log(qCommands.items);
+        $(this).parents("tr").remove();
+      }
+    });
+    addNo();
+  }
 }
 
 function deleteAllQueue() {
-  // Delete all the rows in the table
-  qCommands.clear();
-  $('#tableCommands').find("tr:gt(0)").remove();
-  //console.log(qCommands.items);
+  if (qCommands.isEmpty()) {
+    alert("There are no commands in queue to delete. Please add a command by selecting a button in the Controls section");
+  }
+  else {
+    // Delete all the rows in the table
+    qCommands.clear();
+    $('#tableCommands').find("tr:gt(0)").remove();
+    //console.log(qCommands.items);
+  }
 }
 
 // Submit the qCommands to the server via GET
 function submitQueue() {
-  var qCommandsString = qCommands.convertToString();
-  // Formatting the string
-  qCommandsString = qCommandsString.replace(/[\[\]']+/g, '');
-  qCommandsString = qCommandsString.replace(/["]+/g, '');
-  qCommandsString = qCommandsString.replace(/[,]+/g, '');
-  console.log(qCommandsString);
-  $.ajax({
-    type: "GET",
-    url: "/submitCommands",
-    data: {
-      "qCommands": qCommandsString
-    },
-    success: function (data) {
-      //console.log(data);
-      deleteAllQueue();
-    }
-  });
+  if (qCommands.isEmpty()) {
+    alert("Please add a command by selecting a button in the Controls section");
+  }
+  else {
+    var qCommandsString = qCommands.convertToString();
+    // Formatting the string
+    qCommandsString = qCommandsString.replace(/[\[\]']+/g, '');
+    qCommandsString = qCommandsString.replace(/["]+/g, '');
+    qCommandsString = qCommandsString.replace(/[,]+/g, '');
+    console.log(qCommandsString);
+    $.ajax({
+      type: "GET",
+      url: "/submitCommands",
+      data: {
+        "qCommands": qCommandsString
+      },
+      success: function (data) {
+        //console.log(data);
+        deleteAllQueue();
+      }
+    });
+  }
 }
 
-//#endregion
 
-//#region 
+//#region illustration to dispaly robo car status
 /**/
-
 function display() {
   var bottomRect = document.getElementById("bottomRect").getContext('2d');
   if (isBlackTileDetected == false) {
@@ -320,10 +333,11 @@ function checkFeedback() {
 function checkFirstCommand() {
   $.ajax({
     type: "GET",
-    url: "/api/commands/getFirstCommand",
+    url: "/api/commands/getFirstCommands",
     async: false,
     success: function (data) {
       console.log(data);
+      console.log(data[0]);
       switch (data[0]) {
         case 'W':
           // Move foward
@@ -362,3 +376,7 @@ function checkFirstCommand() {
     }
   });
 }
+
+//#endregion
+//#endregion
+
