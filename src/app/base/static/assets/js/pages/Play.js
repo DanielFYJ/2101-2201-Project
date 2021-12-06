@@ -267,6 +267,7 @@ function submitQueue() {
       }
     });
   }
+}
 
 
   //#region illustration to dispaly robo car status
@@ -328,11 +329,12 @@ function submitQueue() {
       }
     });
   }
+
   // AJAX call to check if the car detect obstacle
   function checkFirstCommand() {
     $.ajax({
       type: "GET",
-      url: "/api/commands/getFirstCommand",
+      url: "/api/commands/getFirstCommands",
       async: false,
       success: function (data) {
         console.log(data);
@@ -375,5 +377,4 @@ function submitQueue() {
       }
     });
   }
-}
  //#endregion
