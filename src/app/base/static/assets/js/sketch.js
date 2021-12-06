@@ -13,10 +13,10 @@ var game_map = [];
 var map_string;
 
 function setup() {
-  var canvas = createCanvas(500, 450);
-  canvas.parent('canvas');
-  startGame();
-  createRestartButton();
+    var canvas = createCanvas(500, 450);
+    canvas.parent('canvas');
+    startGame();
+    createRestartButton();
 }
 
 function preload(){
@@ -96,19 +96,6 @@ class gameCar {
 
   async keyPressed(cmd) {
       noLoop();
-    // if (keyIsDown(LEFT_ARROW)) {
-    //   this.move(-2,0);
-    // }
-    // if (keyIsDown(RIGHT_ARROW)) {
-    //   this.move(2,0);
-    // }
-    // if (keyIsDown(UP_ARROW)) {
-    //   this.move(0,-2);
-    // }
-    // if (keyIsDown(DOWN_ARROW)) {
-    //   this.move(0,2);
-    // }
-  
       await sleep(1000);
       if (cmd == "W" && first_cmd == "W") {
         this.move(0,-80);
@@ -195,7 +182,6 @@ function make2Darray(cols, rows) {
 }
 
 function color2Darray(game_map) {
-  // var avail_color = [0, 255];
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       colors[i][j] = 255;
@@ -239,7 +225,6 @@ function sleep(millisecondsDuration)
 }
 
 function EndGame(GameCar) {
-  console.log(star_count);
   if ((dist(GameCar.x, GameCar.y, 10, 70) < 25) && (star_count == 0)) {
     clear();
     background(255);
@@ -268,3 +253,8 @@ function startGame() {
   }
   GameCar = new gameCar(410, 330);
 }
+
+//testing
+module.exports = make2Darray;
+
+    

@@ -22,3 +22,14 @@ pip install -r requirements.txt
 ```sh
 start_server.bat
 ```
+## Whitebox Testing
+1. install and initialize npm
+```sh
+npm install --save-dev jest
+npm init -y
+```
+2. Change to "test": "jest" in package.json file.
+3. run the test
+```sh
+npm run test  
+```
