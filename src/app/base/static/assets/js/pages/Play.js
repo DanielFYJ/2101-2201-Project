@@ -113,9 +113,9 @@ $(document).ready(function () {
   $("#black_tiles").click(black_tiles);
   $("#stars").click(star);
   $("#stop").click(stop);
-  $("#deleteQueue").click(deleteQueue);
-  $("#deleteAllQueue").click(deleteAllQueue);
-  $("#submitQueue").click(submitQueue);
+  $("#cfmSubmitDelete").click(deleteQueue);
+  $("#cfmSubmitDeleteAll").click(deleteAllQueue);
+  $("#cfmSubmit").click(submitQueue);
   checkFeedback();
   display();
   checkFirstCommand();
@@ -271,7 +271,6 @@ function submitQueue() {
 
   //#region illustration to dispaly robo car status
   /**/
-
   function display() {
     var bottomRect = document.getElementById("bottomRect").getContext('2d');
     if (isBlackTileDetected == false) {
@@ -376,4 +375,5 @@ function submitQueue() {
     });
   }
 }
- //#endregion
+//#endregion
+//#endregion
