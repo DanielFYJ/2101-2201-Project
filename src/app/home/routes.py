@@ -144,6 +144,7 @@ def getFirstCommand():
 def main():
     return render_template('Dashboard.html')
 
+
 count = 0 
 @blueprint.route('/testdata', methods=["GET", "POST"])
 def data():
@@ -175,8 +176,8 @@ def data():
  
 
 # Route for reciving feedback from ESP8266
-@blueprint.route("/api/data/feedback", methods=['GET'])
-def recieveData():
+@blueprint.route("/api/data/testConn", methods=['GET'])
+def testConn():
     if request.method == 'GET':
         return 'Hello EcSP8266'
 
@@ -206,6 +207,33 @@ def play():
 
 
 
+        # Get data from URL parameters
+        feedback = request.args.get('feedback')
+        print (feedback)
+        if (feedback != None):
+            #Store the data into the database
+            try:
+                # Establish database Connection
+                conn = sqlite3.connect('Database.db')
+                c = conn.cursor()
+            except:
+                return "Fail to connect to database"
+            try:
+                #Insert data to DB here
+                c.execute("INSERT INTO Feedback(Data) VALUES (?)", (feedback,))
+                conn.commit()
+                conn.close()
+                return "Successfuly insert feedback"
+            except:
+                return "Fail to store feedback into database"
+        else:
+            return "Fail to recieve feedback"
+    return "Fail to connect to web portal"
+
+# Route for reciving feedback from ESP8266
+@blueprint.route("/api/data/feedback", methods=['GET'])
+def recieveData():
+    if request.method == 'GET':
         # Get data from URL parameters
         feedback = request.args.get('feedback')
         print (feedback)
