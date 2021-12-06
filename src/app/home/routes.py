@@ -11,12 +11,22 @@ from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
+import json
+from time import time
 import sqlite3
+
+
+def db_connection():
+    conn = None
+    try:
+        conn = sqlite3.connect('Database.db')
+    except sqlite3.error as e:
+        print(e)
+    return conn
 
 @blueprint.route('/index')
 @login_required
 def index():
-
     return render_template('index.html', segment='index')
 
 @blueprint.route('/<template>')
@@ -130,9 +140,10 @@ def getFirstCommand():
             return "No commands in queue" + '\0'
     return "Fail"
 
-@blueprint.route("/datatest/<data>", methods=['GET'])
-def data():
-    print(data)
+    
+@blueprint.route('/Dashboard', methods=["GET", "POST"])
+def main():
+    return render_template('Dashboard.html')
 
 # Route for reciving feedback from ESP8266
 @blueprint.route("/api/data/feedback", methods=['GET'])
