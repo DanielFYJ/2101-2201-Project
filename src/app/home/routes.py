@@ -248,7 +248,7 @@ def checkFeedback():
             feedback = c.fetchall()
             print(feedback)
             if (feedback):
-                text = '';
+                text = ''
                 c.execute("DELETE FROM Feedback")
                 conn.commit()
                 conn.close()
