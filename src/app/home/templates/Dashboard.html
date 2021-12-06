@@ -35,17 +35,16 @@
             <!-- order-card start -->
                 <div class="card bg-c-red order-card">
                     <div class="card-body">
-                        <h6 class="text-white">Current Movement <span id="Movement"></span></h6>
-                        <h2 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span>
-                                <h4 class="sensor1"> Sensor : </h4>
+                        <h6 class="text-white">Current Movement </h6>
+                        <h2 class="text-right text-white"><i class="fas fa-car-alt float-left"></i><span>
+                                <span id="Movement"></span>
                             </span></h2>
-                        <p class="m-b-0">Car Movement<span class="float-right">-</span></p>
                     </div>
                 </div>
                 <div class="card bg-c-purple order-card">
                     <div class="card-body">
                         <h6 class="text-white">Speed</h6>
-                        <h2 class="text-right text-white"><i class="feather icon-tag float-left"></i><span>
+                        <h2 class="text-right text-white"><i class="fas fa-tachometer-alt float-left"></i><span>
                                 <h4 class="sensor2">Sensor :</h4>
                             </span></h2>
                         <span class="float-right">cm/s</span></p>
@@ -136,21 +135,19 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
-
     function requestData() {
         // Ajax call to get the Data from Flask
         var requests = $.get('/testdata');
 
         var tm = requests.done(function (result) {
             // Add the Point
-            // Time carmovement\
+            // Time carmovement
             var data1 = [];
             data1.push(result[0]);
             data1.push(result[1]);
 
-
             // Add the Point
-            // Time speed\
+            // Time speed
             var data2 = [];
             data2.push(result[0]);
             data2.push(result[2]);
@@ -163,7 +160,6 @@
 
             // call it again after one second
             setTimeout(requestData, 10000);
-
         });
     }
 
