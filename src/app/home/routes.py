@@ -158,11 +158,12 @@ def getFirstCommand():
         c = conn.cursor()
         try:
             #Get the queue from AJAX GET request
-            c.execute("SELECT commands FROM Queue ORDER BY QueueID ASC LIMIT 1")
+            c.execute("SELECT commands FROM QueueCar ORDER BY QueueID ASC LIMIT 1")
             data = c.fetchone()
             conn.close()
             #Indicate end of string
-            return "Commands:" + data[0][0] + '\0'
+            print(data[0][0]);
+            return data[0][0] + '\0'
         except:
             # flash("No commands in queue")
             # return render_template('page-500.html'), 500
