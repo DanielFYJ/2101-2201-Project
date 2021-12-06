@@ -15,7 +15,7 @@ var star_obj = [];
 var slice_index = 0;
 var cmd = "";
 var first_cmd = "";
-var star_count = 4;
+var star_count = 0;
 var game_map = [];
 var map_string;
 
@@ -23,41 +23,45 @@ function setup() {
   // var canvas = createCanvas(700, 600);
   var canvas = createCanvas(500, 450);
   canvas.parent('canvas');
-  // retrieveGameMap();
-  colors = make2Darray(cols, rows); 
-  // console.log(map_string[0].length);
-  // var map_string = retrieveGameMap();
-  let i = 0;
-  for (var x = 0; x < map_string[0].length; x+=3) {
-    // console.log(map_string[0][x]);
-    // var temp_arr = [];
-    game_map.push(new Array(map_string[0][x],map_string[0][x+1],map_string[0][x+2]));
-    // console.log(temp_arr);
-    // game_map[i] = temp_arr;
-   
-    // var temp_arr = new Array(map_string[x],map_string[x+1],map_string[x+2]);
-    // var temp_arr = new Array(4);
-    // map[i]temp_arr;
-    i++;
-  }
-  console.log(game_map.length);
-  color2Darray(game_map);
-  // rectwstars = game_map;
-  // for (var x = 0; x < rectwstars.length; x++) {
-  //   star_obj[x] = new gameStar(10 + rectwstars[x][0] * 80, 40 + (rectwstars[x][1] * 80));
+  startGame();
+  // colors = make2Darray(cols, rows); 
+  // let i = 0;
+  // for (var x = 0; x < map_string[0].length; x+=3) {
+  //   game_map.push(new Array(map_string[0][x],map_string[0][x+1],map_string[0][x+2]));
+  //   i++;
   // }
-  i = 0;
-  for (var x = 0; x < game_map.length; x++) {
-    if (game_map[x][2] == 1) {
-      star_obj[i] = new gameStar(10 + game_map[x][0] * 80, 70 + (game_map[x][1] * 80));
-      i++;
-      rectwstars.push(new Array(game_map[x][0],game_map[x][1],game_map[x][2]));
-      console.log(rectwstars);
-    }
-  }
-  // GameCar = new gameCar(410, 300);
-  GameCar = new gameCar(410, 330);
+  // console.log(game_map.length);
+  // color2Darray(game_map);
+  // i = 0;
+  // for (var x = 0; x < game_map.length; x++) {
+  //   if (game_map[x][2] == 1) {
+  //     star_obj[i] = new gameStar(10 + game_map[x][0] * 80, 70 + (game_map[x][1] * 80));
+  //     i++;
+  //     rectwstars.push(new Array(game_map[x][0],game_map[x][1],game_map[x][2]));
+  //   }
+  // }
+  // // GameCar = new gameCar(410, 300);
+  // GameCar = new gameCar(410, 330);
   // windowResized();
+  
+  button = createButton('Restart Game');
+  button.parent('canvas');
+  let col = color('#4099ff');
+  // button.style('font-color', color('#fff'));
+  button.style('background-color', col);
+  button.style('color', 'white');
+  button.style('display', 'block');
+  button.style('font-weight','400');
+  button.style('padding', "0.375rem 0.95rem");
+  button.style('border-color', '#4099ff');
+  // button.style('align', 'right'); 
+  // button.style('width', '100%')
+  // button.position("absolute");
+  // button.style('left','640px');
+  // button.style('right','230px');
+  // button.position(650,230,"fixed");
+
+  button.mousePressed(startGame);
 }
 
 function preload(){
@@ -72,19 +76,15 @@ function draw() {
   draw2Darray();
   textSize(20);
   fill(51);
-  text("Star Counter: "+star_count, 0,20);
+  if (rectwstars.length != 0) {
+    star_count = 4;
+    text("Star Counter : "+star_count, 0,20);
+  }
   // text('END', 20, 20);
   text('END', 20,50);
   fill(51);
   // text('START', 410, 380);
   text('START', 410, 410);
-  // if (first_cmd == "") {
-  //   first_cmd = retrieveQueue().charAt(0);
-  //   // console.log(first_cmd.length);
-  //   if (first_cmd == "N"){
-  //     first_cmd = "";
-  //   }
-  // }
   cmd = retrieveQueue();
   if (first_cmd == "" && cmd[0] != "N") {
     first_cmd = cmd[0];
@@ -95,6 +95,7 @@ function draw() {
   for (var x = 0; x < star_obj.length; x++) {
     star_obj[x].display();
   }
+  EndGame(GameCar);
 }
 
 class gameStar {
@@ -118,50 +119,21 @@ class gameCar {
     this.speed = 1;
   }
 
-  // keyPressed(cmd) {
-  //   if (cmd == "A") {
-  //     this.move(-2,0);
-  //   }
-  //   if (cmd == "S") {
-  //     this.move(2,0);
-  //   }
-  //   if (cmd == "W") {
-  //     this.move(0,-2);
-  //   }
-  //   if (cmd == "S") {
-  //     this.move(0,2);
-  //   }
-  //   if (cmd == "R") {
-  //   }
-  //   if (cmd == "B") {
-  //   }
-    // if (cmd == "*") { 
-      // if (star_obj.length != 0) {
-      //   for (var x = 0; x < star_obj.length; x++) {
-      //     if (dist(star_obj[x].x,star_obj[x].y, GameCar.x, GameCar.y) < 10) {
-      //       star_obj.splice(0,1);  
-      //     }
-      //   }    
-      // }
-    // }
-  // }
-
   async keyPressed(cmd) {
       noLoop();
-  //   if (keyIsDown(LEFT_ARROW)) {
-  //     this.move(-2,0);
-  //   }
-  //   if (keyIsDown(RIGHT_ARROW)) {
-  //     this.move(2,0);
-  //   }
-  //   if (keyIsDown(UP_ARROW)) {
-  //     this.move(0,-2);
-  //   }
-  //   if (keyIsDown(DOWN_ARROW)) {
-  //     this.move(0,2);
-  //   }
-  // }
-    // for (const cmd of cmdz) {
+    // if (keyIsDown(LEFT_ARROW)) {
+    //   this.move(-2,0);
+    // }
+    // if (keyIsDown(RIGHT_ARROW)) {
+    //   this.move(2,0);
+    // }
+    // if (keyIsDown(UP_ARROW)) {
+    //   this.move(0,-2);
+    // }
+    // if (keyIsDown(DOWN_ARROW)) {
+    //   this.move(0,2);
+    // }
+  
       await sleep(1000);
       if (cmd == "W" && first_cmd == "W") {
         this.move(0,-80);
@@ -172,7 +144,6 @@ class gameCar {
       } else if (cmd == "D" && first_cmd == "D") {
         this.move(80,0);
       } else if (cmd == "R" && first_cmd == "*") {
-        // await delay(3000);
         console.log(star_obj.length);
         // console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
         if ((star_obj.length != 0) && (dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y) < 85)) {
@@ -180,15 +151,7 @@ class gameCar {
           rectwstars.splice(slice_index,1);
           star_count -= 1;
         }
-        // console.log(dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y));
-        // if ((star_obj.length != 0) && (dist(GameCar.x, GameCar.y,star_obj[slice_index].x,star_obj[slice_index].y) < 100)) {
-        //   console.log("2222");
-        //   star_obj.splice(slice_index,1);
-        //   console.log(star_obj.length);
-        //   map_color[slice_index][2] = 0;
-        //   // await delay(2000);
-        // }
-        //add points function
+       
       } else if (cmd == "B") {
         first_cmd = "B";
       } else if (cmd == "*") {
@@ -201,16 +164,7 @@ class gameCar {
             }
           }
         }
-        // for (var x = 0; x < game_map.length; x++) {
-        //   if (game_map[x][2] == 1) {
-        //     if (dist(GameCar.x, GameCar.y, 10+game_map[x][0]*80, 40+game_map[x][1]*80) < 25) {
-        //       console.log("1111");
-        //       slice_index = x;
-        //       first_cmd = "*";
-        //       break;
-        //     }
-        //   }
-        // }
+      
       } else if (first_cmd == "*" || first_cmd == "B" ) {
         switch(cmd) {
           case "W":
@@ -234,16 +188,6 @@ class gameCar {
         this.move(0,0);
       }
       loop();
-    // else if (cmd[0] == "*") { 
-    //   if (star_obj.length != 0) {
-    //     for (var x = 0; x < star_obj.length; x++) {
-    //       if (dist(star_obj[x].x,star_obj[x].y, GameCar.x, GameCar.y) < 10) {
-    //         star_obj.splice(0,1);  
-    //       }
-    //     }    
-    //   }
-    // }
-
   }
   move(x, y) {
     this.x += x;
@@ -251,23 +195,17 @@ class gameCar {
     if(this.x < 0+(this.diameter/2)){
       this.x = 10;
     }
-    if(this.y < 0+(this.diameter/2)){
-      this.y = 10;
+    if(this.y < 80+(this.diameter/2)){
+      this.y = 90;
     }
-    if(this.x > 480-(this.diameter/2)){
-      this.x = 470;
+    if(this.x > 420-(this.diameter/2)){
+      this.x = 410;
     }
     if(this.y > 340-(this.diameter/2)){
       this.y = 330;
     }
-    // if ( (this.x > 10 && this.x < 70) && (this.y > 290 && this.y <= 340)) {
-      // star_obj.splice(0,1);
-    // if (star_obj.length != 0) {
-    //   if (dist(star_obj[0].x,star_obj[0].y, GameCar.x, GameCar.y) < 10) {
-    //     star_obj.splice(0,1);
-    //   }
-    // }      
   }
+  
   display() {
     // fill("red");
     image(car, this.x, this.y, 60, 30);
@@ -299,12 +237,7 @@ function draw2Darray() {
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       let x = i * 80;
-      // let y = 20 + (j * 80);
       let y = 60 + (j * 80);
-      // var x = i * 80;
-      // var y = j * 80;
-      // c = random(colors);
-      // fill(255);
       fill(colors[i][j]);
       stroke(0)
       rect(x, y, 80, 80);
@@ -325,20 +258,6 @@ function retrieveQueue() {
   return result;
 }
 
-// function retrieveGameMap() {
-//   var result = "";
-//   $.ajax({
-//     type: "GET",
-//     async: false,
-//     url: "/api/commands/retrieveGameMap",
-//     success: function (data) {
-//       console.log(data); 
-//       result = data;
-//     }
-//   });
-//   return result;
-// }
-
 function sleep(millisecondsDuration)
 {
   return new Promise((resolve) => {
@@ -346,9 +265,33 @@ function sleep(millisecondsDuration)
   })
 }
 
+function EndGame(GameCar) {
+  if ((dist(GameCar.x, GameCar.y, 10, 70) < 25) && (star_count == 0)) {
+    clear();
+    background(255);
+    text('Game Success', 150,180);
+  }
+}
 
-
-
-
-
-
+function startGame() {
+  clear();
+  background(255);
+  colors = make2Darray(cols, rows); 
+  let i = 0;
+  for (var x = 0; x < map_string[0].length; x+=3) {
+    game_map.push(new Array(map_string[0][x],map_string[0][x+1],map_string[0][x+2]));
+    i++;
+  }
+  console.log(game_map.length);
+  color2Darray(game_map);
+  i = 0;
+  for (var x = 0; x < game_map.length; x++) {
+    if (game_map[x][2] == 1) {
+      star_obj[i] = new gameStar(10 + game_map[x][0] * 80, 70 + (game_map[x][1] * 80));
+      i++;
+      rectwstars.push(new Array(game_map[x][0],game_map[x][1],game_map[x][2]));
+    }
+  }
+  // GameCar = new gameCar(410, 300);
+  GameCar = new gameCar(410, 330);
+}
