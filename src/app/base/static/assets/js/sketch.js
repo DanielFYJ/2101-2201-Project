@@ -4,64 +4,19 @@ var cols = 6;
 var rows = 4;
 var colors = [];
 var rectwstars = [];
-// var map_color = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
-// var rectwstars = [[0,3,1],[2,3,1],[5,0,1],[2,0,1]];
-// var map_color2 = [[0,1],[0,3],[2,3],[5,2],[5,0],[4,3],[2,0]];
-// var rectwstars2 = [[0,3],[2,3],[5,0],[2,0]];
-// var map_color3 = [[5,1],[3,1],[3,3],[1,3,1],[1,1,1],[2,2,1],[5,2,1],[4,0],[0,1]];
-// var rectwstars3 = [[0,3],[2,3],[5,0],[2,0]];
-// var stars_loc = [];
 var star_obj = [];
 var slice_index = 0;
 var cmd = "";
 var first_cmd = "";
-var star_count = 0;
+var star_count = 4;
 var game_map = [];
 var map_string;
 
 function setup() {
-  // var canvas = createCanvas(700, 600);
   var canvas = createCanvas(500, 450);
   canvas.parent('canvas');
   startGame();
-  // colors = make2Darray(cols, rows); 
-  // let i = 0;
-  // for (var x = 0; x < map_string[0].length; x+=3) {
-  //   game_map.push(new Array(map_string[0][x],map_string[0][x+1],map_string[0][x+2]));
-  //   i++;
-  // }
-  // console.log(game_map.length);
-  // color2Darray(game_map);
-  // i = 0;
-  // for (var x = 0; x < game_map.length; x++) {
-  //   if (game_map[x][2] == 1) {
-  //     star_obj[i] = new gameStar(10 + game_map[x][0] * 80, 70 + (game_map[x][1] * 80));
-  //     i++;
-  //     rectwstars.push(new Array(game_map[x][0],game_map[x][1],game_map[x][2]));
-  //   }
-  // }
-  // // GameCar = new gameCar(410, 300);
-  // GameCar = new gameCar(410, 330);
-  // windowResized();
-  
-  button = createButton('Restart Game');
-  button.parent('canvas');
-  let col = color('#4099ff');
-  // button.style('font-color', color('#fff'));
-  button.style('background-color', col);
-  button.style('color', 'white');
-  button.style('display', 'block');
-  button.style('font-weight','400');
-  button.style('padding', "0.375rem 0.95rem");
-  button.style('border-color', '#4099ff');
-  // button.style('align', 'right'); 
-  // button.style('width', '100%')
-  // button.position("absolute");
-  // button.style('left','640px');
-  // button.style('right','230px');
-  // button.position(650,230,"fixed");
-
-  button.mousePressed(startGame);
+  createRestartButton();
 }
 
 function preload(){
@@ -72,30 +27,51 @@ function preload(){
 
 function draw() {
   clear();  
-  // console.log(map_string);
   draw2Darray();
-  textSize(20);
-  fill(51);
-  if (rectwstars.length != 0) {
-    star_count = 4;
-    text("Star Counter : "+star_count, 0,20);
+  GenerateGameText();
+  storeFirstCmd();
+  GameCar.keyPressed(cmd[0]);
+  GameCar.display();
+  displayAllStars();
+  EndGame(GameCar);
+}
+function displayAllStars() {
+for (var x = 0; x < star_obj.length; x++) {
+    star_obj[x].display();
   }
-  // text('END', 20, 20);
-  text('END', 20,50);
-  fill(51);
-  // text('START', 410, 380);
-  text('START', 410, 410);
+}
+
+function storeFirstCmd(){
   cmd = retrieveQueue();
   if (first_cmd == "" && cmd[0] != "N") {
     first_cmd = cmd[0];
-    console.log(first_cmd);
   }
-  GameCar.keyPressed(cmd[0]);
-  GameCar.display();
-  for (var x = 0; x < star_obj.length; x++) {
-    star_obj[x].display();
+}
+
+function GenerateGameText() {
+  textSize(20);
+  fill(51);
+  if (rectwstars.length != 0) {
+    text("Star Counter : "+star_count, 0,20);
+  } else {
+    star_count = 0;
   }
-  EndGame(GameCar);
+  text('END', 20,50);
+  fill(51);
+  text('START', 410, 410);
+}
+
+function createRestartButton() {
+  button = createButton('Restart Game');
+  button.parent('canvas');
+  let col = color('#4099ff');
+  button.style('background-color', col);
+  button.style('color', 'white');
+  button.style('display', 'block');
+  button.style('font-weight','400');
+  button.style('padding', "0.375rem 0.95rem");
+  button.style('border-color', '#4099ff');
+  button.mousePressed(startGame);
 }
 
 class gameStar {
@@ -116,7 +92,6 @@ class gameCar {
     this.x = width;
     this.y = height;
     this.diameter = 20;
-    this.speed = 1;
   }
 
   async keyPressed(cmd) {
@@ -207,9 +182,7 @@ class gameCar {
   }
   
   display() {
-    // fill("red");
     image(car, this.x, this.y, 60, 30);
-    // ellipse(this.x, this.y, this.diameter, this.diameter);
   }
 }
 
@@ -266,6 +239,7 @@ function sleep(millisecondsDuration)
 }
 
 function EndGame(GameCar) {
+  console.log(star_count);
   if ((dist(GameCar.x, GameCar.y, 10, 70) < 25) && (star_count == 0)) {
     clear();
     background(255);
@@ -292,6 +266,5 @@ function startGame() {
       rectwstars.push(new Array(game_map[x][0],game_map[x][1],game_map[x][2]));
     }
   }
-  // GameCar = new gameCar(410, 300);
   GameCar = new gameCar(410, 330);
 }
