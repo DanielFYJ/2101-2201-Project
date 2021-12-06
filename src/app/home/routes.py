@@ -26,12 +26,10 @@ def db_connection():
     return conn
 
 @blueprint.route('/index')
-@login_required
 def index():
-    return render_template('index.html', segment='index')
+    return render_template('play.html', segment='index')
 
 @blueprint.route('/<template>')
-@login_required
 def route_template(template):
     try:
         if not template.endswith( '.html' ):
@@ -60,7 +58,6 @@ def get_segment( request ):
         return None  
 
 @blueprint.route('/getCommands', methods=["GET" , "POST"])
-@login_required
 def getCommands():
     if request.method == "POST":
         commands = request.form['queue']
@@ -87,6 +84,7 @@ def submitQueue():
             for q in queue:
                 #Insert data to DB here
                 c.execute("INSERT INTO Queue(Commands) VALUES(?)", (q,))
+                c.execute("INSERT INTO QueueCar(Commands) VALUES(?)", (q,))
             conn.commit()
             conn.close()
             return "Success"
@@ -204,32 +202,6 @@ def play():
     else:
         return render_template('play.html')
 
-
-
-
-        # Get data from URL parameters
-        feedback = request.args.get('feedback')
-        print (feedback)
-        if (feedback != None):
-            #Store the data into the database
-            try:
-                # Establish database Connection
-                conn = sqlite3.connect('Database.db')
-                c = conn.cursor()
-            except:
-                return "Fail to connect to database"
-            try:
-                #Insert data to DB here
-                c.execute("INSERT INTO Feedback(Data) VALUES (?)", (feedback,))
-                conn.commit()
-                conn.close()
-                return "Successfuly insert feedback"
-            except:
-                return "Fail to store feedback into database"
-        else:
-            return "Fail to recieve feedback"
-    return "Fail to connect to web portal"
-
 # Route for reciving feedback from ESP8266
 @blueprint.route("/api/data/feedback", methods=['GET'])
 def recieveData():
@@ -274,7 +246,7 @@ def checkFeedback():
             feedback = c.fetchall()
             print(feedback)
             if (feedback):
-                text = '';
+                text = ''
                 c.execute("DELETE FROM Feedback")
                 conn.commit()
                 conn.close()
