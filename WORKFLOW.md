@@ -11,4 +11,3 @@
 11. Fix duplicate feedback() routing in routes.py
 12. Remove Login
 13. Edit error page design and the main pages
-14. Fix illustration design
