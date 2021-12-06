@@ -49,32 +49,32 @@ def request_loader(request):
 
 class GameMap(db.Model):
     __tablename__ = 'GameMap'
-    game_id = Column(Integer, primary_key=True)
-    game_mode = Column(String(7), unique=False, nullable=False)
-    map_location= Column(String(100), unique=True, nullable=False)
+    map_id = Column(Integer, primary_key=True)
+    map_mode = Column(String(7), unique=False, nullable=False)
+    map_string= Column(String(200), unique=True, nullable=False)
 
-    def __init__(self, id, game_mode, map_location):
-        self.game_id = id
-        self.game_mode = game_mode
-        self.map_location = map_location
+    def __init__(self, map_id, map_mode, map_string):
+        self.map_id = map_id
+        self.map_mode = map_mode
+        self.map_string = map_string
     
-    def getId(self):
-        return self.game_id
+    def getMapId(self):
+        return self.map_id
     
-    def getGameMode(self):
-        return self.game_mode
+    def getMapMode(self):
+        return self.map_mode
     
-    def getMapLocation(self):
-        return self.map_location
+    def getMapString(self):
+        return self.map_string
 
-    def setId(self, id):
-        self.game_id = id
+    def setMapId(self, map_id):
+        self.map_id = map_id
     
-    def setGameMode(self, game_mode):
-        self.game_mode = game_mode
+    def setMapMode(self, map_mode):
+        self.map_mode = map_mode
     
-    def setMapLocation(self, map_location):
-        self.map_location = map_location
+    def setMapString(self, map_string):
+        self.map_string = map_string
     
     def __repr__(self):
-        return f"GameMap('{self.game_mode}','{self.map_location}')"
+        return f"GameMap('{self.map_mode}','{self.map_string}')"
