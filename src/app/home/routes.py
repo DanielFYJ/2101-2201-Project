@@ -87,6 +87,7 @@ def submitQueue():
             for q in queue:
                 #Insert data to DB here
                 c.execute("INSERT INTO Queue(Commands) VALUES(?)", (q,))
+                c.execute("INSERT INTO QueueCar(Commands) VALUES(?)", (q,))
             conn.commit()
             conn.close()
             return "Success"
