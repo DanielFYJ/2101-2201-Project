@@ -144,6 +144,7 @@ def getFirstCommand():
 def main():
     return render_template('Dashboard.html')
 
+
 count = 0 
 @blueprint.route('/testdata', methods=["GET", "POST"])
 def data():
@@ -173,6 +174,61 @@ def data():
             return "No commands in queue" + '\0'
     return "Fail"
  
+
+# Route for reciving feedback from ESP8266
+@blueprint.route("/api/data/testConn", methods=['GET'])
+def testConn():
+    if request.method == 'GET':
+        return 'Hello EcSP8266'
+
+@blueprint.route('/retrieveGameMap', methods=["GET", "POST"])
+@login_required
+def play():
+    if request.method == "POST":
+        # Establish database Connection
+        try:
+            conn = sqlite3.connect('Database.db')
+            c = conn.cursor()
+        except:
+            return render_template('page-500.html'), 500
+        try:
+            mid = request.form['mid']
+            c.execute("SELECT map_string FROM GameMap WHERE map_id = ?", (mid,))
+            data = c.fetchall()
+            conn.close()
+            with open('app/base/static/assets/json/map.txt', 'w') as outf:
+                outf.write(str(data[0][0]))
+            return redirect("play.html")
+        except:
+            return render_template('page-500.html'), 500
+    else:
+        return render_template('play.html')
+
+
+
+
+        # Get data from URL parameters
+        feedback = request.args.get('feedback')
+        print (feedback)
+        if (feedback != None):
+            #Store the data into the database
+            try:
+                # Establish database Connection
+                conn = sqlite3.connect('Database.db')
+                c = conn.cursor()
+            except:
+                return "Fail to connect to database"
+            try:
+                #Insert data to DB here
+                c.execute("INSERT INTO Feedback(Data) VALUES (?)", (feedback,))
+                conn.commit()
+                conn.close()
+                return "Successfuly insert feedback"
+            except:
+                return "Fail to store feedback into database"
+        else:
+            return "Fail to recieve feedback"
+    return "Fail to connect to web portal"
 
 # Route for reciving feedback from ESP8266
 @blueprint.route("/api/data/feedback", methods=['GET'])

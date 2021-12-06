@@ -92,20 +92,6 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('base_blueprint.login'))
-
-@blueprint.route('/play',methods=('GET', 'POST'))
-def play():
-    if request.method == 'POST':
-        #submit queue
-        pass
-    
-    gamemap = GameMap.query.filter_by(id=id).first()
-    if gamemap:
-        return render_template('play.html', gamemap=gamemap)
-    else:
-        gamemap = GameMap.query.filter_by(game_mode="Easy").first()
-        return render_template('play.html', gamemap=gamemap)
-
 ## Errors
 
 @login_manager.unauthorized_handler
