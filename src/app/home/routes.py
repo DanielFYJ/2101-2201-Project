@@ -120,7 +120,35 @@ def dequeue():
             # return render_template('page-500.html'), 500
             return "No commands in queue" + '\0'
     return "Fail"
-  
+
+@blueprint.route('/api/commands/dequeueCar', methods=["GET", "POST"])
+def dequeueCar():
+    if request.method == "GET":
+        # Establish database Connection
+        try:
+            conn = sqlite3.connect('Database.db')
+            c = conn.cursor()
+        except:
+            return "Fail to connect to database"
+        try:
+            #Get the queue from AJAX GET request
+            c.execute("SELECT commands FROM QueueCar ORDER BY QueueID ASC LIMIT 1")
+            data = c.fetchone()
+            print(data);
+            if (data):
+                #Remove the first element from the queue
+                c.execute("DELETE FROM QueueCar WHERE QueueID = (SELECT QueueID FROM QueueCar ORDER BY QueueID ASC LIMIT 1)")
+            conn.commit()
+            conn.close()
+            return data[0][0] + ''
+        except:
+            # flash("No commands in queue")
+            # return render_template('page-500.html'), 500
+            return "No commands in queue" + '\0'
+    return "Fail"
+
+
+
 @blueprint.route('/api/commands/getFirstCommands', methods=["GET", "POST"])
 def getFirstCommand():
     if request.method == "GET":
@@ -236,8 +264,10 @@ def recieveData():
 # Route for check obstacle feedback from ESP8266
 @blueprint.route("/checkFeedback", methods=['POST'])
 def checkFeedback():
+    print("Checking feedback")
     if request.method == 'POST':
         #Store the data into the database
+        print("Checking feedback")
         try:
             # Establish database Connection
             conn = sqlite3.connect('Database.db')
@@ -250,7 +280,7 @@ def checkFeedback():
             feedback = c.fetchall()
             print(feedback)
             if (feedback):
-                text = '';
+                text = ''
                 c.execute("DELETE FROM Feedback")
                 conn.commit()
                 conn.close()

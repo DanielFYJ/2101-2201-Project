@@ -310,9 +310,10 @@ function checkFeedback() {
     url: "/checkFeedback",
     async: false,
     success: function (data) {
-      // console.log(data);
+      console.log(data);
       if (data.includes("obstacle") == true) {
         isObstacleDetected = true;
+        console.log(isObstacleDetected);
       }
       else {
         isObstacleDetected = false;
