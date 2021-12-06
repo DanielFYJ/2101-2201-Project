@@ -115,10 +115,8 @@
                     <p>Ready.. Set.. Go?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn  btn-secondary" data-dismiss="modal" id="cfmCancelSubmit">Not
-                        Yet!</button>
-                    <button type="button" class="btn  btn-primary" id="cfmSubmit" data-dismiss="modal">Let's
-                        Go!</button>
+                    <button type="button" class="btn  btn-secondary" data-dismiss="modal" id="cfmCancelSubmit">Not Yet!</button>
+                    <button type="button" class="btn  btn-primary" id="cfmSubmit" data-dismiss="modal">Let's Go!</button>
                 </div>
             </div>
         </div>
@@ -140,10 +138,8 @@
                     <div class="flex-container">
                         <div>
                             <button type="button" class="control btn btn-primary" id="stop">Force Stop</button>
-                            <button type="button" class="control btn btn-primary" id="stars">When <i
-                                    class="fas fa-star"></i> on black tiles</button>
-                            <button type="button" class="control btn btn-primary" id="black_tiles">When on black
-                                tiles</button>
+                            <button type="button" class="control btn btn-primary" id="stars">When <i class="fas fa-star"></i> on black tiles</button>
+                            <button type="button" class="control btn btn-primary" id="black_tiles">When on black tiles</button>
                         </div>
                     </div>
                     <button type="button" class="rotate control btn btn-icon btn-primary wid-55 hei-55" id="rotate">
@@ -166,37 +162,7 @@
                 </div>
             </div>
         </div>
-
         <!-- [ controls section ] end -->
-        <!-- [ Robo car status section ] start -->
-        <div class="col-md-5">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Your Robo Car Status</h5>
-                </div>
-                <div class="card-body">
-                    <div class="flex-container">
-                        <!-- illustration -->
-                        <div>
-                            <i class="fas fa-car-side fa-3x" style="font-size: 3em; color: #449cfc;"></i>
-                            <canvas id="bottomRect" width="60" height="35" style=" display: block;">Your browser does
-                                not support the HTML5 canvas tag.</canvas>
-                        </div>
-                        <canvas id="rightRect" width="35" height="45">Your browser does not support the HTML5 canvas
-                            tag.</canvas>
-                        <!-- status information -->
-                        <div class="status">
-                            <p>Current Movement:
-                                <span id="Movement"></span>
-                            </p>
-                            <p>Speed (cm/s): </p>
-                            <p>Total distance travelled (cm): </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- [ Robo car status section ] end -->
     </div>
     <!-- [ second row of play page ] end -->
 </section>
@@ -207,9 +173,6 @@
 {% block javascripts %}
 <!-- google-map Js -->
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-<script src="https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<script src="/static/assets/js/plugins/gmaps.min.js"></script>
-<script src="/static/assets/js/pages/google-maps.js"></script>
 <script src="/static/assets/js/pages/play.js"></script>
 
 {% endblock javascripts %}
