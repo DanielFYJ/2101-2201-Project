@@ -223,7 +223,7 @@ function retrieveQueue() {
   $.ajax({
     type: "GET",
     async: false,
-    url: "/api/commands/deqeue",
+    url: "/api/commands/dequeue",
     success: function (data) {
       result = data;
     }
