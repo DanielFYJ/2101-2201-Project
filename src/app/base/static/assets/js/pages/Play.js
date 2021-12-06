@@ -276,25 +276,25 @@ function display() {
   var bottomRect = document.getElementById("bottomRect").getContext('2d');
   if (isBlackTileDetected == false) {
     // display dotted rectangle
-    bottomRect.clearRect(0, 5, 55, 12);
+    bottomRect.clearRect(0, 5, 60, 12);
     bottomRect.beginPath();
     bottomRect.setLineDash([5]);
-    bottomRect.rect(0, 5, 55, 12);
+    bottomRect.rect(0, 5, 60, 12);
     bottomRect.stroke();
 
   } else {
     // display filled rectangle
-    bottomRect.clearRect(0, 5, 55, 12);
-    bottomRect.fillRect(0, 5, 55, 12);
+    bottomRect.clearRect(0, 5, 60, 12);
+    bottomRect.fillRect(0, 5, 60, 12);
   }
 
   var rightRect = document.getElementById("rightRect").getContext('2d');
   if (isObstacleDetected == false) {
     // display dotted rectangle
-    rightRect.clearRect(10, 0, 12, 24);
+    rightRect.clearRect(20, 0, 12, 44);
     rightRect.beginPath();
     rightRect.setLineDash([3]);
-    rightRect.rect(10, 0, 12, 24);
+    rightRect.rect(20, 0, 12, 44);
     rightRect.stroke();
   } else {
     // display filled rectangle
@@ -310,7 +310,7 @@ function checkFeedback() {
     url: "/checkFeedback",
     async: false,
     success: function (data) {
-      // console.log(data);
+      console.log(data);
       if (data.includes("obstacle") == true) {
         isObstacleDetected = true;
       }

@@ -202,7 +202,6 @@ def play():
     else:
         return render_template('play.html')
 
-
 # Route for reciving feedback from ESP8266
 @blueprint.route("/api/data/feedback", methods=['GET'])
 def recieveData():
@@ -247,7 +246,7 @@ def checkFeedback():
             feedback = c.fetchall()
             print(feedback)
             if (feedback):
-                text = '';
+                text = ''
                 c.execute("DELETE FROM Feedback")
                 conn.commit()
                 conn.close()
