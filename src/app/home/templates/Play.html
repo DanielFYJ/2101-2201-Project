@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="/static/assets/css/Play.css" />
 {% endblock stylesheets %} {% block content %}
 
+<!-- [ Main Content ] start -->
 <section class="pcoded-main-container">
     <div class="pcoded-content">
         <h5>Car Play</h5>
@@ -10,21 +11,20 @@
         <div class="row">
             <!-- [ game map section ] start -->
 
-            <div class="col-md-7">
-                <div class="card" style="height:310px;">
+            <div class="col-lg-12 col-xl-6">
+                <div class="card">
                     <div class="card-header">
                         <h5>Game Map</h5>
+                        <span class="d-block m-t-5">Navigation of Car</span>
                     </div>
-                    <div class="card-body">
-                        <div id="basic-map" class="set-map" style="height:250px;"></div>
-                    </div>
+                    <div id="canvas" class="card-body"></div>
                 </div>
             </div>
             <!-- [ game map section ] end -->
             <!-- [ queue commands section ] start -->
 
-            <div class="col-md-5">
-                <div class="card" style="height:310px;">
+            <div class="col-md-6">
+                <div class="card" style="height:500px;">
                     <div class="card-header">
                         <h5>Queue Commands</h5>
                     </div>
@@ -49,13 +49,13 @@
                     </div>
                 </div>
             </div>
-            <!-- [ queue commands section ] end -->
-        </div>
+            <!-- [ breadcrumb ] end -->
         <!-- [ first row of play page ] end -->
+        </div>
         <!-- [ second row of play page ] start -->
         <div class="row">
             <!-- [ controls section ] start -->
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h5>Controls</h5>
@@ -91,6 +91,7 @@
                     </div>
                 </div>
             </div>
+        
             <!-- [ controls section ] end -->
             <!-- [ Robo car status section ] start -->
             <div class="col-md-5">
@@ -108,7 +109,9 @@
                             <canvas id="rightRect" width="35" height="45">Your browser does not support the HTML5 canvas tag.</canvas>
                             <!-- status information -->
                             <div class="status">
-                                <p>Current Movement: </p>
+                                <p>Current Movement: 
+                                    <span id="Movement"></span>
+                                </p>
                                 <p>Speed (cm/s): </p>
                                 <p>Total distance travelled (cm): </p>
                             </div>

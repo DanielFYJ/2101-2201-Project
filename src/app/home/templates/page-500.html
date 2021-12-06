@@ -16,9 +16,15 @@
                                 Error 500    
                             </h4>
                             <p class="mb-2 text-muted">
-                                Server Error.
+								<!-- Get the error message -->
+								{% with messages = get_flashed_messages() %}
+								{% if messages %}
+									{% for message in messages %}
+									{{ message }}
+									{% endfor %}
+								{% endif %}
+								{% endwith %}
                             </p>
-
                             <br />
                             <form action="/">
                                 <button class="btn btn-block btn-primary mb-4">HOME</button>
