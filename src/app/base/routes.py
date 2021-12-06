@@ -14,7 +14,7 @@ from flask_login import (
 from app import db, login_manager
 from app.base import blueprint
 from app.base.forms import LoginForm, CreateAccountForm
-from app.base.models import User
+from app.base.models import User, GameMap
 
 from app.base.util import verify_pass
 
@@ -92,7 +92,6 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('base_blueprint.login'))
-
 ## Errors
 
 @login_manager.unauthorized_handler
@@ -110,4 +109,6 @@ def not_found_error(error):
 @blueprint.errorhandler(500)
 def internal_error(error):
     return render_template('page-500.html'), 500
+
+
 
