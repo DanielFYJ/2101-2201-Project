@@ -26,12 +26,10 @@ def db_connection():
     return conn
 
 @blueprint.route('/index')
-@login_required
 def index():
-    return render_template('index.html', segment='index')
+    return render_template('play.html', segment='index')
 
 @blueprint.route('/<template>')
-@login_required
 def route_template(template):
     try:
         if not template.endswith( '.html' ):
@@ -60,7 +58,6 @@ def get_segment( request ):
         return None  
 
 @blueprint.route('/getCommands', methods=["GET" , "POST"])
-@login_required
 def getCommands():
     if request.method == "POST":
         commands = request.form['queue']
