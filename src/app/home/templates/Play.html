@@ -5,7 +5,6 @@
 <!-- [ Main Content ] start -->
 <section class="pcoded-main-container">
     <div class="pcoded-content">
-        <h5>Car Play</h5>
         <!-- [ first row of play page ] start -->
         <div class="row">
             <!-- [ game map section ] start -->
@@ -14,18 +13,19 @@
                     <div class="card-header">
                         <h5>Game Map</h5>
                         <span class="d-block m-t-5">Navigation of Car</span>
+                        <form class="input-group" action="/retrieveGameMap" method="POST">
+                            <select id="mid" name="mid" class="custom-select" id="inputGroupSelect04">
+                                <option selected>Choose Game Map...</option>
+                                <option value="1">Easy</option>
+                                <option value="2">Medium</option>
+                                <option value="3">Hard</option>
+                            </select>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Choose</button>
+                            </div>
+                        </form>
                     </div>
-                    <form class="input-group" action="/retrieveGameMap" method="POST">
-                        <select id="mid" name="mid" class="custom-select" id="inputGroupSelect04">
-                            <option selected>Choose Game Map...</option>
-                            <option value="1">Easy</option>
-                            <option value="2">Medium</option>
-                            <option value="3">Hard</option>
-                        </select>
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Choose</button>
-                        </div>
-                    </form>
+                   
                     <div id="canvas" class="card-body"></div>
                 </div>
             </div>
