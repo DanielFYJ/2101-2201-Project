@@ -43,9 +43,7 @@ DB_PASS=pass
 <br />
 
 ## System Test Cases
-https://youtu.be/ay578-uKb1Y
-
-
+[![Watch the video](https://img.youtube.com/vi/ay578-uKb1Y.jpg)](https://youtu.be/ay578-uKb1Y)
 <br />
 
 ## Start the Web Server
@@ -63,3 +61,6 @@ npm init -y
 ```sh
 npm run test  
 ```
+[![Watch the video](https://img.youtube.com/vi/kV2nuk3d0X0.jpg)](https://www.youtube.com/watch?v=kV2nuk3d0X0)
+
+
