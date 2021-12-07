@@ -18,6 +18,34 @@ python -m venv venv-win
 venv-win\Scripts\Activate
 pip install -r requirements.txt
 ```
+
+## Notes
+Ensure virtual environment (venv) is enabled before starting the project or installng dependencies. 
+```venv-win\Scripts\Activate```. Ensure a .env file is present in the root folder with correct configurations to be able to connect to the database. The variables are as shown below.
+
+##.env
+The .env file will have the following variables. 
+```
+DEBUG=True
+SECRET_KEY=S3cr3t_K#Key
+DB_ENGINE=postgresql
+DB_NAME=appseed-flask
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=appseed
+DB_PASS=pass
+```
+## Development Workflow
+```master```: Only codes that are ready to deploy will be merged here.
+<br>
+```dev```: This is where completed features are being merged
+
+<br />
+## System Test Cases
+
+
+<br />
+
 ## Start the Web Server
 ```sh
 start_server.bat
