@@ -42,7 +42,7 @@ DB_PASS=pass
 
 <br />
 ## System Test Cases
-[![UAT Video](https://img.youtube.com/vi/RbILrVbjYfY/0.jpg)](https://youtu.be/ay578-uKb1Y)
+https://youtu.be/ay578-uKb1Y
 
 
 <br />
