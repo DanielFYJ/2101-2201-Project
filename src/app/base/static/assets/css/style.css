@@ -10990,7 +10990,7 @@ a.text-dark:hover, a.text-dark:focus {
   h3 {
         page-break-after: avoid;
     }
-  @    page {
+  @page {
         size: a3;
     }
 
@@ -26485,5 +26485,10 @@ div.dtk-focus-alt table.dataTable tbody th.focus {
     padding: 70px 40px;
 }
 
-/* image varient End */
+#canvas {
+    display: block;
+}
+  
+
+    /* image varient End */
 /**====== Authentication css end ======**/
