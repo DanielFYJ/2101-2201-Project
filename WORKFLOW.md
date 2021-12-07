@@ -12,4 +12,3 @@
 12. Remove Login
 13. Edit error page design and the main pages
 14. White Box Testing
-15. Merge to Main from Dev
